@@ -1,4 +1,4 @@
-# API
+﻿# API
 
 > 문서 상태: 초안  
 > 기준 문서: `docs/mainplan.md`, `docs/architecture.md`
@@ -43,20 +43,159 @@ Authorization: Bearer <supabase_access_token>
 ## 3. Health
 
 ```text
-GET /health
-GET /health/supabase
+GET /api/health
+GET /api/health/supabase
 ```
 
 서버와 Supabase 연결 상태 확인용 API다.
 
 ---
 
-## 4. Products
+## 4. Profile
+
+로그인한 사용자의 앱 프로필을 조회한다. 프로필이 없으면 Backend가 검증된 사용자 ID 기준으로 생성한다.
+
+```text
+GET /api/profile/me
+```
+
+인증:
+
+- `Authorization: Bearer <supabase_access_token>` 필요
+- 클라이언트가 보낸 `user_id`는 사용하지 않는다.
+
+응답 예시:
+
+```json
+{
+  "data": {
+    "id": "profile-id",
+    "userId": "auth-user-id",
+    "displayName": null,
+    "skinTypeCode": null,
+    "skinTypeCompletedAt": null,
+    "createdAt": "2026-08-17T08:00:00.000Z",
+    "updatedAt": "2026-08-17T08:00:00.000Z"
+  }
+}
+```
+
+---
+
+## 5. Onboarding / Skin Type Survey
+
+회원가입 또는 최초 로그인 이후 초기 피부 타입 설문을 저장하고 조회한다. 설문 문항 원본은 `docs/DB/skin_type_question.md`를 기준으로 한다.
+
+### 설문 문항 조회
+
+```text
+GET /api/onboarding/skin-type/questions
+```
+
+응답 예시:
+
+```json
+{
+  "data": {
+    "version": "baumann_ko_rewrite_v1",
+    "sections": [
+      {
+        "dimension": "oil_dry",
+        "title": "피부의 유분·건조 정도",
+        "questions": [
+          {
+            "id": "OD_01",
+            "text": "세안 후 아무것도 바르지 않고 2~3시간이 지나면 피부가 어떤가요?",
+            "options": [
+              {
+                "id": "A",
+                "text": "매우 건조하고 각질이 일어나거나 거칠게 느껴져요."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+### 설문 응답 저장 및 피부 타입 계산
+
+```text
+POST /api/onboarding/skin-type/responses
+```
+
+요청 예시:
+
+```json
+{
+  "questionnaireVersion": "baumann_ko_rewrite_v1",
+  "responses": [
+    {
+      "questionId": "OD_01",
+      "optionId": "B"
+    }
+  ]
+}
+```
+
+응답 예시:
+
+```json
+{
+    "data": {
+      "skinTypeCode": "OSNT",
+      "displayName": "지성 경향 · 민감성 경향 · 비색소성 경향 · 탄력 유지 경향",
+      "dimensions": {
+        "oilDry": {
+          "code": "O",
+        "label": "지성 경향",
+        "score": 31
+      },
+      "sensitiveResistant": {
+        "code": "S",
+        "label": "민감성 경향",
+        "score": 32
+      },
+      "pigmentedNonPigmented": {
+        "code": "N",
+        "label": "색소침착 낮은 경향",
+        "score": 24
+      },
+      "wrinkledTight": {
+        "code": "T",
+        "label": "탄력 유지 경향",
+        "score": 34
+      }
+    },
+    "notice": "이 결과는 의료 진단이 아니라 초기 기록 기준점입니다."
+    }
+  }
+  ```
+
+저장 방향:
+
+- 점수 계산은 Backend에서 수행한다.
+- Android에는 점수표와 판정 로직을 두지 않는다.
+- 결과는 `profiles`와 설문 응답 테이블에 저장한다.
+- 설문 결과는 진단이 아니라 이후 기록 분석의 기준점으로 사용한다.
+- 사용자 화면에서는 `OSNT` 같은 내부 코드보다 `지성 경향 · 민감성 경향 · 비색소성 경향 · 탄력 유지 경향`처럼 한국어 분류 조합을 중심으로 표시한다.
+
+### 내 초기 설문 결과 조회
+
+```text
+GET /api/onboarding/skin-type/result
+```
+
+---
+
+## 6. Products
 
 ### 제품 검색
 
 ```text
-GET /products/search?q={query}
+GET /api/products/search?q={query}
 ```
 
 흐름:
@@ -97,7 +236,7 @@ GET /products/search?q={query}
 ### 제품 제출용 성분표 추출
 
 ```text
-POST /product-submissions/extract
+POST /api/product-submissions/extract
 ```
 
 사용자가 제품명, 브랜드, 제품 종류, 성분표 사진을 제출하면 Backend가 OpenAI API로 텍스트와 성분 후보를 추출한다.
@@ -156,7 +295,7 @@ multipart/form-data
 ### 제품 제출 확정
 
 ```text
-POST /product-submissions
+POST /api/product-submissions
 ```
 
 사용자가 AI 추출 결과를 확인하거나 수정한 뒤 공용 제품 DB에 등록한다.
@@ -190,7 +329,7 @@ POST /product-submissions
 ### 사용자 제품 등록
 
 ```text
-POST /user-products
+POST /api/user-products
 ```
 
 검색 결과에서 선택한 제품을 사용자 제품 목록에 등록한다.
@@ -208,12 +347,12 @@ POST /user-products
 
 ---
 
-## 5. Ingredients
+## 7. Ingredients
 
 ```text
-GET  /ingredients/search?q={query}
-POST /ingredients/sync
-POST /ingredients/normalize
+GET  /api/ingredients/search?q={query}
+POST /api/ingredients/sync
+POST /api/ingredients/normalize
 ```
 
 MFDS 화장품 원료성분정보 API를 기반으로 성분 마스터를 조회하거나 동기화한다.
@@ -258,23 +397,23 @@ GET https://apis.data.go.kr/1471000/CsmtcsIngdCpntInfoService01/getCsmtcsIngdCpn
 
 ---
 
-## 6. Routines
+## 8. Routines
 
 ```text
-POST /routines
-GET  /routines
-POST /routines/:routineId/products
+POST /api/routines
+GET  /api/routines
+POST /api/routines/:routineId/products
 ```
 
 반복적으로 사용하는 제품 묶음을 등록한다.
 
 ---
 
-## 7. Usage Logs
+## 9. Usage Logs
 
 ```text
-POST /usage-logs
-GET  /usage-logs?from={date}&to={date}
+POST /api/usage-logs
+GET  /api/usage-logs?from={date}&to={date}
 ```
 
 요청 예시:
@@ -290,11 +429,11 @@ GET  /usage-logs?from={date}&to={date}
 
 ---
 
-## 8. Skin Logs
+## 10. Skin Logs
 
 ```text
-POST /skin-logs
-GET  /skin-logs?from={date}&to={date}
+POST /api/skin-logs
+GET  /api/skin-logs?from={date}&to={date}
 ```
 
 요청 예시:
@@ -316,11 +455,11 @@ GET  /skin-logs?from={date}&to={date}
 
 ---
 
-## 9. Skin Photos
+## 11. Skin Photos
 
 ```text
-POST /skin-photos/upload-url
-POST /skin-photos
+POST /api/skin-photos/upload-url
+POST /api/skin-photos
 ```
 
 피부 기록용 사진은 선택 기능이다. Supabase Storage에 사진을 저장하고, DB에는 사진 경로와 연결된 피부 기록 ID만 저장한다.
@@ -329,12 +468,12 @@ POST /skin-photos
 
 ---
 
-## 10. Analysis
+## 12. Analysis
 
 ### 분석 요청
 
 ```text
-POST /analysis/run
+POST /api/analysis/run
 ```
 
 사용자가 분석 탭에서 요청하면 현재까지 저장된 기록을 바탕으로 AI 분석을 수행한다.
@@ -347,18 +486,18 @@ POST /analysis/run
     "analysisRunId": "analysis-run-id",
     "confidenceLevel": "data_insufficient",
     "summary": "현재 기록 수가 적어 신뢰도는 낮지만 반복 후보를 요약했습니다.",
-    "recommendedIngredients": [
+    "positiveSuspectedIngredients": [
       {
         "name": "글리세린",
         "evidenceLevel": "weak",
-        "reason": "건조함 점수가 낮았던 기록과 함께 여러 번 나타났습니다."
+        "reason": "건조함 점수가 낮았던 기록과 함께 여러 번 나타난 긍정적 의심 성분 후보입니다."
       }
     ],
-    "ingredientsToAvoid": [
+    "negativeSuspectedIngredients": [
       {
         "name": "향료",
         "evidenceLevel": "data_insufficient",
-        "reason": "붉음 기록과 같은 날 나타났지만 기록 수가 적습니다."
+        "reason": "붉음 기록과 같은 날 나타났지만 기록 수가 적어 부정적 의심 성분 후보로만 표시합니다."
       }
     ],
     "limitations": [
@@ -376,13 +515,13 @@ POST /analysis/run
 ### 최근 분석 조회
 
 ```text
-GET /analysis/latest
-GET /analysis/runs/:analysisRunId
+GET /api/analysis/latest
+GET /api/analysis/runs/:analysisRunId
 ```
 
 ---
 
-## 11. 금지 응답
+## 13. 금지 응답
 
 분석 API와 제품 성분 추출 API는 다음 표현을 반환하지 않아야 한다.
 
@@ -391,3 +530,6 @@ GET /analysis/runs/:analysisRunId
 - 의약품 사용 지시
 - 특정 제품 또는 성분을 피부 변화의 원인으로 확정하는 표현
 - 성분표 사진에 없는 성분을 사실처럼 추가하는 표현
+
+분석 결과는 `추천 성분` 또는 `피해야 할 성분`처럼 강하게 단정하기보다, MVP에서는 `긍정적 의심 성분 후보`, `부정적 의심 성분 후보`로 표현한다.
+

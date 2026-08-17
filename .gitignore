@@ -15,9 +15,11 @@ dist/
 coverage/
 npm-debug.log*
 pnpm-lock.yaml
+Backend/supabase/.temp/
 
 # Android / Gradle
 .gradle/
+Android/.kotlin/
 build/
 local.properties
 *.iml

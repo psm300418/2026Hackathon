@@ -37,8 +37,25 @@ npm run build      # Compile TypeScript to dist/
 npm run typecheck  # Type-check without emitting files
 npm run check:supabase # Verify Supabase connection with local env
 npm run setup:supabase # Create required Supabase resources when possible
+npm run check:product-seed-tables # Verify product seed tables and RLS access
+npm run setup:demo-user # Create or update a Supabase Auth demo user
+npm run import:skin-type-survey # Import skin type questionnaire seed
 npm run check:external-apis # Verify MFDS ingredient API response
 npm test           # Run tests
+```
+
+To create or update a demo user, pass credentials through environment variables.
+Do not commit personal or production account passwords.
+
+```bash
+DEMO_USER_EMAIL="..." DEMO_USER_PASSWORD="..." npm run setup:demo-user
+```
+
+Current demo account:
+
+```text
+email: demo@example.com
+password: demo1234
 ```
 
 The local server exposes:

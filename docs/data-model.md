@@ -20,6 +20,11 @@
 
 ```text
 profiles
+skin_type_questionnaires
+skin_type_questions
+skin_type_options
+skin_type_results
+skin_type_responses
 products
 product_submissions
 ingredients
@@ -51,8 +56,88 @@ analysis_findings
 - `baseline_redness`
 - `baseline_trouble_frequency`
 - `main_skin_concerns`
+- `skin_type_code`
+- `skin_type_completed_at`
 - `created_at`
 - `updated_at`
+
+### skin_type_questionnaires
+
+초기 피부 타입 설문 버전 정보를 저장한다. 문항 원본은 `docs/DB/skin_type_question.md`를 기준으로 seed한다.
+
+- `id`
+- `version`
+- `title`
+- `description`
+- `is_active`
+- `created_at`
+- `updated_at`
+
+### skin_type_questions
+
+설문 문항을 저장한다.
+
+- `id`
+- `questionnaire_id`
+- `dimension`
+- `question_key`
+- `question_text`
+- `display_order`
+- `special_rule`
+- `created_at`
+
+`dimension`은 `oil_dry`, `sensitive_resistant`, `pigmented_non_pigmented`, `wrinkled_tight` 같은 값을 고려한다.
+
+### skin_type_options
+
+설문 문항의 선택지를 저장한다.
+
+- `id`
+- `question_id`
+- `option_key`
+- `option_text`
+- `score`
+- `display_order`
+- `created_at`
+
+점수와 판정 로직은 Android에 두지 않고 Backend에서 사용한다.
+
+### skin_type_results
+
+사용자의 초기 피부 타입 설문 결과를 저장한다.
+
+- `id`
+- `user_id`
+- `questionnaire_id`
+- `skin_type_code`
+- `oil_dry_code`
+- `oil_dry_score`
+- `sensitive_resistant_code`
+- `sensitive_resistant_score`
+- `pigmented_non_pigmented_code`
+- `pigmented_non_pigmented_score`
+- `wrinkled_tight_code`
+- `wrinkled_tight_score`
+- `result_notice`
+- `completed_at`
+- `created_at`
+- `updated_at`
+
+`skin_type_code`는 `OSNT`처럼 4개 축의 결과를 조합한 값이다. 이 값은 의료 진단이 아니라 초기 기록 기준점으로 사용한다.
+
+### skin_type_responses
+
+사용자가 선택한 설문 응답을 저장한다.
+
+- `id`
+- `skin_type_result_id`
+- `user_id`
+- `question_id`
+- `option_id`
+- `score`
+- `created_at`
+
+설문 문구가 바뀌어도 과거 응답을 해석할 수 있도록 `questionnaire_id`와 선택지 버전을 결과와 함께 보존한다.
 
 ### products
 
@@ -256,12 +341,14 @@ MFDS 성분 마스터와 매칭되지 않은 성분은 별도 보정 전까지 `
 - `supporting_logs`
 - `created_at`
 
-`finding_type`은 `recommended` 또는 `avoid`를 사용한다. 각 타입은 최대 5개를 기본 정책으로 한다.
+`finding_type`은 `positive_suspect` 또는 `negative_suspect`를 사용한다. 각 타입은 최대 5개를 기본 정책으로 한다.
+분석 결과는 추천이나 금지처럼 단정하지 않고, 저장된 기록에서 긍정적 변화 또는 부정적 변화와 함께 나타난 의심 성분 후보로 표현한다.
 
 ---
 
 ## 4. 관계 요약
 
+- 한 사용자는 하나 이상의 `skin_type_results`와 여러 `skin_type_responses`를 가질 수 있다.
 - 한 사용자는 여러 `product_submissions`, `user_products`, `routines`, `usage_logs`, `skin_logs`, `analysis_runs`를 가진다.
 - 한 제품은 사용자 제출(`product_submissions`)을 통해 생성될 수 있다.
 - 한 제품은 여러 성분을 가질 수 있다.
@@ -280,6 +367,8 @@ MFDS 성분 마스터와 매칭되지 않은 성분은 별도 보정 전까지 `
 RLS 적용 대상:
 
 - `profiles`
+- `skin_type_results`
+- `skin_type_responses`
 - `product_submissions`
 - `user_products`
 - `routines`

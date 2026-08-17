@@ -67,6 +67,21 @@ RLS 방향:
 - insert, update, delete는 public policy를 만들지 않는다.
 - seed import와 향후 community 제품 등록은 Backend service role을 통해 수행한다.
 
+적용 후 Backend 환경 변수에 `SUPABASE_URL`, `SUPABASE_ANON_KEY`,
+`SUPABASE_SERVICE_ROLE_KEY`가 설정되어 있으면 다음 명령으로 T0-1 완료 조건을 확인한다.
+
+```bash
+cd Backend
+npm run check:product-seed-tables
+```
+
+이 검증은 다음을 확인한다.
+
+- `products`, `ingredients`, `product_ingredients`가 service role로 조회된다.
+- 같은 테이블이 anon key로 조회된다.
+- anon key로는 `products` insert가 차단된다.
+- service role로는 `products` insert/delete가 가능하다.
+
 ## 5. Supabase에 Seed Import
 
 `Backend/.env`에 다음 값이 있어야 한다.
@@ -116,4 +131,3 @@ order by count(*) desc;
 - `ingredientNameCandidate`는 MFDS 표준 성분명이 아니라 매칭 전 후보명이다.
 - 성분 표준화와 `ingredient_id` 연결은 MFDS ingredient master import 이후 별도 단계로 처리한다.
 - service role key는 Android 앱, GitHub, 문서에 넣지 않는다.
-

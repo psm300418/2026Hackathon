@@ -2,26 +2,22 @@
 
 > 문서 상태: 개발용 상세 초안  
 > 기준 문서: `docs/mainplan.md`, `docs/architecture.md`, `docs/api.md`, `docs/data-model.md`, `docs/design.md`, `docs/security.md`  
-> 목적: 혼자 바이브 코딩으로 MVP를 개발할 때 바로 작업 단위로 사용할 수 있도록 백로그를 잘게 나눈다.
+> 목적: 혼자 바이브 코딩으로 MVP를 개발할 때 기능 순서가 흔들리지 않도록 풀스택 작업 단위를 정의한다.
 
-## 1. MVP 성공 기준
+## 1. MVP 핵심 흐름
 
-초기 MVP는 다음 3가지 흐름이 실제 Android APK 또는 에뮬레이터에서 끝까지 동작하면 성공으로 본다.
-
-1. 사용자가 로그인한 뒤 제품을 검색하고, 검색 결과에서 제품을 자신의 목록에 등록할 수 있다.
-2. 사용자가 제품 사용 기록과 일일 피부 상태 기록을 저장하고 다시 조회할 수 있다.
-3. 사용자가 저장된 기록을 바탕으로 분석 탭에서 AI 분석을 요청하고 결과를 확인할 수 있다.
-
-제품 DB 초기 seed, 성분표 사진 기반 제품 제출, MFDS 성분 매칭은 MVP 가치를 높이는 핵심 기능이지만, 시연 안정성을 위해 다음 순서로 구현한다.
+이 프로젝트의 MVP 핵심 흐름은 다음 6단계다.
 
 ```text
-제품 seed 검색
-  -> 사용자 제품 등록
-  -> 제품 사용 기록
-  -> 피부 상태 기록
-  -> AI 분석
-  -> 성분표 사진 기반 community 제품 등록
+1. 회원가입 / 로그인
+2. 초기 설문을 통한 피부 타입 검사
+3. 이전에 사용해봤던 제품 등록
+4. 일일 제품 사용 기록 저장
+5. 저장한 기록 확인
+6. 저장한 기록 기반 긍정적 의심 성분 / 부정적 의심 성분 분석
 ```
+
+이 흐름이 실제 Android 앱에서 끝까지 동작하면 MVP 성공으로 본다.
 
 ## 2. 현재 준비 상태
 
@@ -33,75 +29,59 @@
 - `/api/health`, `/api/health/supabase`
 - Supabase client 설정
 - JWT auth middleware 초안
-- MFDS gateway 초안
 - 제품 seed 원본 문서: `docs/DB/*.md`
+- 초기 피부 타입 설문 문서: `docs/DB/skin_type_question.md`
 - 제품 seed 정리 스크립트: `npm run prepare:product-seed`
 - 제품 seed import 스크립트: `npm run import:product-seed`
 - 제품/성분 seed migration SQL
 - 디자인 기준 문서: `docs/design.md`
 
-### 지금 막 해야 하는 수동 작업
+### 완료로 간주하는 초기 작업
 
-`SUPABASE_DB_URL`이 비어 있어 migration 자동 적용은 아직 불가하다.
+사용자가 T-03까지 진행했다고 했으므로, 현재 백로그에서는 아래 작업을 완료 또는 완료 직전 상태로 본다.
 
-1. Supabase SQL Editor에서 실행:
+- T0-1 Supabase 제품 seed 테이블 생성
+- T0-2 제품 seed import
+- T0-3 demo 계정 또는 인증 준비
 
-```text
-Backend/supabase/migrations/202608170001_create_product_seed_tables.sql
-```
+## 3. 개발 우선순위
 
-2. 테이블 생성 후 실행:
+기존 백로그는 제품 검색을 너무 앞에 두었지만, 실제 앱 경험에서는 로그인 직후 초기 피부 타입 검사가 먼저다. 따라서 앞으로는 다음 순서로 진행한다.
 
-```bash
-cd Backend
-npm run import:product-seed
-```
+1. Auth + Profile
+2. Initial Skin Type Survey
+3. Past Product Registration
+4. Daily Usage Log
+5. Log History
+6. Ingredient Analysis
+7. Product Submission OCR
+8. Deploy
 
-기대값:
+성분표 사진 기반 community 제품 등록은 AI 핵심성을 보여주기 좋은 기능이지만, 기본 MVP에서는 “이전에 사용해봤던 제품을 seed DB에서 찾아 등록”하는 흐름을 먼저 완성한다.
 
-- `products`: 197개
-- `product_ingredients`: 6,805행
+## 4. 공통 개발 원칙
 
-## 3. 개발 원칙
-
-- 먼저 백엔드 API를 완성하고, Android는 API가 동작하는 흐름부터 연결한다.
-- 화면은 예쁘게 만들기 전에 loading, empty, error, success 상태를 먼저 갖춘다.
-- AI 기능은 반드시 백엔드에서 호출한다.
 - Android에는 OpenAI key, Supabase service role key, MFDS key를 넣지 않는다.
-- TypeScript에서 `any`는 금지한다.
-- API/DB 계약이 바뀌면 `docs/api.md`, `docs/data-model.md`를 같이 수정한다.
+- 초기 피부 타입 결과는 의료 진단이 아니라 기록 기준점으로 표시한다.
+- 제품 분석 결과는 원인 확정이 아니라 긍정적/부정적 의심 성분 후보로 표현한다.
+- TypeScript에서 `any` 타입은 금지한다.
+- API/DB 계약이 바뀌면 `docs/api.md`, `docs/data-model.md`를 함께 수정한다.
+- Android 화면은 `docs/design.md`의 디자인 토큰과 상태 규칙을 따른다.
 
-## 4. Phase 개요
-
-| Phase | 목표 | MVP 필수 |
-| --- | --- | --- |
-| 0 | DB seed와 개발 환경 확정 | Yes |
-| 1 | Backend 제품 검색 API | Yes |
-| 2 | Backend 인증과 사용자 제품 등록 | Yes |
-| 3 | Backend 기록 API | Yes |
-| 4 | Backend AI 분석 API | Yes |
-| 5 | Android 앱 뼈대와 디자인 시스템 | Yes |
-| 6 | Android 핵심 화면 연결 | Yes |
-| 7 | 성분표 사진 기반 제품 제출 | High |
-| 8 | 배포와 시연 안정화 | Yes |
-| 9 | P1 확장 기능 | No |
-
-## 5. Phase 0: DB Seed와 환경 확정
+## 5. Phase 0: DB Seed와 인증 준비
 
 ### T0-1. Supabase 제품 seed 테이블 생성
 
+- 상태: 완료 또는 완료 확인 필요
 - 우선순위: P0
-- 대상: Supabase SQL Editor
-- 입력 문서: `docs/DB/product-seed-import.md`
-- 작업:
-  - `202608170001_create_product_seed_tables.sql` 실행
-  - `products`, `ingredients`, `product_ingredients` 생성 확인
-  - RLS policy 확인
+- 대상:
+  - `Backend/supabase/migrations/202608170001_create_product_seed_tables.sql`
 - 완료 조건:
-  - Supabase에서 세 테이블이 보인다.
-  - anon/authenticated는 select만 가능하다.
-  - service role로 insert 가능하다.
-- 검증:
+  - `products`, `ingredients`, `product_ingredients` 테이블 존재
+  - seed 제품 읽기 가능
+  - public write는 열지 않음
+
+검증:
 
 ```sql
 select count(*) from public.products;
@@ -110,11 +90,8 @@ select count(*) from public.product_ingredients;
 
 ### T0-2. 제품 seed import
 
+- 상태: 완료 또는 완료 확인 필요
 - 우선순위: P0
-- 대상: `Backend/supabase/seed`
-- 작업:
-  - 제품 seed 재생성
-  - Supabase import 실행
 - 명령:
 
 ```bash
@@ -124,131 +101,193 @@ npm run import:product-seed
 ```
 
 - 완료 조건:
-  - 제품 197개 저장
-  - 제품-성분 6,805행 저장
-  - 같은 명령을 다시 실행해도 중복 없이 갱신된다.
+  - `products`: 197개
+  - `product_ingredients`: 6,805행
 
-### T0-3. 개발용 demo 계정 준비
+### T0-3. Demo 계정 준비
 
+- 상태: 완료 또는 완료 확인 필요
 - 우선순위: P0
 - 대상: Supabase Auth
-- 작업:
-  - 시연용 이메일/비밀번호 계정 생성
-  - 이메일 인증 비활성화 확인
-  - 계정 정보 공유 방식 결정
 - 완료 조건:
-  - Android에서 10초 안에 demo login 가능
-  - README 또는 개인 메모에 demo 계정 정보가 있다.
-- 주의:
-  - 공개 GitHub 문서에는 실제 비밀번호를 적지 않는다.
+  - 이메일 인증 없이 demo 계정으로 로그인 가능
+  - 공개 문서에는 실제 비밀번호를 적지 않음
 
-## 6. Phase 1: Backend 제품 검색
+## 6. Phase 1: 회원가입 / 로그인
 
-### T1-1. 제품 검색 repository 작성
+### T1-1. Auth middleware 최종 점검
 
 - 우선순위: P0
-- 대상 파일:
-  - `Backend/src/repositories/products.repository.ts`
-  - 필요 시 `Backend/src/types/products.ts`
+- 대상:
+  - `Backend/src/middlewares/auth.ts`
 - 작업:
-  - `products` 검색 함수 작성
-  - 제품명, 브랜드, 카테고리 부분 검색
-  - 검색어 trim, 빈 검색어 validation
-  - seed/community/verified 상태 포함
-  - 최대 결과 수 제한
+  - `Authorization: Bearer <token>` 검증
+  - token 없으면 401
+  - 잘못된 token이면 401
+  - 검증된 user id를 request context에 저장
+  - 클라이언트가 보낸 `user_id`는 신뢰하지 않음
 - 완료 조건:
-  - seed 제품을 검색할 수 있다.
-  - 검색 결과에 `id`, `name`, `brand`, `category`, `ingredients_text`, `source`, `verification_status`가 포함된다.
-- 검증:
-  - repository 단위 테스트 또는 임시 script로 `독도`, `라운드랩`, `크림` 검색
+  - 보호 API에서 backend가 인증된 user id를 사용할 수 있음
+  - `any` 없이 타입 처리
 
-### T1-2. 제품 검색 service 작성
+### T1-2. Profile migration 작성
 
 - 우선순위: P0
-- 대상 파일:
-  - `Backend/src/services/products.service.ts`
-- 작업:
-  - 검색 결과 DTO 변환
-  - `canSubmitProduct` 계산
-  - 성분 정보 부족 상태 계산
-  - 빈 검색어는 사용자 오류로 처리
+- 대상:
+  - `Backend/supabase/migrations/*_create_profiles.sql`
+- 테이블:
+  - `profiles`
+- 필드:
+  - `user_id`
+  - `display_name`
+  - `skin_type_code`
+  - `skin_type_completed_at`
+  - `created_at`
+  - `updated_at`
 - 완료 조건:
-  - 검색 결과 없음이면 `items=[]`, `canSubmitProduct=true`
-  - 검색 결과 있음이면 `canSubmitProduct`도 true로 유지해 직접 등록 흐름을 막지 않는다.
+  - 사용자별 RLS 적용
+  - 로그인 후 profile 생성 또는 조회 가능
 
-### T1-3. 제품 검색 API 연결
+### T1-3. Android 로그인 화면
 
 - 우선순위: P0
-- 대상 파일:
-  - `Backend/src/controllers/products.controller.ts`
-  - `Backend/src/routes/products.ts`
-  - `Backend/src/routes/index.ts`
+- 대상:
+  - `Android/.../feature/auth`
+- 작업:
+  - 이메일/비밀번호 로그인
+  - 회원가입 최소 입력
+  - Demo Login 버튼
+  - 로그인 상태 저장
+  - 로그아웃
+- 완료 조건:
+  - demo 계정으로 10초 안에 앱 진입
+  - access token으로 backend 보호 API 호출 가능
+
+## 7. Phase 2: 초기 설문을 통한 피부 타입 검사
+
+설문 원본은 `docs/DB/skin_type_question.md`를 기준으로 한다. 이 결과는 진단이 아니라 이후 기록 분석을 위한 초기 기준점이다.
+
+### T2-1. 피부 타입 설문 migration 작성
+
+- 우선순위: P0
+- 대상:
+  - `Backend/supabase/migrations/*_create_skin_type_survey_tables.sql`
+- 테이블:
+  - `skin_type_questionnaires`
+  - `skin_type_questions`
+  - `skin_type_options`
+  - `skin_type_results`
+  - `skin_type_responses`
+- 완료 조건:
+  - 설문 문항과 선택지를 version별로 관리 가능
+  - 사용자 응답과 결과는 user id로 분리
+  - 사용자별 RLS 적용
+
+### T2-2. 설문 문항 seed 작성
+
+- 우선순위: P0
+- 대상:
+  - `Backend/supabase/seed`
+  - 필요 시 `Backend/src/scripts/prepare-skin-type-survey.ts`
+  - 필요 시 `Backend/src/scripts/import-skin-type-survey.ts`
+- 작업:
+  - `docs/DB/skin_type_question.md`를 구조화
+  - 문항 id, dimension, option id, option text, score 분리
+  - 특수 규칙 문항 표시
+- 완료 조건:
+  - Backend가 설문 문항을 DB 또는 정적 JSON에서 반환 가능
+  - 점수표는 Android에 직접 넣지 않음
+
+### T2-3. 피부 타입 계산 service
+
+- 우선순위: P0
+- 대상:
+  - `Backend/src/services/skin-type.service.ts`
+- 작업:
+  - O/D, S/R, P/N, W/T 점수 계산
+  - `OSNT` 같은 최종 조합 생성
+  - 결과 안내 문구 생성
+  - 공개 자료 기반 비공식 설문이라는 제한 안내
+  - 완료 조건:
+    - 응답이 부족하면 validation error
+    - 결과는 의료 진단으로 표현하지 않음
+    - 사용자에게는 `OSNT` 같은 내부 코드보다 `지성 경향 · 민감성 경향 · 비색소성 경향 · 탄력 유지 경향`처럼 한국어 분류 조합을 중심으로 표시
+
+### T2-4. 초기 설문 API
+
+- 우선순위: P0
+- API:
+
+```text
+GET  /api/onboarding/skin-type/questions
+POST /api/onboarding/skin-type/responses
+GET  /api/onboarding/skin-type/result
+```
+
+- 완료 조건:
+  - 로그인 사용자만 응답 저장 가능
+  - 설문 완료 시 `profiles.skin_type_code`와 `skin_type_completed_at` 갱신
+  - 이미 완료한 사용자는 결과 조회 가능
+
+### T2-5. Android 초기 설문 화면
+
+- 우선순위: P0
+- 대상:
+  - `Android/.../feature/onboarding`
+- 작업:
+  - 로그인 후 설문 미완료면 설문 화면으로 이동
+  - 질문 하나씩 또는 섹션별 표시
+  - 진행률 표시
+  - 응답 저장
+  - 결과 화면 표시
+  - 완료 조건:
+    - 설문 완료 전에는 홈으로 바로 가지 않음
+    - 결과 화면에 한국어 4분류 조합과 쉬운 설명 표시
+    - 의료 진단이 아니라 기준점이라는 안내 표시
+
+## 8. Phase 3: 이전에 사용해봤던 제품 등록
+
+초기 설문 이후 사용자는 과거에 사용해본 제품을 등록한다. 이 데이터는 분석에서 참고 데이터로 사용한다.
+
+### T3-1. 사용자 제품 migration 작성
+
+- 우선순위: P0
+- 대상:
+  - `Backend/supabase/migrations/*_create_user_products.sql`
+- 테이블:
+  - `user_products`
+- 필드:
+  - `user_id`
+  - `product_id`
+  - `usage_status`: `current`, `past`, `paused`
+  - `started_at`
+  - `is_past_experience`
+  - `past_reaction_memo`
+  - `memo`
+- 완료 조건:
+  - 사용자는 자기 제품만 조회 가능
+  - 같은 제품 중복 등록 정책 정의
+
+### T3-2. 제품 검색 API
+
+- 우선순위: P0
 - API:
 
 ```text
 GET /api/products/search?q={query}
 ```
 
-- 완료 조건:
-  - 성공 응답은 `docs/api.md`의 `{ data: ... }` 형식
-  - 오류 응답은 공통 error handler 사용
-  - 검색어가 없으면 400
-- 검증:
-
-```bash
-cd Backend
-npm run typecheck
-npm test
-```
-
-수동:
-
-```bash
-curl "http://localhost:3000/api/products/search?q=독도"
-```
-
-## 7. Phase 2: Backend 인증과 사용자 제품 등록
-
-### T2-1. 사용자 관련 migration 작성
-
-- 우선순위: P0
-- 대상:
-  - `Backend/supabase/migrations/*_create_user_product_tables.sql`
-- 테이블:
-  - `profiles`
-  - `user_products`
 - 작업:
-  - `user_id uuid not null`
-  - `product_id`는 `products(id)` 참조
-  - `usage_status`: `current`, `past`, `paused`
-  - `is_past_experience`
-  - RLS 정책 작성
+  - seed 제품 검색
+  - 제품명, 브랜드, 카테고리 기준 검색
+  - 검색 결과의 전성분 요약 반환
 - 완료 조건:
-  - 사용자는 자기 `user_products`만 조회 가능
-  - backend service role은 insert/update/delete 가능
+  - `독도`, `라운드랩`, `크림` 같은 검색어로 결과 반환
+  - 검색 결과 없을 때 직접 등록 진입 가능
 
-### T2-2. auth middleware 점검
+### T3-3. 사용자 제품 등록 API
 
 - 우선순위: P0
-- 대상:
-  - `Backend/src/middlewares/auth.ts`
-- 작업:
-  - Authorization header 없는 경우 401
-  - 잘못된 token 401
-  - 검증된 user id를 request context에 저장
-  - 클라이언트가 보낸 user id는 사용하지 않음
-- 완료 조건:
-  - 보호 API에서 `req.user.id` 또는 equivalent 사용 가능
-  - `any` 없이 타입 확장 처리
-
-### T2-3. 사용자 제품 등록 API
-
-- 우선순위: P0
-- 대상:
-  - `Backend/src/repositories/user-products.repository.ts`
-  - `Backend/src/services/user-products.service.ts`
-  - `Backend/src/controllers/user-products.controller.ts`
-  - `Backend/src/routes/user-products.ts`
 - API:
 
 ```text
@@ -256,44 +295,51 @@ POST /api/user-products
 GET  /api/user-products
 ```
 
-- 요청:
+- 요청 예시:
 
 ```json
 {
   "productId": "uuid",
-  "usageStatus": "current",
-  "startedAt": "2026-08-17",
-  "memo": "저녁에 사용"
+  "usageStatus": "past",
+  "isPastExperience": true,
+  "pastReactionMemo": "예전에 사용했을 때 건조함이 줄었던 것 같음",
+  "memo": "겨울에 사용"
 }
 ```
 
 - 완료 조건:
-  - 로그인 사용자 기준으로 저장
-  - 같은 제품 중복 등록 처리 방식 결정
-  - 제품 존재하지 않으면 404
-  - 목록 조회 시 제품 기본 정보 포함
+  - 과거 사용 제품을 등록 가능
+  - 현재 사용 제품도 등록 가능
+  - 등록한 제품을 다시 조회 가능
 
-## 8. Phase 3: Backend 기록 API
-
-### T3-1. 기록용 migration 작성
+### T3-4. Android 과거 제품 등록 화면
 
 - 우선순위: P0
-- 대상:
-  - `Backend/supabase/migrations/*_create_record_tables.sql`
+- 작업:
+  - 제품 검색
+  - 제품 선택
+  - 과거 사용 여부 선택
+  - 기억나는 반응 메모 입력
+  - 내 제품 목록 저장
+- 완료 조건:
+  - 초기 설문 완료 후 과거 제품 등록으로 자연스럽게 이어짐
+  - 나중에 건너뛰기 가능 여부 결정
+
+## 9. Phase 4: 일일 제품 사용 기록 저장
+
+### T4-1. 기록 migration 작성
+
+- 우선순위: P0
 - 테이블:
   - `usage_logs`
   - `usage_log_items`
   - `skin_logs`
-- MVP에서 제외 가능:
-  - `routines`
-  - `routine_products`
-  - `skin_photos`
 - 완료 조건:
-  - `usage_logs.user_id` 기준 RLS
-  - `skin_logs.user_id` 기준 RLS
-  - 피부 점수는 0부터 5까지 check constraint
+  - 사용자별 RLS
+  - 피부 점수는 0부터 5까지
+  - 제품 사용 기록과 피부 상태 기록을 같은 날짜 흐름에서 조회 가능
 
-### T3-2. 제품 사용 기록 저장/조회 API
+### T4-2. 제품 사용 기록 API
 
 - 우선순위: P0
 - API:
@@ -304,15 +350,15 @@ GET  /api/usage-logs?from=YYYY-MM-DD&to=YYYY-MM-DD
 ```
 
 - 작업:
-  - `usedAt` 기본값 처리
-  - `userProductIds` 검증
-  - 사용자의 제품만 기록 가능
-  - 날짜 범위 조회
+  - 사용한 제품 선택
+  - 사용 시각 저장
+  - 여러 제품 저장 가능
+  - 사용자의 제품인지 검증
 - 완료 조건:
-  - 사용 기록 저장 후 다시 조회 가능
-  - 다른 사용자의 `userProductId`를 넣으면 거절
+  - 오늘 사용한 제품을 저장 가능
+  - 저장 후 다시 조회 가능
 
-### T3-3. 피부 상태 기록 저장/조회 API
+### T4-3. 일일 피부 상태 기록 API
 
 - 우선순위: P0
 - API:
@@ -323,59 +369,103 @@ GET  /api/skin-logs?from=YYYY-MM-DD&to=YYYY-MM-DD
 ```
 
 - 작업:
-  - `dryness`, `oiliness`, `redness`, `trouble` 0-5 validation
-  - `sleepLevel`, `stressLevel` 0-5 validation
-  - `memo` optional
-  - 날짜 범위 조회
+  - 건조함, 유분, 붉음, 트러블
+  - 수면, 스트레스
+  - 메모
 - 완료 조건:
-  - 같은 날짜 여러 기록 허용 여부 결정
-  - 저장된 피부 기록을 분석 API에서 조회 가능
+  - 피부 상태 기록 저장 가능
+  - 분석에서 사용할 수 있음
 
-## 9. Phase 4: Backend AI 분석 API
+### T4-4. Android 일일 기록 화면
 
-### T4-1. 분석용 migration 작성
+- 우선순위: P0
+- 작업:
+  - 내 제품 목록에서 오늘 사용 제품 선택
+  - 피부 상태 점수 입력
+  - 수면/스트레스 입력
+  - 저장 성공/실패 표시
+- 완료 조건:
+  - 제품 사용 기록과 피부 상태 기록을 앱에서 저장 가능
+
+## 10. Phase 5: 저장한 기록 확인
+
+### T5-1. 기록 조회 service 정리
+
+- 우선순위: P0
+- 작업:
+  - 날짜별 사용 제품 조회
+  - 날짜별 피부 상태 조회
+  - 최근 기록 요약
+- 완료 조건:
+  - 분석 이전에 사용자가 본인 기록을 확인 가능
+
+### T5-2. 기록 히스토리 API
+
+- 우선순위: P0
+- API:
+
+```text
+GET /api/records/daily?from=YYYY-MM-DD&to=YYYY-MM-DD
+GET /api/records/latest
+```
+
+- 완료 조건:
+  - 제품 사용 기록과 피부 상태 기록을 합쳐 반환
+  - 기록 없는 날짜도 empty state 처리 가능
+
+### T5-3. Android 기록 확인 화면
+
+- 우선순위: P0
+- 작업:
+  - 최근 기록 목록
+  - 날짜별 상세
+  - 제품 사용 내역
+  - 피부 상태 점수
+- 완료 조건:
+  - 저장한 기록을 사용자가 앱에서 다시 확인 가능
+
+## 11. Phase 6: 저장 기록 기반 긍정/부정 의심 성분 분석
+
+### T6-1. 분석 migration 작성
 
 - 우선순위: P0
 - 테이블:
   - `analysis_runs`
   - `analysis_findings`
 - 완료 조건:
-  - 사용자별 RLS
-  - `finding_type`: `recommended`, `avoid`
+  - `finding_type`: `positive_suspect`, `negative_suspect`
   - `evidence_level`: `strong`, `medium`, `weak`, `data_insufficient`
+  - 사용자별 RLS
 
-### T4-2. 사용자 기록 집계 service
+### T6-2. 사용자 기록 집계 service
 
 - 우선순위: P0
 - 대상:
   - `Backend/src/services/analysis-evidence.service.ts`
 - 작업:
-  - 사용자 제품 사용 기록 조회
-  - 제품 성분 노출 횟수 계산
-  - 피부 변화 점수 요약
-  - 수면/스트레스 중첩 요약
-  - 데이터 부족 기준 계산
+  - 과거 사용 제품과 일일 사용 기록 분리
+  - 성분 노출 횟수 계산
+  - 피부 상태 변화와 함께 등장한 성분 집계
+  - 긍정적 변화 후보와 부정적 변화 후보 분리
+  - 수면/스트레스 중첩 여부 계산
 - 완료 조건:
-  - AI 호출 전 재현 가능한 evidence JSON 생성
-  - 기록이 거의 없어도 빈 배열과 limitations를 반환
+  - AI 호출 전 evidence JSON 생성
+  - 데이터 부족 시 limitations 포함
 
-### T4-3. OpenAI 분석 gateway
+### T6-3. OpenAI 분석 gateway
 
 - 우선순위: P0
-- 대상:
-  - `Backend/src/gateways/openai-analysis.gateway.ts`
 - 작업:
-  - OpenAI API key는 backend env에서만 사용
-  - structured JSON 출력 요청
-  - 추천 성분 최대 5개
-  - 피해야 할 성분 최대 5개
-  - 금지 표현 prompt에 포함
-  - 응답 zod validation
+  - evidence JSON만 AI에 전달
+  - 긍정적 의심 성분 최대 5개
+  - 부정적 의심 성분 최대 5개
+  - 근거 수준과 이유 포함
+  - 진단/치료/원인 확정 금지
 - 완료 조건:
-  - AI 응답이 schema를 벗어나면 안전한 오류
-  - 원인 확정, 진단, 치료 표현을 요청하지 않음
+  - 응답 schema validation
+  - 데이터 부족 시 신뢰도 낮음 안내
 
-### T4-4. 분석 실행 API
+### T6-4. 분석 API
 
 - 우선순위: P0
 - API:
@@ -387,29 +477,68 @@ GET  /api/analysis/runs/:analysisRunId
 ```
 
 - 완료 조건:
-  - 분석 요청 결과 저장
+  - 분석 결과 저장
   - 최근 분석 조회 가능
-  - 기록 부족 시 `data_insufficient` 반환
-  - AI 실패 시 사용자 기록은 손상되지 않음
+  - AI 실패 시 fallback 분석 제공
 
-### T4-5. AI 없이 fallback 분석
+### T6-5. Android 분석 화면
 
 - 우선순위: P0
-- 이유:
-  - 해커톤 시연 중 OpenAI 장애나 key 문제를 대비
 - 작업:
-  - OpenAI 호출 실패 시 evidence 기반 간단 요약 반환
-  - 결과에 `limitations`와 `data_insufficient` 표시
+  - 분석 요청 버튼
+  - 긍정적 의심 성분 카드
+  - 부정적 의심 성분 카드
+  - 근거 수준 배지
+  - 데이터 부족 안내
+  - 최근 분석 결과 표시
 - 완료 조건:
-  - AI 장애에도 분석 탭이 빈 화면으로 끝나지 않는다.
+  - 저장한 기록 기반 분석 결과 확인 가능
+  - “원인”이 아니라 “의심 성분 후보”로 표현
 
-## 10. Phase 5: Android 앱 뼈대와 디자인 시스템
+## 12. Phase 7: 성분표 사진 기반 제품 직접 등록
 
-### T5-1. Android package 구조 정리
+이 Phase는 시간이 허용될 때 추가한다. 제품 seed 검색과 과거 제품 등록이 먼저다.
+
+### T7-1. product_submissions migration
+
+- 우선순위: P1
+- 완료 조건:
+  - 성분표 사진 원본 저장 안 함
+  - AI 추출 텍스트와 사용자 확정 텍스트만 저장
+
+### T7-2. 성분표 사진 추출 API
+
+- 우선순위: P1
+- API:
+
+```text
+POST /api/product-submissions/extract
+```
+
+- 완료 조건:
+  - 사진에서 텍스트 추출
+  - 저장 없이 응답으로만 반환
+
+### T7-3. community 제품 확정 API
+
+- 우선순위: P1
+- API:
+
+```text
+POST /api/product-submissions
+```
+
+- 완료 조건:
+  - 사용자가 검토한 제품이 `community`로 저장
+  - 이후 검색 결과에 노출
+
+## 13. Phase 8: Android 앱 구조와 디자인 시스템
+
+Android 작업은 Backend API와 병렬로 일부 진행 가능하지만, 기능 연결은 API 완성 후 진행한다.
+
+### T8-1. Android package 구조 정리
 
 - 우선순위: P0
-- 대상:
-  - `Android/app/src/main/java/com/hackathon/skindata`
 - 구조:
 
 ```text
@@ -417,359 +546,131 @@ core/designsystem
 core/network
 core/session
 feature/auth
+feature/onboarding
 feature/products
 feature/records
 feature/analysis
 ```
 
-- 완료 조건:
-  - 기능별 Screen, ViewModel, Repository 위치가 정해짐
-
-### T5-2. 디자인 토큰 적용
+### T8-2. 디자인 토큰 적용
 
 - 우선순위: P0
 - 기준: `docs/design.md`
-- 작업:
-  - 색상 토큰
-  - typography 토큰
-  - spacing/radius object
-  - PrimaryButton, AppTextField, Chip, ProductCard 기본 컴포넌트
 - 완료 조건:
-  - 화면에서 raw color를 직접 쓰지 않음
-  - 올리브 CTA와 따뜻한 배경 톤 적용
+  - 색상, typography, spacing, radius token 사용
+  - 공통 버튼, 입력창, 칩, 카드 컴포넌트 준비
 
-### T5-3. Navigation shell 작성
+### T8-3. Navigation shell 작성
 
 - 우선순위: P0
+- 흐름:
+
+```text
+로그인 전
+  -> Auth
+로그인 후 설문 미완료
+  -> Skin Type Survey
+로그인 후 설문 완료
+  -> Main Tabs
+```
+
 - 탭:
   - Home
   - Products
   - Record
   - Analysis
   - Profile
-- 완료 조건:
-  - 로그인 전/후 route 분리
-  - 하단 내비게이션 표시
-  - 빈 화면이라도 탭 이동 가능
 
-### T5-4. API client 기본 구조
+## 14. Phase 9: 배포와 시연 안정화
+
+### T9-1. Backend Render 배포
+
+- 우선순위: P0
+- 완료 조건:
+  - Render URL에서 `/api/health` 성공
+  - 환경 변수는 Render dashboard에서 관리
+
+### T9-2. APK 빌드
+
+- 우선순위: P0
+- 완료 조건:
+  - 실제 기기 또는 에뮬레이터에서 로그인부터 분석까지 동작
+
+### T9-3. 시연 데이터 준비
 
 - 우선순위: P0
 - 작업:
-  - Backend base URL 설정
-  - Authorization header 삽입
-  - 공통 response wrapper 처리
-  - 공통 error model 처리
-- 완료 조건:
-  - `/api/health` 호출 가능
-  - token 필요한 API와 필요 없는 API 분리
-
-## 11. Phase 6: Android 핵심 화면 연결
-
-### T6-1. 로그인과 Demo Login
-
-- 우선순위: P0
-- 작업:
-  - 이메일/비밀번호 로그인
-  - 회원가입 최소 입력
-  - Demo Login 버튼
-  - 로그인 상태 보존
-  - 로그아웃
-- 완료 조건:
-  - demo 계정으로 빠르게 진입
-  - access token으로 backend 보호 API 호출 가능
-
-### T6-2. 제품 검색 화면
-
-- 우선순위: P0
-- 작업:
-  - 검색 입력
-  - 검색 결과 리스트
-  - loading/empty/error
-  - 제품 성분 요약
-  - 사용자 제품 등록 버튼
-- 완료 조건:
-  - `독도`, `크림`, `라운드랩` 등 seed 제품 검색 가능
-  - 검색 결과에서 내 제품으로 저장 가능
-
-### T6-3. 내 제품 목록 화면
-
-- 우선순위: P0
-- 작업:
-  - `GET /user-products`
-  - 현재 사용/과거 사용 구분
-  - 비어 있을 때 제품 검색 CTA
-- 완료 조건:
-  - 저장한 제품이 앱 재실행 후에도 보임
-
-### T6-4. 기록 입력 화면
-
-- 우선순위: P0
-- 작업:
-  - 오늘 사용 제품 선택
-  - 사용 기록 저장
-  - 건조함/유분/붉음/트러블 점수 입력
-  - 수면/스트레스 선택
-  - 메모 입력
-  - 저장 후 오늘 기록 요약
-- 완료 조건:
-  - 제품 사용 기록과 피부 상태 기록을 각각 저장 가능
-  - 저장 성공/실패 표시
-
-### T6-5. 분석 화면
-
-- 우선순위: P0
-- 작업:
-  - 분석 요청 버튼
-  - loading
-  - 데이터 부족 안내
-  - 추천 성분 최대 5개
-  - 피해야 할 성분 최대 5개
-  - 근거 수준 배지
-  - limitations 표시
-- 완료 조건:
-  - 분석 결과가 카드 형태로 표시
-  - 진단/치료/원인 확정처럼 보이지 않음
-
-## 12. Phase 7: 성분표 사진 기반 제품 제출
-
-이 Phase는 AI 핵심성을 보여주는 데 좋지만, 시간이 부족하면 제품 seed 검색 기반 MVP가 먼저다.
-
-### T7-1. 제품 제출 migration
-
-- 우선순위: P0-High
-- 테이블:
-  - `product_submissions`
-- 완료 조건:
-  - 성분표 사진 원본 경로 저장 안 함
-  - `ai_extracted_text`, `confirmed_ingredients_text` 저장
-
-### T7-2. 성분표 사진 추출 API
-
-- 우선순위: P0-High
-- API:
-
-```text
-POST /api/product-submissions/extract
-```
-
-- 작업:
-  - multipart 처리
-  - 사진 원본 미저장
-  - OpenAI vision/text extraction
-  - 성분 후보 분리
-  - MFDS 또는 ingredient 후보 매칭
-- 완료 조건:
-  - 이미지에서 텍스트 추출
-  - 결과를 저장하지 않고 응답으로만 반환
-  - 실패 시 사용자에게 재촬영/직접 입력 안내 가능
-
-### T7-3. 제품 제출 확정 API
-
-- 우선순위: P0-High
-- API:
-
-```text
-POST /api/product-submissions
-```
-
-- 작업:
-  - 사용자가 검토한 성분표 저장
-  - `products.source=community`
-  - `verification_status=community`
-  - `product_ingredients` 저장
-  - unmatched 성분 보존
-- 완료 조건:
-  - 저장 후 제품 검색 결과에 노출
-  - 성분표 사진 원본은 어디에도 저장되지 않음
-
-### T7-4. Android 제품 제출 화면
-
-- 우선순위: P0-High
-- 작업:
-  - 제품명/브랜드/카테고리 입력
-  - 성분표 사진 선택
-  - 추출 요청 loading
-  - 추출된 성분 편집
-  - 성분 추가/삭제
-  - 최종 저장
-- 완료 조건:
-  - 사용자가 AI 추출 결과를 직접 검토한 뒤 저장
-  - 저장 완료 후 내 제품으로 추가 가능
-
-## 13. Phase 8: 배포와 시연 안정화
-
-### T8-1. Backend Render 배포
-
-- 우선순위: P0
-- 작업:
-  - Render service 생성
-  - environment variables 설정
-  - `/api/health` 확인
-  - `/api/health/supabase` 확인
-- 완료 조건:
-  - Render URL에서 health 성공
-  - 비밀키는 Render env에만 존재
-
-### T8-2. Android release APK
-
-- 우선순위: P0
-- 작업:
-  - release 빌드 설정
-  - Backend URL을 release 환경에 설정
-  - APK 생성
-  - 실제 기기 또는 에뮬레이터 설치
-- 완료 조건:
-  - APK에서 로그인부터 분석까지 동작
-
-### T8-3. README와 Release note
-
-- 우선순위: P0
-- 작업:
-  - 앱 소개
-  - 실행 방법
-  - APK 설치 방법
-  - demo 계정 안내 방식
-  - API key가 필요 없는 체험 흐름
-- 완료 조건:
-  - 심사자 또는 팀원이 문서만 보고 실행 가능
-
-### T8-4. 시연 데이터 준비
-
-- 우선순위: P0
-- 작업:
-  - demo 계정에 제품 2-3개 등록
-  - 사용 기록 3일치 이상 생성
-  - 피부 상태 기록 3일치 이상 생성
-  - 분석 결과가 보기 좋게 나오는 데이터 구성
-- 완료 조건:
-  - 3분 이내 시연 흐름 가능
-  - 네트워크가 느려도 보여줄 최근 분석 결과 존재
-
-## 14. P1 확장 기능
-
-### E9-1. 루틴
-
-- `routines`
-- `routine_products`
-- 루틴 생성/수정/삭제
-- 루틴 기반 사용 기록
-
-### E9-2. 피부 사진
-
-- Supabase Storage upload URL
-- `skin_photos` metadata
-- 피부 기록과 사진 연결
-- 사진 없이도 기록 가능
-
-### E9-3. 분석 고도화
-
-- 제품별 반복 패턴
-- 무반응 사례 표시
-- 생활 요인 중첩 표시
-- 기록 부족 시 추가 질문 추천
-- 최근 분석 히스토리 목록
-
-### E9-4. 제품 데이터 고도화
-
-- MFDS ingredient master 전체 sync
-- product ingredient 자동 매칭
-- community 제품 중복 후보 감지
-- admin verified 전환
+  - demo 계정 설문 완료
+  - 과거 제품 2-3개 등록
+  - 일일 기록 3일치 이상 생성
+  - 분석 결과가 표시되는 데이터 구성
 
 ## 15. 권장 작업 순서
 
-혼자 진행할 때는 아래 순서가 가장 안전하다.
+T-03 이후에는 아래 순서로 이어간다.
 
-1. T0-1 Supabase 제품 seed 테이블 생성
-2. T0-2 제품 seed import
-3. T1-1 제품 검색 repository
-4. T1-2 제품 검색 service
-5. T1-3 제품 검색 API
-6. T2-1 사용자 제품 migration
-7. T2-2 auth middleware 점검
-8. T2-3 사용자 제품 등록 API
-9. T3-1 기록 migration
-10. T3-2 제품 사용 기록 API
-11. T3-3 피부 상태 기록 API
-12. T4-1 분석 migration
-13. T4-2 사용자 기록 집계 service
-14. T4-3 OpenAI 분석 gateway
-15. T4-4 분석 실행 API
-16. T4-5 AI fallback 분석
-17. T5-1 Android package 구조
-18. T5-2 디자인 토큰
-19. T5-3 Navigation shell
-20. T5-4 API client
-21. T6-1 로그인과 Demo Login
-22. T6-2 제품 검색 화면
-23. T6-3 내 제품 목록 화면
-24. T6-4 기록 입력 화면
-25. T6-5 분석 화면
-26. T7-1 제품 제출 migration
-27. T7-2 성분표 사진 추출 API
-28. T7-3 제품 제출 확정 API
-29. T7-4 Android 제품 제출 화면
-30. T8-1 Render 배포
-31. T8-2 APK 빌드
-32. T8-3 README와 Release note
-33. T8-4 시연 데이터 준비
+1. T1-1 Auth middleware 최종 점검
+2. T1-2 Profile migration 작성
+3. T1-3 Android 로그인 화면
+4. T2-1 피부 타입 설문 migration 작성
+5. T2-2 설문 문항 seed 작성
+6. T2-3 피부 타입 계산 service
+7. T2-4 초기 설문 API
+8. T2-5 Android 초기 설문 화면
+9. T3-1 사용자 제품 migration 작성
+10. T3-2 제품 검색 API
+11. T3-3 사용자 제품 등록 API
+12. T3-4 Android 과거 제품 등록 화면
+13. T4-1 기록 migration 작성
+14. T4-2 제품 사용 기록 API
+15. T4-3 일일 피부 상태 기록 API
+16. T4-4 Android 일일 기록 화면
+17. T5-1 기록 조회 service 정리
+18. T5-2 기록 히스토리 API
+19. T5-3 Android 기록 확인 화면
+20. T6-1 분석 migration 작성
+21. T6-2 사용자 기록 집계 service
+22. T6-3 OpenAI 분석 gateway
+23. T6-4 분석 API
+24. T6-5 Android 분석 화면
+25. T8-1 Android package 구조 정리
+26. T8-2 디자인 토큰 적용
+27. T8-3 Navigation shell 작성
+28. T9-1 Backend Render 배포
+29. T9-2 APK 빌드
+30. T9-3 시연 데이터 준비
 
-## 16. 작업 프롬프트 템플릿
+## 16. 수동 검증 체크리스트
 
-각 티켓을 진행할 때 Codex에 이렇게 요청한다.
-
-```text
-docs/backlog.md의 T1-3을 진행해줘.
-작업 전에 관련 docs를 읽고, API/DB 계약이 바뀌면 문서도 같이 수정해줘.
-완료 후 실행한 검증과 남은 리스크를 알려줘.
-```
-
-Android 화면 작업은 이렇게 요청한다.
-
-```text
-docs/backlog.md의 T6-2를 진행해줘.
-docs/design.md의 디자인 토큰과 컴포넌트 규칙을 따라줘.
-API DTO와 UI state를 섞지 말고 loading/empty/error/success 상태를 포함해줘.
-```
-
-## 17. 수동 검증 체크리스트
-
-시연 직전 반드시 확인한다.
-
-- demo 계정으로 빠르게 로그인된다.
-- 제품명을 검색하면 seed 제품이 표시된다.
-- 검색 결과에서 제품을 내 제품으로 등록할 수 있다.
-- 내 제품 목록이 다시 조회된다.
-- 제품 사용 기록을 저장할 수 있다.
-- 피부 상태 기록을 저장할 수 있다.
-- 분석 탭에서 분석을 요청할 수 있다.
-- 추천 성분과 피해야 할 성분 후보가 근거와 함께 표시된다.
+- 회원가입 또는 demo login이 된다.
+- 로그인 후 설문 미완료 사용자는 초기 피부 타입 설문으로 이동한다.
+- 설문 완료 후 피부 타입 코드와 결과 안내가 저장된다.
+- 이전에 사용해본 제품을 검색하고 등록할 수 있다.
+- 등록한 과거 제품을 다시 조회할 수 있다.
+- 오늘 사용한 제품 기록을 저장할 수 있다.
+- 오늘 피부 상태 기록을 저장할 수 있다.
+- 저장한 기록을 날짜별로 확인할 수 있다.
+- 분석 탭에서 긍정적 의심 성분과 부정적 의심 성분을 확인할 수 있다.
+- 분석 결과는 원인 확정, 진단, 치료 표현을 사용하지 않는다.
 - 데이터가 부족하면 신뢰도 낮음이 표시된다.
-- 성분표 사진 기반 제품 제출을 구현했다면 사진 원본이 저장되지 않는다.
 - Android 앱에 OpenAI key, Supabase service role key, MFDS key가 포함되지 않는다.
-- Render 배포 환경에서 `/api/health`가 성공한다.
-- APK 설치 후 핵심 흐름이 동작한다.
 
-## 18. 컷라인
+## 17. 컷라인
 
-시간이 부족하면 아래 순서로 과감히 줄인다.
+시간이 부족하면 반드시 살릴 것:
 
-반드시 살릴 것:
+- 회원가입 / 로그인
+- 초기 피부 타입 설문
+- 과거 제품 등록
+- 일일 제품 사용 기록
+- 저장 기록 확인
+- 긍정적 의심 성분 / 부정적 의심 성분 분석
 
-- demo login
-- 제품 seed 검색
-- 내 제품 등록
-- 제품 사용 기록
-- 피부 상태 기록
-- 분석 요청과 결과 표시
+시간이 부족하면 미룰 것:
 
-나중으로 미룰 것:
-
-- 루틴
+- 성분표 사진 기반 제품 직접 등록
 - 피부 사진 저장
-- 성분표 사진 기반 community 제품 등록
+- 루틴
 - MFDS 전체 자동 sync
 - admin 검수
 - 계정 탈퇴와 내보내기
-

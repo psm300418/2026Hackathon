@@ -10,4 +10,22 @@ describe("app", () => {
     expect(response.body.data.status).toBe("ok");
   });
 
+  it("rejects protected profile route without token", async () => {
+    const response = await request(createApp()).get("/api/profile/me");
+
+    expect(response.status).toBe(401);
+    expect(response.body.error.code).toBe("UNAUTHORIZED");
+  });
+
+  it("rejects protected skin type submission without token", async () => {
+    const response = await request(createApp())
+      .post("/api/onboarding/skin-type/responses")
+      .send({
+        questionnaireVersion: "baumann_ko_rewrite_v1",
+        responses: []
+      });
+
+    expect(response.status).toBe(401);
+    expect(response.body.error.code).toBe("UNAUTHORIZED");
+  });
 });

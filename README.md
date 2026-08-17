@@ -1,44 +1,42 @@
-# Personal Skin Data Prototype
+# 개인 피부 데이터 프로토타입
 
-Hackathon prototype for a personal skin data app.
+개인 피부 데이터 앱을 위한 해커톤 프로토타입입니다.
 
-The project is kept as a monorepo during the hackathon so Android, backend,
-database schema, and shared API notes can evolve together.
+해커톤 기간 동안 Android, 백엔드, 데이터베이스 스키마, 공통 API 문서를 함께 발전시킬 수 있도록 프로젝트를 모노레포로 구성합니다.
 
-## Structure
+## 구조
 
 ```text
-Android/   Kotlin + Jetpack Compose app
-Backend/   TypeScript + Node.js + Express API server
-docs/      Shared API, architecture, and data model notes
+Android/   Kotlin + Jetpack Compose 앱
+Backend/   TypeScript + Node.js + Express API 서버
+docs/      공통 API, 아키텍처, 데이터 모델 문서
 ```
 
-## Direction
+## 개발 방향
 
-- Android handles user flows, local UI state, photo capture/upload flow, and API calls.
-- Backend owns OpenAI calls, external cosmetic/health-food API integrations, Supabase access, and analysis rules.
-- Supabase PostgreSQL stores user records, products, ingredients, usage logs, skin logs, and analysis results.
-- Supabase Storage should be used for user-uploaded skin photos.
+* Android는 사용자 플로우, 로컬 UI 상태, 사진 촬영/업로드 플로우, API 호출을 담당합니다.
+* Backend는 OpenAI 호출, 외부 화장품/건강기능식품 API 연동, Supabase 접근, 분석 규칙을 담당합니다.
+* Supabase PostgreSQL에는 사용자 정보, 제품, 성분, 사용 기록, 피부 기록, 분석 결과를 저장합니다.
+* 사용자가 업로드한 피부 사진은 Supabase Storage에 저장합니다.
 
-## Repo Strategy
+## 저장소 전략
 
-Use one GitHub repository for the hackathon. If the project grows, `Android/`
-and `Backend/` can be split into separate repositories later because their
-boundaries are already explicit.
+해커톤 기간에는 하나의 GitHub 저장소를 사용합니다.
+프로젝트 규모가 커질 경우 `Android/`와 `Backend/`의 경계가 이미 명확하게 구분되어 있으므로 추후 별도의 저장소로 분리할 수 있습니다.
 
-## Collaboration
+## 협업 방식
 
-Use GitHub Flow with short-lived feature branches and Pull Requests.
+짧게 유지되는 기능 브랜치와 Pull Request를 사용하는 GitHub Flow 방식을 사용합니다.
 
-- Branch from `main`.
-- Open a PR for every change.
-- Prefer `Squash and merge`.
-- Never commit `.env` files or real API keys.
+* `main` 브랜치에서 새로운 브랜치를 생성합니다.
+* 모든 변경사항에 대해 PR을 생성합니다.
+* `Squash and merge` 방식을 권장합니다.
+* `.env` 파일이나 실제 API 키는 절대 커밋하지 않습니다.
 
-See `docs/git-workflow.md` for details.
-See `docs/conventions.md` for code conventions and commit message rules.
+자세한 내용은 `docs/git-workflow.md`를 참고하세요.
+코드 컨벤션과 커밋 메시지 규칙은 `docs/conventions.md`를 참고하세요.
 
-## Development
+## 개발 방법
 
 Backend:
 
@@ -55,7 +53,7 @@ cd Android
 ./gradlew :app:assembleDebug
 ```
 
-On Windows:
+Windows에서는:
 
 ```powershell
 cd Android

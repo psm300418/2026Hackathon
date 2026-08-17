@@ -10,8 +10,11 @@
     "typecheck": "tsc --noEmit",
     "check:supabase": "tsx src/scripts/check-supabase.ts",
     "setup:supabase": "tsx src/scripts/setup-supabase.ts",
+    "check:product-seed-tables": "tsx src/scripts/check-product-seed-tables.ts",
+    "setup:demo-user": "tsx src/scripts/upsert-demo-user.ts",
     "prepare:product-seed": "tsx src/scripts/prepare-product-seed.ts",
     "import:product-seed": "tsx src/scripts/import-product-seed.ts",
+    "import:skin-type-survey": "tsx src/scripts/import-skin-type-survey.ts",
     "check:external-apis": "tsx src/scripts/check-external-apis.ts",
     "test": "vitest run"
   },
