@@ -1,0 +1,26 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Node / backend
+node_modules/
+dist/
+coverage/
+npm-debug.log*
+pnpm-lock.yaml
+
+# Android / Gradle
+.gradle/
+build/
+local.properties
+*.iml
+
+# Temporary workspace files
+tmp/

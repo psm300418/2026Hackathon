@@ -1,0 +1,9298 @@
+[
+  {
+    "name": "정제수",
+    "normalizedName": "정제수",
+    "occurrenceCount": 188,
+    "productCount": 188,
+    "exampleRawNames": [
+      "정제수"
+    ]
+  },
+  {
+    "name": "1,2-헥산다이올",
+    "normalizedName": "12헥산다이올",
+    "occurrenceCount": 185,
+    "productCount": 185,
+    "exampleRawNames": [
+      "1,2-헥산다이올"
+    ]
+  },
+  {
+    "name": "부틸렌글라이콜",
+    "normalizedName": "부틸렌글라이콜",
+    "occurrenceCount": 176,
+    "productCount": 176,
+    "exampleRawNames": [
+      "부틸렌글라이콜"
+    ]
+  },
+  {
+    "name": "글리세린",
+    "normalizedName": "글리세린",
+    "occurrenceCount": 169,
+    "productCount": 169,
+    "exampleRawNames": [
+      "글리세린"
+    ]
+  },
+  {
+    "name": "에틸헥실글리세린",
+    "normalizedName": "에틸헥실글리세린",
+    "occurrenceCount": 158,
+    "productCount": 158,
+    "exampleRawNames": [
+      "에틸헥실글리세린"
+    ]
+  },
+  {
+    "name": "소듐하이알루로네이트",
+    "normalizedName": "소듐하이알루로네이트",
+    "occurrenceCount": 118,
+    "productCount": 118,
+    "exampleRawNames": [
+      "소듐하이알루로네이트",
+      "소듐하이알루로네이트 (3%)",
+      "소듐하이알루로네이트(1001 ppm)",
+      "소듐하이알루로네이트(1,100 ppm)",
+      "소듐하이알루로네이트(0.1%)"
+    ]
+  },
+  {
+    "name": "판테놀",
+    "normalizedName": "판테놀",
+    "occurrenceCount": 107,
+    "productCount": 107,
+    "exampleRawNames": [
+      "판테놀",
+      "판테놀 (510ppm)"
+    ]
+  },
+  {
+    "name": "다이소듐이디티에이",
+    "normalizedName": "다이소듐이디티에이",
+    "occurrenceCount": 103,
+    "productCount": 103,
+    "exampleRawNames": [
+      "다이소듐이디티에이"
+    ]
+  },
+  {
+    "name": "프로판다이올",
+    "normalizedName": "프로판다이올",
+    "occurrenceCount": 87,
+    "productCount": 87,
+    "exampleRawNames": [
+      "프로판다이올"
+    ]
+  },
+  {
+    "name": "하이드로제네이티드레시틴",
+    "normalizedName": "하이드로제네이티드레시틴",
+    "occurrenceCount": 87,
+    "productCount": 87,
+    "exampleRawNames": [
+      "하이드로제네이티드레시틴"
+    ]
+  },
+  {
+    "name": "알란토인",
+    "normalizedName": "알란토인",
+    "occurrenceCount": 85,
+    "productCount": 85,
+    "exampleRawNames": [
+      "알란토인"
+    ]
+  },
+  {
+    "name": "나이아신아마이드",
+    "normalizedName": "나이아신아마이드",
+    "occurrenceCount": 82,
+    "productCount": 82,
+    "exampleRawNames": [
+      "나이아신아마이드",
+      "나이아신아마이드 (15%)",
+      "나이아신아마이드(5%)"
+    ]
+  },
+  {
+    "name": "잔탄검",
+    "normalizedName": "잔탄검",
+    "occurrenceCount": 81,
+    "productCount": 81,
+    "exampleRawNames": [
+      "잔탄검"
+    ]
+  },
+  {
+    "name": "트로메타민",
+    "normalizedName": "트로메타민",
+    "occurrenceCount": 80,
+    "productCount": 80,
+    "exampleRawNames": [
+      "트로메타민"
+    ]
+  },
+  {
+    "name": "토코페롤",
+    "normalizedName": "토코페롤",
+    "occurrenceCount": 78,
+    "productCount": 78,
+    "exampleRawNames": [
+      "토코페롤"
+    ]
+  },
+  {
+    "name": "다이프로필렌글라이콜",
+    "normalizedName": "다이프로필렌글라이콜",
+    "occurrenceCount": 74,
+    "productCount": 74,
+    "exampleRawNames": [
+      "다이프로필렌글라이콜"
+    ]
+  },
+  {
+    "name": "카보머",
+    "normalizedName": "카보머",
+    "occurrenceCount": 74,
+    "productCount": 74,
+    "exampleRawNames": [
+      "카보머"
+    ]
+  },
+  {
+    "name": "병풀추출물",
+    "normalizedName": "병풀추출물",
+    "occurrenceCount": 72,
+    "productCount": 72,
+    "exampleRawNames": [
+      "병풀추출물 (11,198ppm)",
+      "병풀추출물 (10ppm)",
+      "병풀추출물",
+      "병풀추출물 (25,715ppm)",
+      "병풀추출물 (22,124ppm)"
+    ]
+  },
+  {
+    "name": "세라마이드엔피",
+    "normalizedName": "세라마이드엔피",
+    "occurrenceCount": 70,
+    "productCount": 70,
+    "exampleRawNames": [
+      "세라마이드엔피",
+      "세라마이드엔피(0.75 ppm)",
+      "세라마이드엔피(40ppm)"
+    ]
+  },
+  {
+    "name": "카프릴릭/카프릭트라이글리세라이드",
+    "normalizedName": "카프릴릭카프릭트라이글리세라이드",
+    "occurrenceCount": 66,
+    "productCount": 66,
+    "exampleRawNames": [
+      "카프릴릭/카프릭트라이글리세라이드"
+    ]
+  },
+  {
+    "name": "하이드롤라이즈드하이알루로닉애씨드",
+    "normalizedName": "하이드롤라이즈드하이알루로닉애씨드",
+    "occurrenceCount": 62,
+    "productCount": 62,
+    "exampleRawNames": [
+      "하이드롤라이즈드하이알루로닉애씨드",
+      "하이드롤라이즈드하이알루로닉애씨드(22.5ppm)",
+      "하이드롤라이즈드하이알루로닉애씨드(15ppb)"
+    ]
+  },
+  {
+    "name": "아데노신",
+    "normalizedName": "아데노신",
+    "occurrenceCount": 60,
+    "productCount": 60,
+    "exampleRawNames": [
+      "아데노신"
+    ]
+  },
+  {
+    "name": "베타인",
+    "normalizedName": "베타인",
+    "occurrenceCount": 55,
+    "productCount": 55,
+    "exampleRawNames": [
+      "베타인"
+    ]
+  },
+  {
+    "name": "펜틸렌글라이콜",
+    "normalizedName": "펜틸렌글라이콜",
+    "occurrenceCount": 53,
+    "productCount": 53,
+    "exampleRawNames": [
+      "펜틸렌글라이콜"
+    ]
+  },
+  {
+    "name": "하이알루로닉애씨드",
+    "normalizedName": "하이알루로닉애씨드",
+    "occurrenceCount": 53,
+    "productCount": 53,
+    "exampleRawNames": [
+      "하이알루로닉애씨드",
+      "하이알루로닉애씨드(21ppm)",
+      "하이알루로닉애씨드(10ppb)"
+    ]
+  },
+  {
+    "name": "알지닌",
+    "normalizedName": "알지닌",
+    "occurrenceCount": 50,
+    "productCount": 50,
+    "exampleRawNames": [
+      "알지닌"
+    ]
+  },
+  {
+    "name": "아크릴레이트/C10-30알킬아크릴레이트크로스폴리머",
+    "normalizedName": "아크릴레이트c1030알킬아크릴레이트크로스폴리머",
+    "occurrenceCount": 49,
+    "productCount": 49,
+    "exampleRawNames": [
+      "아크릴레이트/C10-30알킬아크릴레이트크로스폴리머"
+    ]
+  },
+  {
+    "name": "카프릴릴글라이콜",
+    "normalizedName": "카프릴릴글라이콜",
+    "occurrenceCount": 48,
+    "productCount": 48,
+    "exampleRawNames": [
+      "카프릴릴글라이콜"
+    ]
+  },
+  {
+    "name": "마데카소사이드",
+    "normalizedName": "마데카소사이드",
+    "occurrenceCount": 45,
+    "productCount": 45,
+    "exampleRawNames": [
+      "마데카소사이드",
+      "마데카소사이드 (0.4090ppm)",
+      "마데카소사이드 (0.4188ppm)",
+      "마데카소사이드 (0.01ppm)",
+      "마데카소사이드 (200ppm)"
+    ]
+  },
+  {
+    "name": "마데카식애씨드",
+    "normalizedName": "마데카식애씨드",
+    "occurrenceCount": 44,
+    "productCount": 44,
+    "exampleRawNames": [
+      "마데카식애씨드",
+      "마데카식애씨드 (0.4090ppm)",
+      "마데카식애씨드 (0.4188ppm)",
+      "마데카식애씨드 (0.01ppm)",
+      "마데카식애씨드(36 ppm)"
+    ]
+  },
+  {
+    "name": "세테아릴알코올",
+    "normalizedName": "세테아릴알코올",
+    "occurrenceCount": 44,
+    "productCount": 44,
+    "exampleRawNames": [
+      "세테아릴알코올"
+    ]
+  },
+  {
+    "name": "아시아티코사이드",
+    "normalizedName": "아시아티코사이드",
+    "occurrenceCount": 44,
+    "productCount": 44,
+    "exampleRawNames": [
+      "아시아티코사이드",
+      "아시아티코사이드 (0.4090ppm)",
+      "아시아티코사이드 (0.4188ppm)",
+      "아시아티코사이드 (0.01ppm)",
+      "아시아티코사이드(48 ppm)"
+    ]
+  },
+  {
+    "name": "아시아틱애씨드",
+    "normalizedName": "아시아틱애씨드",
+    "occurrenceCount": 43,
+    "productCount": 43,
+    "exampleRawNames": [
+      "아시아틱애씨드",
+      "아시아틱애씨드 (0.4090ppm)",
+      "아시아틱애씨드 (0.4188ppm)",
+      "아시아틱애씨드 (0.01ppm)",
+      "아시아틱애씨드(36 ppm)"
+    ]
+  },
+  {
+    "name": "하이드록시아세토페논",
+    "normalizedName": "하이드록시아세토페논",
+    "occurrenceCount": 43,
+    "productCount": 43,
+    "exampleRawNames": [
+      "하이드록시아세토페논"
+    ]
+  },
+  {
+    "name": "시트릭애씨드",
+    "normalizedName": "시트릭애씨드",
+    "occurrenceCount": 42,
+    "productCount": 42,
+    "exampleRawNames": [
+      "시트릭애씨드",
+      "시트릭애씨드(100ppb)"
+    ]
+  },
+  {
+    "name": "스테아릭애씨드",
+    "normalizedName": "스테아릭애씨드",
+    "occurrenceCount": 41,
+    "productCount": 41,
+    "exampleRawNames": [
+      "스테아릭애씨드"
+    ]
+  },
+  {
+    "name": "글리세릴스테아레이트",
+    "normalizedName": "글리세릴스테아레이트",
+    "occurrenceCount": 37,
+    "productCount": 37,
+    "exampleRawNames": [
+      "글리세릴스테아레이트"
+    ]
+  },
+  {
+    "name": "다이포타슘글리시리제이트",
+    "normalizedName": "다이포타슘글리시리제이트",
+    "occurrenceCount": 37,
+    "productCount": 37,
+    "exampleRawNames": [
+      "다이포타슘글리시리제이트"
+    ]
+  },
+  {
+    "name": "덱스트린",
+    "normalizedName": "덱스트린",
+    "occurrenceCount": 36,
+    "productCount": 36,
+    "exampleRawNames": [
+      "덱스트린"
+    ]
+  },
+  {
+    "name": "소듐아세틸레이티드하이알루로네이트",
+    "normalizedName": "소듐아세틸레이티드하이알루로네이트",
+    "occurrenceCount": 34,
+    "productCount": 34,
+    "exampleRawNames": [
+      "소듐아세틸레이티드하이알루로네이트",
+      "소듐아세틸레이티드하이알루로네이트(0.7ppm)",
+      "소듐아세틸레이티드하이알루로네이트(4ppb)"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-10라우레이트",
+    "normalizedName": "폴리글리세릴10라우레이트",
+    "occurrenceCount": 34,
+    "productCount": 34,
+    "exampleRawNames": [
+      "폴리글리세릴-10라우레이트"
+    ]
+  },
+  {
+    "name": "콜레스테롤",
+    "normalizedName": "콜레스테롤",
+    "occurrenceCount": 33,
+    "productCount": 33,
+    "exampleRawNames": [
+      "콜레스테롤"
+    ]
+  },
+  {
+    "name": "소듐하이알루로네이트크로스폴리머",
+    "normalizedName": "소듐하이알루로네이트크로스폴리머",
+    "occurrenceCount": 32,
+    "productCount": 32,
+    "exampleRawNames": [
+      "소듐하이알루로네이트크로스폴리머",
+      "소듐하이알루로네이트크로스폴리머(21ppm)",
+      "소듐하이알루로네이트크로스폴리머(8ppb)"
+    ]
+  },
+  {
+    "name": "글리세릴카프릴레이트",
+    "normalizedName": "글리세릴카프릴레이트",
+    "occurrenceCount": 31,
+    "productCount": 31,
+    "exampleRawNames": [
+      "글리세릴카프릴레이트"
+    ]
+  },
+  {
+    "name": "솔비탄올리베이트",
+    "normalizedName": "솔비탄올리베이트",
+    "occurrenceCount": 30,
+    "productCount": 30,
+    "exampleRawNames": [
+      "솔비탄올리베이트"
+    ]
+  },
+  {
+    "name": "글루코오스",
+    "normalizedName": "글루코오스",
+    "occurrenceCount": 29,
+    "productCount": 29,
+    "exampleRawNames": [
+      "글루코오스"
+    ]
+  },
+  {
+    "name": "세테아릴올리베이트",
+    "normalizedName": "세테아릴올리베이트",
+    "occurrenceCount": 29,
+    "productCount": 29,
+    "exampleRawNames": [
+      "세테아릴올리베이트"
+    ]
+  },
+  {
+    "name": "하이드록시에틸아크릴레이트/소듐아크릴로일다이메틸타우레이트코폴리머",
+    "normalizedName": "하이드록시에틸아크릴레이트소듐아크릴로일다이메틸타우레이트코폴리머",
+    "occurrenceCount": 29,
+    "productCount": 29,
+    "exampleRawNames": [
+      "하이드록시에틸아크릴레이트/소듐아크릴로일다이메틸타우레이트코폴리머"
+    ]
+  },
+  {
+    "name": "스쿠알란",
+    "normalizedName": "스쿠알란",
+    "occurrenceCount": 28,
+    "productCount": 28,
+    "exampleRawNames": [
+      "스쿠알란"
+    ]
+  },
+  {
+    "name": "암모늄아크릴로일다이메틸타우레이트/브이피코폴리머",
+    "normalizedName": "암모늄아크릴로일다이메틸타우레이트브이피코폴리머",
+    "occurrenceCount": 28,
+    "productCount": 28,
+    "exampleRawNames": [
+      "암모늄아크릴로일다이메틸타우레이트/브이피코폴리머"
+    ]
+  },
+  {
+    "name": "소듐파이테이트",
+    "normalizedName": "소듐파이테이트",
+    "occurrenceCount": 26,
+    "productCount": 26,
+    "exampleRawNames": [
+      "소듐파이테이트"
+    ]
+  },
+  {
+    "name": "솔비탄아이소스테아레이트",
+    "normalizedName": "솔비탄아이소스테아레이트",
+    "occurrenceCount": 26,
+    "productCount": 26,
+    "exampleRawNames": [
+      "솔비탄아이소스테아레이트"
+    ]
+  },
+  {
+    "name": "메틸프로판다이올",
+    "normalizedName": "메틸프로판다이올",
+    "occurrenceCount": 25,
+    "productCount": 25,
+    "exampleRawNames": [
+      "메틸프로판다이올"
+    ]
+  },
+  {
+    "name": "카프릴로일살리실릭애씨드",
+    "normalizedName": "카프릴로일살리실릭애씨드",
+    "occurrenceCount": 25,
+    "productCount": 25,
+    "exampleRawNames": [
+      "카프릴로일살리실릭애씨드",
+      "카프릴로일살리실릭애씨드(10ppm)"
+    ]
+  },
+  {
+    "name": "글리세릴아크릴레이트/아크릴릭애씨드코폴리머",
+    "normalizedName": "글리세릴아크릴레이트아크릴릭애씨드코폴리머",
+    "occurrenceCount": 24,
+    "productCount": 24,
+    "exampleRawNames": [
+      "글리세릴아크릴레이트/아크릴릭애씨드코폴리머"
+    ]
+  },
+  {
+    "name": "베타-글루칸",
+    "normalizedName": "베타글루칸",
+    "occurrenceCount": 24,
+    "productCount": 24,
+    "exampleRawNames": [
+      "베타-글루칸"
+    ]
+  },
+  {
+    "name": "글루코노락톤",
+    "normalizedName": "글루코노락톤",
+    "occurrenceCount": 23,
+    "productCount": 23,
+    "exampleRawNames": [
+      "글루코노락톤"
+    ]
+  },
+  {
+    "name": "팔미틱애씨드",
+    "normalizedName": "팔미틱애씨드",
+    "occurrenceCount": 23,
+    "productCount": 23,
+    "exampleRawNames": [
+      "팔미틱애씨드"
+    ]
+  },
+  {
+    "name": "하이드록시프로필트라이모늄하이알루로네이트",
+    "normalizedName": "하이드록시프로필트라이모늄하이알루로네이트",
+    "occurrenceCount": 23,
+    "productCount": 23,
+    "exampleRawNames": [
+      "하이드록시프로필트라이모늄하이알루로네이트",
+      "하이드록시프로필트라이모늄하이알루로네이트(1 ppm)",
+      "하이드록시프로필트라이모늄하이알루로네이트(21ppm)",
+      "하이드록시프로필트라이모늄하이알루로네이트(8ppb)"
+    ]
+  },
+  {
+    "name": "소듐시트레이트",
+    "normalizedName": "소듐시트레이트",
+    "occurrenceCount": 22,
+    "productCount": 22,
+    "exampleRawNames": [
+      "소듐시트레이트"
+    ]
+  },
+  {
+    "name": "소듐클로라이드",
+    "normalizedName": "소듐클로라이드",
+    "occurrenceCount": 22,
+    "productCount": 22,
+    "exampleRawNames": [
+      "소듐클로라이드"
+    ]
+  },
+  {
+    "name": "글리세레스-26",
+    "normalizedName": "글리세레스26",
+    "occurrenceCount": 21,
+    "productCount": 21,
+    "exampleRawNames": [
+      "글리세레스-26"
+    ]
+  },
+  {
+    "name": "트레할로오스",
+    "normalizedName": "트레할로오스",
+    "occurrenceCount": 21,
+    "productCount": 21,
+    "exampleRawNames": [
+      "트레할로오스"
+    ]
+  },
+  {
+    "name": "포타슘하이알루로네이트",
+    "normalizedName": "포타슘하이알루로네이트",
+    "occurrenceCount": 21,
+    "productCount": 21,
+    "exampleRawNames": [
+      "포타슘하이알루로네이트",
+      "포타슘하이알루로네이트(21ppm)",
+      "포타슘하이알루로네이트(10ppb)"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-3메틸글루코오스다이스테아레이트",
+    "normalizedName": "폴리글리세릴3메틸글루코오스다이스테아레이트",
+    "occurrenceCount": 21,
+    "productCount": 21,
+    "exampleRawNames": [
+      "폴리글리세릴-3메틸글루코오스다이스테아레이트"
+    ]
+  },
+  {
+    "name": "하이드롤라이즈드소듐하이알루로네이트",
+    "normalizedName": "하이드롤라이즈드소듐하이알루로네이트",
+    "occurrenceCount": 21,
+    "productCount": 21,
+    "exampleRawNames": [
+      "하이드롤라이즈드소듐하이알루로네이트",
+      "하이드롤라이즈드소듐하이알루로네이트(21ppm)",
+      "하이드롤라이즈드소듐하이알루로네이트(15ppb)"
+    ]
+  },
+  {
+    "name": "락토바실러스발효물",
+    "normalizedName": "락토바실러스발효물",
+    "occurrenceCount": 20,
+    "productCount": 20,
+    "exampleRawNames": [
+      "락토바실러스발효물"
+    ]
+  },
+  {
+    "name": "실리카",
+    "normalizedName": "실리카",
+    "occurrenceCount": 18,
+    "productCount": 18,
+    "exampleRawNames": [
+      "실리카"
+    ]
+  },
+  {
+    "name": "아스코빅애씨드",
+    "normalizedName": "아스코빅애씨드",
+    "occurrenceCount": 18,
+    "productCount": 18,
+    "exampleRawNames": [
+      "아스코빅애씨드",
+      "아스코빅애씨드 (13%)",
+      "아스코빅애씨드(10ppm)"
+    ]
+  },
+  {
+    "name": "글리세릴스테아레이트시트레이트",
+    "normalizedName": "글리세릴스테아레이트시트레이트",
+    "occurrenceCount": 17,
+    "productCount": 17,
+    "exampleRawNames": [
+      "글리세릴스테아레이트시트레이트"
+    ]
+  },
+  {
+    "name": "님꽃추출물",
+    "normalizedName": "님꽃추출물",
+    "occurrenceCount": 17,
+    "productCount": 17,
+    "exampleRawNames": [
+      "님꽃추출물"
+    ]
+  },
+  {
+    "name": "님잎추출물",
+    "normalizedName": "님잎추출물",
+    "occurrenceCount": 17,
+    "productCount": 17,
+    "exampleRawNames": [
+      "님잎추출물"
+    ]
+  },
+  {
+    "name": "글리세릴글루코사이드",
+    "normalizedName": "글리세릴글루코사이드",
+    "occurrenceCount": 16,
+    "productCount": 16,
+    "exampleRawNames": [
+      "글리세릴글루코사이드"
+    ]
+  },
+  {
+    "name": "라우릭애씨드",
+    "normalizedName": "라우릭애씨드",
+    "occurrenceCount": 16,
+    "productCount": 16,
+    "exampleRawNames": [
+      "라우릭애씨드"
+    ]
+  },
+  {
+    "name": "소듐폴리아크릴레이트",
+    "normalizedName": "소듐폴리아크릴레이트",
+    "occurrenceCount": 16,
+    "productCount": 16,
+    "exampleRawNames": [
+      "소듐폴리아크릴레이트"
+    ]
+  },
+  {
+    "name": "카카오씨추출물",
+    "normalizedName": "카카오씨추출물",
+    "occurrenceCount": 16,
+    "productCount": 16,
+    "exampleRawNames": [
+      "카카오씨추출물"
+    ]
+  },
+  {
+    "name": "하이드로제네이티드폴리데센",
+    "normalizedName": "하이드로제네이티드폴리데센",
+    "occurrenceCount": 16,
+    "productCount": 16,
+    "exampleRawNames": [
+      "하이드로제네이티드폴리데센"
+    ]
+  },
+  {
+    "name": "인도멀구슬나무꽃추출물",
+    "normalizedName": "인도멀구슬나무꽃추출물",
+    "occurrenceCount": 15,
+    "productCount": 15,
+    "exampleRawNames": [
+      "인도멀구슬나무꽃추출물"
+    ]
+  },
+  {
+    "name": "인도멀구슬나무잎추출물",
+    "normalizedName": "인도멀구슬나무잎추출물",
+    "occurrenceCount": 15,
+    "productCount": 15,
+    "exampleRawNames": [
+      "인도멀구슬나무잎추출물"
+    ]
+  },
+  {
+    "name": "녹두추출물",
+    "normalizedName": "녹두추출물",
+    "occurrenceCount": 14,
+    "productCount": 14,
+    "exampleRawNames": [
+      "녹두추출물",
+      "녹두추출물(3,300ppm)",
+      "녹두추출물(10ppm)",
+      "녹두추출물(200ppm)",
+      "녹두추출물(1,100ppm)"
+    ]
+  },
+  {
+    "name": "다이메티콘",
+    "normalizedName": "다이메티콘",
+    "occurrenceCount": 14,
+    "productCount": 14,
+    "exampleRawNames": [
+      "다이메티콘"
+    ]
+  },
+  {
+    "name": "만니톨",
+    "normalizedName": "만니톨",
+    "occurrenceCount": 14,
+    "productCount": 14,
+    "exampleRawNames": [
+      "만니톨"
+    ]
+  },
+  {
+    "name": "미리스틱애씨드",
+    "normalizedName": "미리스틱애씨드",
+    "occurrenceCount": 14,
+    "productCount": 14,
+    "exampleRawNames": [
+      "미리스틱애씨드"
+    ]
+  },
+  {
+    "name": "살리실릭애씨드",
+    "normalizedName": "살리실릭애씨드",
+    "occurrenceCount": 14,
+    "productCount": 14,
+    "exampleRawNames": [
+      "살리실릭애씨드",
+      "살리실릭애씨드(0.45%)",
+      "살리실릭애씨드(5,000ppm)"
+    ]
+  },
+  {
+    "name": "시어버터",
+    "normalizedName": "시어버터",
+    "occurrenceCount": 14,
+    "productCount": 14,
+    "exampleRawNames": [
+      "시어버터"
+    ]
+  },
+  {
+    "name": "울금뿌리추출물",
+    "normalizedName": "울금뿌리추출물",
+    "occurrenceCount": 14,
+    "productCount": 14,
+    "exampleRawNames": [
+      "울금뿌리추출물"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-10미리스테이트",
+    "normalizedName": "폴리글리세릴10미리스테이트",
+    "occurrenceCount": 14,
+    "productCount": 14,
+    "exampleRawNames": [
+      "폴리글리세릴-10미리스테이트"
+    ]
+  },
+  {
+    "name": "폴리메틸실세스퀴옥세인",
+    "normalizedName": "폴리메틸실세스퀴옥세인",
+    "occurrenceCount": 14,
+    "productCount": 14,
+    "exampleRawNames": [
+      "폴리메틸실세스퀴옥세인"
+    ]
+  },
+  {
+    "name": "하이드로제네이티드폴리(C6-14올레핀)",
+    "normalizedName": "하이드로제네이티드폴리c614올레핀",
+    "occurrenceCount": 14,
+    "productCount": 14,
+    "exampleRawNames": [
+      "하이드로제네이티드폴리(C6-14올레핀)"
+    ]
+  },
+  {
+    "name": "홀리바질잎추출물",
+    "normalizedName": "홀리바질잎추출물",
+    "occurrenceCount": 14,
+    "productCount": 14,
+    "exampleRawNames": [
+      "홀리바질잎추출물"
+    ]
+  },
+  {
+    "name": "3-O-에틸아스코빅애씨드",
+    "normalizedName": "3o에틸아스코빅애씨드",
+    "occurrenceCount": 13,
+    "productCount": 13,
+    "exampleRawNames": [
+      "3-O-에틸아스코빅애씨드"
+    ]
+  },
+  {
+    "name": "사이클로헥사실록세인",
+    "normalizedName": "사이클로헥사실록세인",
+    "occurrenceCount": 13,
+    "productCount": 13,
+    "exampleRawNames": [
+      "사이클로헥사실록세인"
+    ]
+  },
+  {
+    "name": "세라마이드에이피",
+    "normalizedName": "세라마이드에이피",
+    "occurrenceCount": 13,
+    "productCount": 13,
+    "exampleRawNames": [
+      "세라마이드에이피"
+    ]
+  },
+  {
+    "name": "소나무잎추출물",
+    "normalizedName": "소나무잎추출물",
+    "occurrenceCount": 13,
+    "productCount": 13,
+    "exampleRawNames": [
+      "소나무잎추출물 (400,196ppm)",
+      "소나무잎추출물 (409,785ppm)",
+      "소나무잎추출물 (10.6ppm)",
+      "소나무잎추출물"
+    ]
+  },
+  {
+    "name": "치자추출물",
+    "normalizedName": "치자추출물",
+    "occurrenceCount": 13,
+    "productCount": 13,
+    "exampleRawNames": [
+      "치자추출물"
+    ]
+  },
+  {
+    "name": "카프릴릴메티콘",
+    "normalizedName": "카프릴릴메티콘",
+    "occurrenceCount": 13,
+    "productCount": 13,
+    "exampleRawNames": [
+      "카프릴릴메티콘"
+    ]
+  },
+  {
+    "name": "베헤닐알코올",
+    "normalizedName": "베헤닐알코올",
+    "occurrenceCount": 12,
+    "productCount": 12,
+    "exampleRawNames": [
+      "베헤닐알코올"
+    ]
+  },
+  {
+    "name": "병풀잎추출물",
+    "normalizedName": "병풀잎추출물",
+    "occurrenceCount": 12,
+    "productCount": 12,
+    "exampleRawNames": [
+      "병풀잎추출물 (10.6ppm)",
+      "병풀잎추출물",
+      "병풀잎추출물(40 ppm)",
+      "병풀잎추출물(1,750ppb)",
+      "병풀잎추출물(701ppb)"
+    ]
+  },
+  {
+    "name": "비닐다이메티콘",
+    "normalizedName": "비닐다이메티콘",
+    "occurrenceCount": 12,
+    "productCount": 12,
+    "exampleRawNames": [
+      "비닐다이메티콘"
+    ]
+  },
+  {
+    "name": "세라마이드이오피",
+    "normalizedName": "세라마이드이오피",
+    "occurrenceCount": 12,
+    "productCount": 12,
+    "exampleRawNames": [
+      "세라마이드이오피"
+    ]
+  },
+  {
+    "name": "소듐스테아로일글루타메이트",
+    "normalizedName": "소듐스테아로일글루타메이트",
+    "occurrenceCount": 12,
+    "productCount": 12,
+    "exampleRawNames": [
+      "소듐스테아로일글루타메이트"
+    ]
+  },
+  {
+    "name": "트라이에톡시카프릴릴실레인",
+    "normalizedName": "트라이에톡시카프릴릴실레인",
+    "occurrenceCount": 12,
+    "productCount": 12,
+    "exampleRawNames": [
+      "트라이에톡시카프릴릴실레인"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-10스테아레이트",
+    "normalizedName": "폴리글리세릴10스테아레이트",
+    "occurrenceCount": 12,
+    "productCount": 12,
+    "exampleRawNames": [
+      "폴리글리세릴-10스테아레이트"
+    ]
+  },
+  {
+    "name": "피토스핑고신",
+    "normalizedName": "피토스핑고신",
+    "occurrenceCount": 12,
+    "productCount": 12,
+    "exampleRawNames": [
+      "피토스핑고신"
+    ]
+  },
+  {
+    "name": "해바라기씨오일",
+    "normalizedName": "해바라기씨오일",
+    "occurrenceCount": 12,
+    "productCount": 12,
+    "exampleRawNames": [
+      "해바라기씨오일"
+    ]
+  },
+  {
+    "name": "향료",
+    "normalizedName": "향료",
+    "occurrenceCount": 12,
+    "productCount": 12,
+    "exampleRawNames": [
+      "향료"
+    ]
+  },
+  {
+    "name": "황련뿌리추출물",
+    "normalizedName": "황련뿌리추출물",
+    "occurrenceCount": 12,
+    "productCount": 12,
+    "exampleRawNames": [
+      "황련뿌리추출물"
+    ]
+  },
+  {
+    "name": "글라이신",
+    "normalizedName": "글라이신",
+    "occurrenceCount": 11,
+    "productCount": 11,
+    "exampleRawNames": [
+      "글라이신"
+    ]
+  },
+  {
+    "name": "녹두씨추출물",
+    "normalizedName": "녹두씨추출물",
+    "occurrenceCount": 11,
+    "productCount": 11,
+    "exampleRawNames": [
+      "녹두씨추출물",
+      "녹두씨추출물(10ppm)",
+      "녹두씨추출물(5ppm)",
+      "녹두씨추출물(100ppm)"
+    ]
+  },
+  {
+    "name": "다이메티콘/비닐다이메티콘크로스폴리머",
+    "normalizedName": "다이메티콘비닐다이메티콘크로스폴리머",
+    "occurrenceCount": 11,
+    "productCount": 11,
+    "exampleRawNames": [
+      "다이메티콘/비닐다이메티콘크로스폴리머"
+    ]
+  },
+  {
+    "name": "마카다미아씨오일",
+    "normalizedName": "마카다미아씨오일",
+    "occurrenceCount": 11,
+    "productCount": 11,
+    "exampleRawNames": [
+      "마카다미아씨오일"
+    ]
+  },
+  {
+    "name": "메틸트라이메티콘",
+    "normalizedName": "메틸트라이메티콘",
+    "occurrenceCount": 11,
+    "productCount": 11,
+    "exampleRawNames": [
+      "메틸트라이메티콘"
+    ]
+  },
+  {
+    "name": "베타인살리실레이트",
+    "normalizedName": "베타인살리실레이트",
+    "occurrenceCount": 11,
+    "productCount": 11,
+    "exampleRawNames": [
+      "베타인살리실레이트",
+      "베타인살리실레이트(0.5%)"
+    ]
+  },
+  {
+    "name": "세라마이드에이에스",
+    "normalizedName": "세라마이드에이에스",
+    "occurrenceCount": 11,
+    "productCount": 11,
+    "exampleRawNames": [
+      "세라마이드에이에스"
+    ]
+  },
+  {
+    "name": "자일리톨",
+    "normalizedName": "자일리톨",
+    "occurrenceCount": 11,
+    "productCount": 11,
+    "exampleRawNames": [
+      "자일리톨"
+    ]
+  },
+  {
+    "name": "트라이소듐에틸렌다이아민다이석시네이트",
+    "normalizedName": "트라이소듐에틸렌다이아민다이석시네이트",
+    "occurrenceCount": 11,
+    "productCount": 11,
+    "exampleRawNames": [
+      "트라이소듐에틸렌다이아민다이석시네이트"
+    ]
+  },
+  {
+    "name": "파이토스핑고신",
+    "normalizedName": "파이토스핑고신",
+    "occurrenceCount": 11,
+    "productCount": 11,
+    "exampleRawNames": [
+      "파이토스핑고신"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-3다이스테아레이트",
+    "normalizedName": "폴리글리세릴3다이스테아레이트",
+    "occurrenceCount": 11,
+    "productCount": 11,
+    "exampleRawNames": [
+      "폴리글리세릴-3다이스테아레이트"
+    ]
+  },
+  {
+    "name": "글루타티온",
+    "normalizedName": "글루타티온",
+    "occurrenceCount": 10,
+    "productCount": 10,
+    "exampleRawNames": [
+      "글루타티온"
+    ]
+  },
+  {
+    "name": "글리세릴스테아레이트에스이",
+    "normalizedName": "글리세릴스테아레이트에스이",
+    "occurrenceCount": 10,
+    "productCount": 10,
+    "exampleRawNames": [
+      "글리세릴스테아레이트에스이"
+    ]
+  },
+  {
+    "name": "부틸옥틸살리실레이트",
+    "normalizedName": "부틸옥틸살리실레이트",
+    "occurrenceCount": 10,
+    "productCount": 10,
+    "exampleRawNames": [
+      "부틸옥틸살리실레이트"
+    ]
+  },
+  {
+    "name": "세틸에틸헥사노에이트",
+    "normalizedName": "세틸에틸헥사노에이트",
+    "occurrenceCount": 10,
+    "productCount": 10,
+    "exampleRawNames": [
+      "세틸에틸헥사노에이트"
+    ]
+  },
+  {
+    "name": "아세틸헥사펩타이드-8",
+    "normalizedName": "아세틸헥사펩타이드8",
+    "occurrenceCount": 10,
+    "productCount": 10,
+    "exampleRawNames": [
+      "아세틸헥사펩타이드-8"
+    ]
+  },
+  {
+    "name": "알로에베라잎추출물",
+    "normalizedName": "알로에베라잎추출물",
+    "occurrenceCount": 10,
+    "productCount": 10,
+    "exampleRawNames": [
+      "알로에베라잎추출물"
+    ]
+  },
+  {
+    "name": "카올린",
+    "normalizedName": "카올린",
+    "occurrenceCount": 10,
+    "productCount": 10,
+    "exampleRawNames": [
+      "카올린",
+      "카올린(23%)"
+    ]
+  },
+  {
+    "name": "프룩토올리고사카라이드",
+    "normalizedName": "프룩토올리고사카라이드",
+    "occurrenceCount": 10,
+    "productCount": 10,
+    "exampleRawNames": [
+      "프룩토올리고사카라이드"
+    ]
+  },
+  {
+    "name": "C12-20알킬글루코사이드",
+    "normalizedName": "c1220알킬글루코사이드",
+    "occurrenceCount": 10,
+    "productCount": 10,
+    "exampleRawNames": [
+      "C12-20알킬글루코사이드"
+    ]
+  },
+  {
+    "name": "C14-22알코올",
+    "normalizedName": "c1422알코올",
+    "occurrenceCount": 10,
+    "productCount": 10,
+    "exampleRawNames": [
+      "C14-22알코올"
+    ]
+  },
+  {
+    "name": "글루타믹애씨드",
+    "normalizedName": "글루타믹애씨드",
+    "occurrenceCount": 9,
+    "productCount": 9,
+    "exampleRawNames": [
+      "글루타믹애씨드"
+    ]
+  },
+  {
+    "name": "다이카프릴릴카보네이트",
+    "normalizedName": "다이카프릴릴카보네이트",
+    "occurrenceCount": 9,
+    "productCount": 9,
+    "exampleRawNames": [
+      "다이카프릴릴카보네이트"
+    ]
+  },
+  {
+    "name": "로즈마리잎오일",
+    "normalizedName": "로즈마리잎오일",
+    "occurrenceCount": 9,
+    "productCount": 9,
+    "exampleRawNames": [
+      "로즈마리잎오일"
+    ]
+  },
+  {
+    "name": "메도우폼씨오일",
+    "normalizedName": "메도우폼씨오일",
+    "occurrenceCount": 9,
+    "productCount": 9,
+    "exampleRawNames": [
+      "메도우폼씨오일"
+    ]
+  },
+  {
+    "name": "메틸글루세스-20",
+    "normalizedName": "메틸글루세스20",
+    "occurrenceCount": 9,
+    "productCount": 9,
+    "exampleRawNames": [
+      "메틸글루세스-20"
+    ]
+  },
+  {
+    "name": "메틸다이아이소프로필프로피온아마이드",
+    "normalizedName": "메틸다이아이소프로필프로피온아마이드",
+    "occurrenceCount": 9,
+    "productCount": 9,
+    "exampleRawNames": [
+      "메틸다이아이소프로필프로피온아마이드"
+    ]
+  },
+  {
+    "name": "바이오사카라이드검-1",
+    "normalizedName": "바이오사카라이드검1",
+    "occurrenceCount": 9,
+    "productCount": 9,
+    "exampleRawNames": [
+      "바이오사카라이드검-1"
+    ]
+  },
+  {
+    "name": "산호말추출물",
+    "normalizedName": "산호말추출물",
+    "occurrenceCount": 9,
+    "productCount": 9,
+    "exampleRawNames": [
+      "산호말추출물"
+    ]
+  },
+  {
+    "name": "소듐폴리아크릴로일다이메틸타우레이트",
+    "normalizedName": "소듐폴리아크릴로일다이메틸타우레이트",
+    "occurrenceCount": 9,
+    "productCount": 9,
+    "exampleRawNames": [
+      "소듐폴리아크릴로일다이메틸타우레이트"
+    ]
+  },
+  {
+    "name": "아세틸글루코사민",
+    "normalizedName": "아세틸글루코사민",
+    "occurrenceCount": 9,
+    "productCount": 9,
+    "exampleRawNames": [
+      "아세틸글루코사민"
+    ]
+  },
+  {
+    "name": "아크릴레이트/암모늄메타크릴레이트코폴리머",
+    "normalizedName": "아크릴레이트암모늄메타크릴레이트코폴리머",
+    "occurrenceCount": 9,
+    "productCount": 9,
+    "exampleRawNames": [
+      "아크릴레이트/암모늄메타크릴레이트코폴리머"
+    ]
+  },
+  {
+    "name": "올레익애씨드",
+    "normalizedName": "올레익애씨드",
+    "occurrenceCount": 9,
+    "productCount": 9,
+    "exampleRawNames": [
+      "올레익애씨드"
+    ]
+  },
+  {
+    "name": "트라이에틸헥사노인",
+    "normalizedName": "트라이에틸헥사노인",
+    "occurrenceCount": 9,
+    "productCount": 9,
+    "exampleRawNames": [
+      "트라이에틸헥사노인"
+    ]
+  },
+  {
+    "name": "티트리잎오일",
+    "normalizedName": "티트리잎오일",
+    "occurrenceCount": 9,
+    "productCount": 9,
+    "exampleRawNames": [
+      "티트리잎오일"
+    ]
+  },
+  {
+    "name": "페닐트라이메티콘",
+    "normalizedName": "페닐트라이메티콘",
+    "occurrenceCount": 9,
+    "productCount": 9,
+    "exampleRawNames": [
+      "페닐트라이메티콘"
+    ]
+  },
+  {
+    "name": "포타슘코코일글리시네이트",
+    "normalizedName": "포타슘코코일글리시네이트",
+    "occurrenceCount": 9,
+    "productCount": 9,
+    "exampleRawNames": [
+      "포타슘코코일글리시네이트"
+    ]
+  },
+  {
+    "name": "피브이엠/엠에이코폴리머",
+    "normalizedName": "피브이엠엠에이코폴리머",
+    "occurrenceCount": 9,
+    "productCount": 9,
+    "exampleRawNames": [
+      "피브이엠/엠에이코폴리머"
+    ]
+  },
+  {
+    "name": "하이드록시프로필비스팔미타마이드엠이에이",
+    "normalizedName": "하이드록시프로필비스팔미타마이드엠이에이",
+    "occurrenceCount": 9,
+    "productCount": 9,
+    "exampleRawNames": [
+      "하이드록시프로필비스팔미타마이드엠이에이",
+      "하이드록시프로필비스팔미타마이드엠이에이(210 ppm)"
+    ]
+  },
+  {
+    "name": "가지열매추출물",
+    "normalizedName": "가지열매추출물",
+    "occurrenceCount": 8,
+    "productCount": 8,
+    "exampleRawNames": [
+      "가지열매추출물"
+    ]
+  },
+  {
+    "name": "녹차추출물",
+    "normalizedName": "녹차추출물",
+    "occurrenceCount": 8,
+    "productCount": 8,
+    "exampleRawNames": [
+      "녹차추출물"
+    ]
+  },
+  {
+    "name": "다시마추출물",
+    "normalizedName": "다시마추출물",
+    "occurrenceCount": 8,
+    "productCount": 8,
+    "exampleRawNames": [
+      "다시마추출물"
+    ]
+  },
+  {
+    "name": "디에칠아미노하이드록시벤조일헥실벤조에이트",
+    "normalizedName": "디에칠아미노하이드록시벤조일헥실벤조에이트",
+    "occurrenceCount": 8,
+    "productCount": 8,
+    "exampleRawNames": [
+      "디에칠아미노하이드록시벤조일헥실벤조에이트"
+    ]
+  },
+  {
+    "name": "말라카이트추출물",
+    "normalizedName": "말라카이트추출물",
+    "occurrenceCount": 8,
+    "productCount": 8,
+    "exampleRawNames": [
+      "말라카이트추출물"
+    ]
+  },
+  {
+    "name": "백미꽃추출물",
+    "normalizedName": "백미꽃추출물",
+    "occurrenceCount": 8,
+    "productCount": 8,
+    "exampleRawNames": [
+      "백미꽃추출물"
+    ]
+  },
+  {
+    "name": "세라마이드엔에스",
+    "normalizedName": "세라마이드엔에스",
+    "occurrenceCount": 8,
+    "productCount": 8,
+    "exampleRawNames": [
+      "세라마이드엔에스"
+    ]
+  },
+  {
+    "name": "소듐메틸코코일타우레이트",
+    "normalizedName": "소듐메틸코코일타우레이트",
+    "occurrenceCount": 8,
+    "productCount": 8,
+    "exampleRawNames": [
+      "소듐메틸코코일타우레이트"
+    ]
+  },
+  {
+    "name": "쇠비름추출물",
+    "normalizedName": "쇠비름추출물",
+    "occurrenceCount": 8,
+    "productCount": 8,
+    "exampleRawNames": [
+      "쇠비름추출물"
+    ]
+  },
+  {
+    "name": "수크로오스다이스테아레이트",
+    "normalizedName": "수크로오스다이스테아레이트",
+    "occurrenceCount": 8,
+    "productCount": 8,
+    "exampleRawNames": [
+      "수크로오스다이스테아레이트"
+    ]
+  },
+  {
+    "name": "아라키딕애씨드",
+    "normalizedName": "아라키딕애씨드",
+    "occurrenceCount": 8,
+    "productCount": 8,
+    "exampleRawNames": [
+      "아라키딕애씨드"
+    ]
+  },
+  {
+    "name": "자일리틸글루코사이드",
+    "normalizedName": "자일리틸글루코사이드",
+    "occurrenceCount": 8,
+    "productCount": 8,
+    "exampleRawNames": [
+      "자일리틸글루코사이드"
+    ]
+  },
+  {
+    "name": "자작나무수액",
+    "normalizedName": "자작나무수액",
+    "occurrenceCount": 8,
+    "productCount": 8,
+    "exampleRawNames": [
+      "자작나무수액 (10,000ppm)",
+      "자작나무수액"
+    ]
+  },
+  {
+    "name": "참마뿌리추출물",
+    "normalizedName": "참마뿌리추출물",
+    "occurrenceCount": 8,
+    "productCount": 8,
+    "exampleRawNames": [
+      "참마뿌리추출물"
+    ]
+  },
+  {
+    "name": "코코-베타인",
+    "normalizedName": "코코베타인",
+    "occurrenceCount": 8,
+    "productCount": 8,
+    "exampleRawNames": [
+      "코코-베타인"
+    ]
+  },
+  {
+    "name": "코코-카프릴레이트/카프레이트",
+    "normalizedName": "코코카프릴레이트카프레이트",
+    "occurrenceCount": 8,
+    "productCount": 8,
+    "exampleRawNames": [
+      "코코-카프릴레이트/카프레이트"
+    ]
+  },
+  {
+    "name": "코키니아인디카열매추출물",
+    "normalizedName": "코키니아인디카열매추출물",
+    "occurrenceCount": 8,
+    "productCount": 8,
+    "exampleRawNames": [
+      "코키니아인디카열매추출물"
+    ]
+  },
+  {
+    "name": "콩씨추출물",
+    "normalizedName": "콩씨추출물",
+    "occurrenceCount": 8,
+    "productCount": 8,
+    "exampleRawNames": [
+      "콩씨추출물 (11,700ppm)",
+      "콩씨추출물",
+      "콩씨추출물 (10,000ppm)",
+      "콩씨추출물 (1,000ppm)",
+      "콩씨추출물 (5,130ppm)"
+    ]
+  },
+  {
+    "name": "트라넥사믹애씨드",
+    "normalizedName": "트라넥사믹애씨드",
+    "occurrenceCount": 8,
+    "productCount": 8,
+    "exampleRawNames": [
+      "트라넥사믹애씨드",
+      "트라넥사믹애씨드(0.5%)"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-10올리에이트",
+    "normalizedName": "폴리글리세릴10올리에이트",
+    "occurrenceCount": 8,
+    "productCount": 8,
+    "exampleRawNames": [
+      "폴리글리세릴-10올리에이트"
+    ]
+  },
+  {
+    "name": "하이드록시에틸우레아",
+    "normalizedName": "하이드록시에틸우레아",
+    "occurrenceCount": 8,
+    "productCount": 8,
+    "exampleRawNames": [
+      "하이드록시에틸우레아"
+    ]
+  },
+  {
+    "name": "하이드록시프로필스타치포스페이트",
+    "normalizedName": "하이드록시프로필스타치포스페이트",
+    "occurrenceCount": 8,
+    "productCount": 8,
+    "exampleRawNames": [
+      "하이드록시프로필스타치포스페이트"
+    ]
+  },
+  {
+    "name": "호호바씨오일",
+    "normalizedName": "호호바씨오일",
+    "occurrenceCount": 8,
+    "productCount": 8,
+    "exampleRawNames": [
+      "호호바씨오일"
+    ]
+  },
+  {
+    "name": "녹두싹추출물",
+    "normalizedName": "녹두싹추출물",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "녹두싹추출물(10ppm)",
+      "녹두싹추출물",
+      "녹두싹추출물(0.1ppm)",
+      "녹두싹추출물(5ppm)"
+    ]
+  },
+  {
+    "name": "녹차잎추출물",
+    "normalizedName": "녹차잎추출물",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "녹차잎추출물"
+    ]
+  },
+  {
+    "name": "다이메티콘올",
+    "normalizedName": "다이메티콘올",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "다이메티콘올"
+    ]
+  },
+  {
+    "name": "다이메틸실란올하이알루로네이트",
+    "normalizedName": "다이메틸실란올하이알루로네이트",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "다이메틸실란올하이알루로네이트",
+      "다이메틸실란올하이알루로네이트(15ppb)"
+    ]
+  },
+  {
+    "name": "다이부틸아디페이트",
+    "normalizedName": "다이부틸아디페이트",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "다이부틸아디페이트"
+    ]
+  },
+  {
+    "name": "다이소듐코코암포다이아세테이트",
+    "normalizedName": "다이소듐코코암포다이아세테이트",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "다이소듐코코암포다이아세테이트"
+    ]
+  },
+  {
+    "name": "말토덱스트린",
+    "normalizedName": "말토덱스트린",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "말토덱스트린"
+    ]
+  },
+  {
+    "name": "베타-시토스테롤",
+    "normalizedName": "베타시토스테롤",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "베타-시토스테롤"
+    ]
+  },
+  {
+    "name": "비스-에칠헥실옥시페놀메톡시페닐트리아진",
+    "normalizedName": "비스에칠헥실옥시페놀메톡시페닐트리아진",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "비스-에칠헥실옥시페놀메톡시페닐트리아진"
+    ]
+  },
+  {
+    "name": "세린",
+    "normalizedName": "세린",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "세린"
+    ]
+  },
+  {
+    "name": "셀룰로오스검",
+    "normalizedName": "셀룰로오스검",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "셀룰로오스검"
+    ]
+  },
+  {
+    "name": "소듐락테이트",
+    "normalizedName": "소듐락테이트",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "소듐락테이트"
+    ]
+  },
+  {
+    "name": "알라닌",
+    "normalizedName": "알라닌",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "알라닌"
+    ]
+  },
+  {
+    "name": "약모밀추출물",
+    "normalizedName": "약모밀추출물",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "약모밀추출물",
+      "약모밀추출물(100ppm)"
+    ]
+  },
+  {
+    "name": "에칠헥실트리아존",
+    "normalizedName": "에칠헥실트리아존",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "에칠헥실트리아존"
+    ]
+  },
+  {
+    "name": "에틸헥산다이올",
+    "normalizedName": "에틸헥산다이올",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "에틸헥산다이올"
+    ]
+  },
+  {
+    "name": "에틸헥실팔미테이트",
+    "normalizedName": "에틸헥실팔미테이트",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "에틸헥실팔미테이트"
+    ]
+  },
+  {
+    "name": "카카오추출물",
+    "normalizedName": "카카오추출물",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "카카오추출물"
+    ]
+  },
+  {
+    "name": "토코페릴아세테이트",
+    "normalizedName": "토코페릴아세테이트",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "토코페릴아세테이트"
+    ]
+  },
+  {
+    "name": "트레오닌",
+    "normalizedName": "트레오닌",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "트레오닌"
+    ]
+  },
+  {
+    "name": "파이토스테롤",
+    "normalizedName": "파이토스테롤",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "파이토스테롤"
+    ]
+  },
+  {
+    "name": "팔미토일펜타펩타이드-4",
+    "normalizedName": "팔미토일펜타펩타이드4",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "팔미토일펜타펩타이드-4"
+    ]
+  },
+  {
+    "name": "편백수",
+    "normalizedName": "편백수",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "편백수"
+    ]
+  },
+  {
+    "name": "폴리글리세린-3",
+    "normalizedName": "폴리글리세린3",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "폴리글리세린-3"
+    ]
+  },
+  {
+    "name": "폴리솔베이트20",
+    "normalizedName": "폴리솔베이트20",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "폴리솔베이트20"
+    ]
+  },
+  {
+    "name": "폴리아크릴레이트크로스폴리머-6",
+    "normalizedName": "폴리아크릴레이트크로스폴리머6",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "폴리아크릴레이트크로스폴리머-6"
+    ]
+  },
+  {
+    "name": "폴리쿼터늄-51",
+    "normalizedName": "폴리쿼터늄51",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "폴리쿼터늄-51"
+    ]
+  },
+  {
+    "name": "폴리쿼터늄-67",
+    "normalizedName": "폴리쿼터늄67",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "폴리쿼터늄-67"
+    ]
+  },
+  {
+    "name": "프롤린",
+    "normalizedName": "프롤린",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "프롤린"
+    ]
+  },
+  {
+    "name": "피토스테롤",
+    "normalizedName": "피토스테롤",
+    "occurrenceCount": 7,
+    "productCount": 7,
+    "exampleRawNames": [
+      "피토스테롤"
+    ]
+  },
+  {
+    "name": "2,3-부탄다이올",
+    "normalizedName": "23부탄다이올",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "2,3-부탄다이올"
+    ]
+  },
+  {
+    "name": "글라이콜릭애씨드",
+    "normalizedName": "글라이콜릭애씨드",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "글라이콜릭애씨드"
+    ]
+  },
+  {
+    "name": "노니열매추출물",
+    "normalizedName": "노니열매추출물",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "노니열매추출물(0.8%)",
+      "노니열매추출물(0.7%)",
+      "노니열매추출물(0.1%)",
+      "노니열매추출물(0.5%)"
+    ]
+  },
+  {
+    "name": "느릅나무뿌리추출물",
+    "normalizedName": "느릅나무뿌리추출물",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "느릅나무뿌리추출물"
+    ]
+  },
+  {
+    "name": "다이스테아다이모늄헥토라이트",
+    "normalizedName": "다이스테아다이모늄헥토라이트",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "다이스테아다이모늄헥토라이트"
+    ]
+  },
+  {
+    "name": "다이아이소스테아릴말레이트",
+    "normalizedName": "다이아이소스테아릴말레이트",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "다이아이소스테아릴말레이트"
+    ]
+  },
+  {
+    "name": "다이에톡시에틸석시네이트",
+    "normalizedName": "다이에톡시에틸석시네이트",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "다이에톡시에틸석시네이트"
+    ]
+  },
+  {
+    "name": "달맞이꽃꽃추출물",
+    "normalizedName": "달맞이꽃꽃추출물",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "달맞이꽃꽃추출물"
+    ]
+  },
+  {
+    "name": "달팽이점액여과물",
+    "normalizedName": "달팽이점액여과물",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "달팽이점액여과물",
+      "달팽이점액여과물(10,000 ppm)",
+      "달팽이점액여과물(2,000ppm)"
+    ]
+  },
+  {
+    "name": "당느릅나무뿌리추출물",
+    "normalizedName": "당느릅나무뿌리추출물",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "당느릅나무뿌리추출물"
+    ]
+  },
+  {
+    "name": "라우릴하이드록시설테인",
+    "normalizedName": "라우릴하이드록시설테인",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "라우릴하이드록시설테인"
+    ]
+  },
+  {
+    "name": "무화과추출물",
+    "normalizedName": "무화과추출물",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "무화과추출물"
+    ]
+  },
+  {
+    "name": "밤껍질추출물",
+    "normalizedName": "밤껍질추출물",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "밤껍질추출물"
+    ]
+  },
+  {
+    "name": "부틸렌글라이콜다이카프릴레이트/다이카프레이트",
+    "normalizedName": "부틸렌글라이콜다이카프릴레이트다이카프레이트",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "부틸렌글라이콜다이카프릴레이트/다이카프레이트"
+    ]
+  },
+  {
+    "name": "비사보롤",
+    "normalizedName": "비사보롤",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "비사보롤"
+    ]
+  },
+  {
+    "name": "비피다발효용해물",
+    "normalizedName": "비피다발효용해물",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "비피다발효용해물"
+    ]
+  },
+  {
+    "name": "사과추출물",
+    "normalizedName": "사과추출물",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "사과추출물"
+    ]
+  },
+  {
+    "name": "사탕수수추출물",
+    "normalizedName": "사탕수수추출물",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "사탕수수추출물"
+    ]
+  },
+  {
+    "name": "세테아릴글루코사이드",
+    "normalizedName": "세테아릴글루코사이드",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "세테아릴글루코사이드"
+    ]
+  },
+  {
+    "name": "소듐아세테이트",
+    "normalizedName": "소듐아세테이트",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "소듐아세테이트"
+    ]
+  },
+  {
+    "name": "소듐코코일아이세티오네이트",
+    "normalizedName": "소듐코코일아이세티오네이트",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "소듐코코일아이세티오네이트"
+    ]
+  },
+  {
+    "name": "소듐하이알루로네이트다이메틸실란올",
+    "normalizedName": "소듐하이알루로네이트다이메틸실란올",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "소듐하이알루로네이트다이메틸실란올",
+      "소듐하이알루로네이트다이메틸실란올(5ppb)"
+    ]
+  },
+  {
+    "name": "수크로오스",
+    "normalizedName": "수크로오스",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "수크로오스"
+    ]
+  },
+  {
+    "name": "시아노코발라민",
+    "normalizedName": "시아노코발라민",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "시아노코발라민"
+    ]
+  },
+  {
+    "name": "아이소도데케인",
+    "normalizedName": "아이소도데케인",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "아이소도데케인"
+    ]
+  },
+  {
+    "name": "알로에베라꽃추출물",
+    "normalizedName": "알로에베라꽃추출물",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "알로에베라꽃추출물"
+    ]
+  },
+  {
+    "name": "어성초추출물",
+    "normalizedName": "어성초추출물",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "어성초추출물 (10,699ppm)",
+      "어성초추출물",
+      "어성초추출물 (70%)"
+    ]
+  },
+  {
+    "name": "징크피씨에이",
+    "normalizedName": "징크피씨에이",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "징크피씨에이"
+    ]
+  },
+  {
+    "name": "칡뿌리추출물",
+    "normalizedName": "칡뿌리추출물",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "칡뿌리추출물"
+    ]
+  },
+  {
+    "name": "카퍼트라이펩타이드-1",
+    "normalizedName": "카퍼트라이펩타이드1",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "카퍼트라이펩타이드-1"
+    ]
+  },
+  {
+    "name": "팔미토일트라이펩타이드-1",
+    "normalizedName": "팔미토일트라이펩타이드1",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "팔미토일트라이펩타이드-1"
+    ]
+  },
+  {
+    "name": "페녹시에탄올",
+    "normalizedName": "페녹시에탄올",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "페녹시에탄올"
+    ]
+  },
+  {
+    "name": "포도씨오일",
+    "normalizedName": "포도씨오일",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "포도씨오일"
+    ]
+  },
+  {
+    "name": "포타슘벤조에이트",
+    "normalizedName": "포타슘벤조에이트",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "포타슘벤조에이트"
+    ]
+  },
+  {
+    "name": "하이드록시에틸셀룰로오스",
+    "normalizedName": "하이드록시에틸셀룰로오스",
+    "occurrenceCount": 6,
+    "productCount": 6,
+    "exampleRawNames": [
+      "하이드록시에틸셀룰로오스"
+    ]
+  },
+  {
+    "name": "글라이코리피드",
+    "normalizedName": "글라이코리피드",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "글라이코리피드"
+    ]
+  },
+  {
+    "name": "다이페닐다이메티콘",
+    "normalizedName": "다이페닐다이메티콘",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "다이페닐다이메티콘"
+    ]
+  },
+  {
+    "name": "당단백질",
+    "normalizedName": "당단백질",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "당단백질 (8.1800ppm)",
+      "당단백질",
+      "당단백질 (8.3760ppm)",
+      "당단백질 (0.2ppm)"
+    ]
+  },
+  {
+    "name": "라벤더꽃추출물",
+    "normalizedName": "라벤더꽃추출물",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "라벤더꽃추출물"
+    ]
+  },
+  {
+    "name": "라이신",
+    "normalizedName": "라이신",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "라이신"
+    ]
+  },
+  {
+    "name": "락토바실러스/소이밀크발효여과물",
+    "normalizedName": "락토바실러스소이밀크발효여과물",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "락토바실러스/소이밀크발효여과물",
+      "락토바실러스/소이밀크발효여과물(1,000ppb)"
+    ]
+  },
+  {
+    "name": "리모넨",
+    "normalizedName": "리모넨",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "리모넨"
+    ]
+  },
+  {
+    "name": "마그네슘설페이트",
+    "normalizedName": "마그네슘설페이트",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "마그네슘설페이트"
+    ]
+  },
+  {
+    "name": "맥아추출물",
+    "normalizedName": "맥아추출물",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "맥아추출물"
+    ]
+  },
+  {
+    "name": "모란뿌리추출물",
+    "normalizedName": "모란뿌리추출물",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "모란뿌리추출물"
+    ]
+  },
+  {
+    "name": "변성알코올",
+    "normalizedName": "변성알코올",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "변성알코올"
+    ]
+  },
+  {
+    "name": "사이클로펜타실록세인",
+    "normalizedName": "사이클로펜타실록세인",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "사이클로펜타실록세인"
+    ]
+  },
+  {
+    "name": "석시닉애씨드",
+    "normalizedName": "석시닉애씨드",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "석시닉애씨드"
+    ]
+  },
+  {
+    "name": "소듐디엔에이",
+    "normalizedName": "소듐디엔에이",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "소듐디엔에이",
+      "소듐디엔에이(100ppm)"
+    ]
+  },
+  {
+    "name": "소듐서팩틴",
+    "normalizedName": "소듐서팩틴",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "소듐서팩틴"
+    ]
+  },
+  {
+    "name": "소듐아크릴레이트/소듐아크릴로일다이메틸타우레이트코폴리머",
+    "normalizedName": "소듐아크릴레이트소듐아크릴로일다이메틸타우레이트코폴리머",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "소듐아크릴레이트/소듐아크릴로일다이메틸타우레이트코폴리머"
+    ]
+  },
+  {
+    "name": "솔비탄올리에이트",
+    "normalizedName": "솔비탄올리에이트",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "솔비탄올리에이트"
+    ]
+  },
+  {
+    "name": "솔비톨",
+    "normalizedName": "솔비톨",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "솔비톨"
+    ]
+  },
+  {
+    "name": "수용성콜라겐",
+    "normalizedName": "수용성콜라겐",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "수용성콜라겐",
+      "수용성콜라겐(1 ppb)"
+    ]
+  },
+  {
+    "name": "스피어민트추출물",
+    "normalizedName": "스피어민트추출물",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "스피어민트추출물"
+    ]
+  },
+  {
+    "name": "스핑고리피드",
+    "normalizedName": "스핑고리피드",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "스핑고리피드"
+    ]
+  },
+  {
+    "name": "아라키딜글루코사이드",
+    "normalizedName": "아라키딜글루코사이드",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "아라키딜글루코사이드"
+    ]
+  },
+  {
+    "name": "아라키딜알코올",
+    "normalizedName": "아라키딜알코올",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "아라키딜알코올"
+    ]
+  },
+  {
+    "name": "아스파틱애씨드",
+    "normalizedName": "아스파틱애씨드",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "아스파틱애씨드"
+    ]
+  },
+  {
+    "name": "아이리쉬모스추출물",
+    "normalizedName": "아이리쉬모스추출물",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "아이리쉬모스추출물"
+    ]
+  },
+  {
+    "name": "아이소노닐아이소노나노에이트",
+    "normalizedName": "아이소노닐아이소노나노에이트",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "아이소노닐아이소노나노에이트"
+    ]
+  },
+  {
+    "name": "아이소펜틸다이올",
+    "normalizedName": "아이소펜틸다이올",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "아이소펜틸다이올"
+    ]
+  },
+  {
+    "name": "아크릴레이트코폴리머",
+    "normalizedName": "아크릴레이트코폴리머",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "아크릴레이트코폴리머"
+    ]
+  },
+  {
+    "name": "안하이드록시자일리톨",
+    "normalizedName": "안하이드록시자일리톨",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "안하이드록시자일리톨"
+    ]
+  },
+  {
+    "name": "옥수수전분",
+    "normalizedName": "옥수수전분",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "옥수수전분"
+    ]
+  },
+  {
+    "name": "접시꽃꽃추출물",
+    "normalizedName": "접시꽃꽃추출물",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "접시꽃꽃추출물"
+    ]
+  },
+  {
+    "name": "접시꽃추출물",
+    "normalizedName": "접시꽃추출물",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "접시꽃추출물"
+    ]
+  },
+  {
+    "name": "제비꽃꽃추출물",
+    "normalizedName": "제비꽃꽃추출물",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "제비꽃꽃추출물"
+    ]
+  },
+  {
+    "name": "젤란검",
+    "normalizedName": "젤란검",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "젤란검"
+    ]
+  },
+  {
+    "name": "징크옥사이드",
+    "normalizedName": "징크옥사이드",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "징크옥사이드"
+    ]
+  },
+  {
+    "name": "참산호말추출물",
+    "normalizedName": "참산호말추출물",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "참산호말추출물"
+    ]
+  },
+  {
+    "name": "치자열매추출물",
+    "normalizedName": "치자열매추출물",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "치자열매추출물"
+    ]
+  },
+  {
+    "name": "캐모마일꽃추출물",
+    "normalizedName": "캐모마일꽃추출물",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "캐모마일꽃추출물",
+      "캐모마일꽃추출물(515ppm)"
+    ]
+  },
+  {
+    "name": "코코-글루코사이드",
+    "normalizedName": "코코글루코사이드",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "코코-글루코사이드"
+    ]
+  },
+  {
+    "name": "티트리잎수",
+    "normalizedName": "티트리잎수",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "티트리잎수"
+    ]
+  },
+  {
+    "name": "펜타에리스리틸테트라아이소스테아레이트",
+    "normalizedName": "펜타에리스리틸테트라아이소스테아레이트",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "펜타에리스리틸테트라아이소스테아레이트"
+    ]
+  },
+  {
+    "name": "포타슘세틸포스페이트",
+    "normalizedName": "포타슘세틸포스페이트",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "포타슘세틸포스페이트"
+    ]
+  },
+  {
+    "name": "포타슘하이드록사이드",
+    "normalizedName": "포타슘하이드록사이드",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "포타슘하이드록사이드"
+    ]
+  },
+  {
+    "name": "폴리글루타믹애씨드",
+    "normalizedName": "폴리글루타믹애씨드",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "폴리글루타믹애씨드"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-3폴리다이메틸실록시에틸다이메티콘",
+    "normalizedName": "폴리글리세릴3폴리다이메틸실록시에틸다이메티콘",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "폴리글리세릴-3폴리다이메틸실록시에틸다이메티콘"
+    ]
+  },
+  {
+    "name": "프랑스해안송껍질추출물",
+    "normalizedName": "프랑스해안송껍질추출물",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "프랑스해안송껍질추출물"
+    ]
+  },
+  {
+    "name": "프로폴리스추출물",
+    "normalizedName": "프로폴리스추출물",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "프로폴리스추출물"
+    ]
+  },
+  {
+    "name": "하이드로제네이티드폴리아이소부텐",
+    "normalizedName": "하이드로제네이티드폴리아이소부텐",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "하이드로제네이티드폴리아이소부텐"
+    ]
+  },
+  {
+    "name": "해수",
+    "normalizedName": "해수",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "해수"
+    ]
+  },
+  {
+    "name": "헥실렌글라이콜",
+    "normalizedName": "헥실렌글라이콜",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "헥실렌글라이콜"
+    ]
+  },
+  {
+    "name": "흰목이버섯폴리사카라이드",
+    "normalizedName": "흰목이버섯폴리사카라이드",
+    "occurrenceCount": 5,
+    "productCount": 5,
+    "exampleRawNames": [
+      "흰목이버섯폴리사카라이드"
+    ]
+  },
+  {
+    "name": "7-데하이드로콜레스테롤",
+    "normalizedName": "7데하이드로콜레스테롤",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "7-데하이드로콜레스테롤"
+    ]
+  },
+  {
+    "name": "글라이코스핑고리피드",
+    "normalizedName": "글라이코스핑고리피드",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "글라이코스핑고리피드"
+    ]
+  },
+  {
+    "name": "글리세릴폴리메타크릴레이트",
+    "normalizedName": "글리세릴폴리메타크릴레이트",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "글리세릴폴리메타크릴레이트"
+    ]
+  },
+  {
+    "name": "노니씨오일",
+    "normalizedName": "노니씨오일",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "노니씨오일(200ppm)",
+      "노니씨오일(100ppm)",
+      "노니씨오일(10,000ppm)",
+      "노니씨오일(0.1ppm)"
+    ]
+  },
+  {
+    "name": "다이펜타에리스리틸헥사C5-9애씨드에스터",
+    "normalizedName": "다이펜타에리스리틸헥사c59애씨드에스터",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "다이펜타에리스리틸헥사C5-9애씨드에스터"
+    ]
+  },
+  {
+    "name": "다이펩타이드다이아미노부티로일벤질아마이드다이아세테이트",
+    "normalizedName": "다이펩타이드다이아미노부티로일벤질아마이드다이아세테이트",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "다이펩타이드다이아미노부티로일벤질아마이드다이아세테이트"
+    ]
+  },
+  {
+    "name": "데실글루코사이드",
+    "normalizedName": "데실글루코사이드",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "데실글루코사이드"
+    ]
+  },
+  {
+    "name": "라우릴글루코사이드",
+    "normalizedName": "라우릴글루코사이드",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "라우릴글루코사이드"
+    ]
+  },
+  {
+    "name": "라우릴베타인",
+    "normalizedName": "라우릴베타인",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "라우릴베타인"
+    ]
+  },
+  {
+    "name": "라우릴폴리글리세릴-3폴리다이메틸실록시에틸다이메티콘",
+    "normalizedName": "라우릴폴리글리세릴3폴리다이메틸실록시에틸다이메티콘",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "라우릴폴리글리세릴-3폴리다이메틸실록시에틸다이메티콘"
+    ]
+  },
+  {
+    "name": "레시틴",
+    "normalizedName": "레시틴",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "레시틴"
+    ]
+  },
+  {
+    "name": "류신",
+    "normalizedName": "류신",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "류신"
+    ]
+  },
+  {
+    "name": "리날룰",
+    "normalizedName": "리날룰",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "리날룰"
+    ]
+  },
+  {
+    "name": "메티오닌",
+    "normalizedName": "메티오닌",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "메티오닌"
+    ]
+  },
+  {
+    "name": "메틸메타크릴레이트크로스폴리머",
+    "normalizedName": "메틸메타크릴레이트크로스폴리머",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "메틸메타크릴레이트크로스폴리머"
+    ]
+  },
+  {
+    "name": "미네랄솔트",
+    "normalizedName": "미네랄솔트",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "미네랄솔트",
+      "미네랄솔트(10ppm)"
+    ]
+  },
+  {
+    "name": "밀몽화꽃추출물",
+    "normalizedName": "밀몽화꽃추출물",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "밀몽화꽃추출물"
+    ]
+  },
+  {
+    "name": "발린",
+    "normalizedName": "발린",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "발린"
+    ]
+  },
+  {
+    "name": "복숭아꽃추출물",
+    "normalizedName": "복숭아꽃추출물",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "복숭아꽃추출물"
+    ]
+  },
+  {
+    "name": "세틸알코올",
+    "normalizedName": "세틸알코올",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "세틸알코올"
+    ]
+  },
+  {
+    "name": "소듐라우로일글루타메이트",
+    "normalizedName": "소듐라우로일글루타메이트",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "소듐라우로일글루타메이트"
+    ]
+  },
+  {
+    "name": "소듐벤조에이트",
+    "normalizedName": "소듐벤조에이트",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "소듐벤조에이트"
+    ]
+  },
+  {
+    "name": "소듐코코일이세티오네이트",
+    "normalizedName": "소듐코코일이세티오네이트",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "소듐코코일이세티오네이트"
+    ]
+  },
+  {
+    "name": "소듐C14-16올레핀설포네이트",
+    "normalizedName": "소듐c1416올레핀설포네이트",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "소듐C14-16올레핀설포네이트"
+    ]
+  },
+  {
+    "name": "솔비탄세스퀴올리에이트",
+    "normalizedName": "솔비탄세스퀴올리에이트",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "솔비탄세스퀴올리에이트"
+    ]
+  },
+  {
+    "name": "시스테인",
+    "normalizedName": "시스테인",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "시스테인"
+    ]
+  },
+  {
+    "name": "쑥잎추출물",
+    "normalizedName": "쑥잎추출물",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "쑥잎추출물 (240ppm)",
+      "쑥잎추출물 (800ppm)",
+      "쑥잎추출물"
+    ]
+  },
+  {
+    "name": "쓴풀추출물",
+    "normalizedName": "쓴풀추출물",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "쓴풀추출물"
+    ]
+  },
+  {
+    "name": "아이소류신",
+    "normalizedName": "아이소류신",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "아이소류신"
+    ]
+  },
+  {
+    "name": "알루미늄하이드록사이드",
+    "normalizedName": "알루미늄하이드록사이드",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "알루미늄하이드록사이드"
+    ]
+  },
+  {
+    "name": "알파-알부틴",
+    "normalizedName": "알파알부틴",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "알파-알부틴"
+    ]
+  },
+  {
+    "name": "암모늄폴리아크릴로일다이메틸타우레이트",
+    "normalizedName": "암모늄폴리아크릴로일다이메틸타우레이트",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "암모늄폴리아크릴로일다이메틸타우레이트"
+    ]
+  },
+  {
+    "name": "에리스리톨",
+    "normalizedName": "에리스리톨",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "에리스리톨"
+    ]
+  },
+  {
+    "name": "에탄올",
+    "normalizedName": "에탄올",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "에탄올"
+    ]
+  },
+  {
+    "name": "엑토인",
+    "normalizedName": "엑토인",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "엑토인"
+    ]
+  },
+  {
+    "name": "옥틸도데칸올",
+    "normalizedName": "옥틸도데칸올",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "옥틸도데칸올"
+    ]
+  },
+  {
+    "name": "올리브열매오일",
+    "normalizedName": "올리브열매오일",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "올리브열매오일"
+    ]
+  },
+  {
+    "name": "카라멜",
+    "normalizedName": "카라멜",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "카라멜"
+    ]
+  },
+  {
+    "name": "카페인",
+    "normalizedName": "카페인",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "카페인"
+    ]
+  },
+  {
+    "name": "칼슘클로라이드",
+    "normalizedName": "칼슘클로라이드",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "칼슘클로라이드"
+    ]
+  },
+  {
+    "name": "코코넛애씨드",
+    "normalizedName": "코코넛애씨드",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "코코넛애씨드"
+    ]
+  },
+  {
+    "name": "코토니추출물",
+    "normalizedName": "코토니추출물",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "코토니추출물"
+    ]
+  },
+  {
+    "name": "콩오일",
+    "normalizedName": "콩오일",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "콩오일"
+    ]
+  },
+  {
+    "name": "타라열매추출물",
+    "normalizedName": "타라열매추출물",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "타라열매추출물"
+    ]
+  },
+  {
+    "name": "타이로신",
+    "normalizedName": "타이로신",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "타이로신"
+    ]
+  },
+  {
+    "name": "트라이펩타이드-1",
+    "normalizedName": "트라이펩타이드1",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "트라이펩타이드-1"
+    ]
+  },
+  {
+    "name": "티타늄디옥사이드",
+    "normalizedName": "티타늄디옥사이드",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "티타늄디옥사이드"
+    ]
+  },
+  {
+    "name": "팔미토일테트라펩타이드-7",
+    "normalizedName": "팔미토일테트라펩타이드7",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "팔미토일테트라펩타이드-7"
+    ]
+  },
+  {
+    "name": "팔미토일트라이펩타이드-5",
+    "normalizedName": "팔미토일트라이펩타이드5",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "팔미토일트라이펩타이드-5"
+    ]
+  },
+  {
+    "name": "팜오일",
+    "normalizedName": "팜오일",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "팜오일"
+    ]
+  },
+  {
+    "name": "페닐알라닌",
+    "normalizedName": "페닐알라닌",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "페닐알라닌"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-4카프레이트",
+    "normalizedName": "폴리글리세릴4카프레이트",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "폴리글리세릴-4카프레이트"
+    ]
+  },
+  {
+    "name": "폴리아이소부텐",
+    "normalizedName": "폴리아이소부텐",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "폴리아이소부텐"
+    ]
+  },
+  {
+    "name": "폴리하이드록시스테아릭애씨드",
+    "normalizedName": "폴리하이드록시스테아릭애씨드",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "폴리하이드록시스테아릭애씨드"
+    ]
+  },
+  {
+    "name": "푸른연꽃꽃추출물",
+    "normalizedName": "푸른연꽃꽃추출물",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "푸른연꽃꽃추출물"
+    ]
+  },
+  {
+    "name": "프로필렌글라이콜",
+    "normalizedName": "프로필렌글라이콜",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "프로필렌글라이콜"
+    ]
+  },
+  {
+    "name": "프로필헵틸카프릴레이트",
+    "normalizedName": "프로필헵틸카프릴레이트",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "프로필헵틸카프릴레이트"
+    ]
+  },
+  {
+    "name": "프룩토오스",
+    "normalizedName": "프룩토오스",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "프룩토오스"
+    ]
+  },
+  {
+    "name": "하이드록시프로필비스라우라마이드엠이에이",
+    "normalizedName": "하이드록시프로필비스라우라마이드엠이에이",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "하이드록시프로필비스라우라마이드엠이에이"
+    ]
+  },
+  {
+    "name": "헥사펩타이드-9",
+    "normalizedName": "헥사펩타이드9",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "헥사펩타이드-9"
+    ]
+  },
+  {
+    "name": "황련추출물",
+    "normalizedName": "황련추출물",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "황련추출물"
+    ]
+  },
+  {
+    "name": "효모발효여과물",
+    "normalizedName": "효모발효여과물",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "효모발효여과물"
+    ]
+  },
+  {
+    "name": "히스티딘",
+    "normalizedName": "히스티딘",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "히스티딘"
+    ]
+  },
+  {
+    "name": "C12-14알케스-12",
+    "normalizedName": "c1214알케스12",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "C12-14알케스-12"
+    ]
+  },
+  {
+    "name": "C12-15알킬벤조에이트",
+    "normalizedName": "c1215알킬벤조에이트",
+    "occurrenceCount": 4,
+    "productCount": 4,
+    "exampleRawNames": [
+      "C12-15알킬벤조에이트"
+    ]
+  },
+  {
+    "name": "갈락토미세스발효여과물",
+    "normalizedName": "갈락토미세스발효여과물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "갈락토미세스발효여과물"
+    ]
+  },
+  {
+    "name": "감나무잎추출물",
+    "normalizedName": "감나무잎추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "감나무잎추출물"
+    ]
+  },
+  {
+    "name": "검정콩추출물",
+    "normalizedName": "검정콩추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "검정콩추출물"
+    ]
+  },
+  {
+    "name": "결명자씨추출물",
+    "normalizedName": "결명자씨추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "결명자씨추출물"
+    ]
+  },
+  {
+    "name": "구주소나무잎오일",
+    "normalizedName": "구주소나무잎오일",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "구주소나무잎오일"
+    ]
+  },
+  {
+    "name": "꿀추출물",
+    "normalizedName": "꿀추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "꿀추출물"
+    ]
+  },
+  {
+    "name": "네오펜틸글라이콜다이헵타노에이트",
+    "normalizedName": "네오펜틸글라이콜다이헵타노에이트",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "네오펜틸글라이콜다이헵타노에이트"
+    ]
+  },
+  {
+    "name": "녹두전초추출물",
+    "normalizedName": "녹두전초추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "녹두전초추출물(10ppm)"
+    ]
+  },
+  {
+    "name": "녹차수",
+    "normalizedName": "녹차수",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "녹차수"
+    ]
+  },
+  {
+    "name": "녹차씨오일",
+    "normalizedName": "녹차씨오일",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "녹차씨오일"
+    ]
+  },
+  {
+    "name": "다이글리세린",
+    "normalizedName": "다이글리세린",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "다이글리세린"
+    ]
+  },
+  {
+    "name": "다이카프릴릴에터",
+    "normalizedName": "다이카프릴릴에터",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "다이카프릴릴에터"
+    ]
+  },
+  {
+    "name": "당근뿌리추출물",
+    "normalizedName": "당근뿌리추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "당근뿌리추출물"
+    ]
+  },
+  {
+    "name": "락틱애씨드",
+    "normalizedName": "락틱애씨드",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "락틱애씨드"
+    ]
+  },
+  {
+    "name": "레몬즙",
+    "normalizedName": "레몬즙",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "레몬즙"
+    ]
+  },
+  {
+    "name": "로만캐모마일꽃오일",
+    "normalizedName": "로만캐모마일꽃오일",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "로만캐모마일꽃오일"
+    ]
+  },
+  {
+    "name": "멘톡시프로판다이올",
+    "normalizedName": "멘톡시프로판다이올",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "멘톡시프로판다이올"
+    ]
+  },
+  {
+    "name": "미결정셀룰로오스",
+    "normalizedName": "미결정셀룰로오스",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "미결정셀룰로오스"
+    ]
+  },
+  {
+    "name": "밀싹추출물",
+    "normalizedName": "밀싹추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "밀싹추출물"
+    ]
+  },
+  {
+    "name": "베타-카로틴",
+    "normalizedName": "베타카로틴",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "베타-카로틴"
+    ]
+  },
+  {
+    "name": "복숭아열매수",
+    "normalizedName": "복숭아열매수",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "복숭아열매수 (77%)"
+    ]
+  },
+  {
+    "name": "복숭아열매추출물",
+    "normalizedName": "복숭아열매추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "복숭아열매추출물"
+    ]
+  },
+  {
+    "name": "비닐다이메티콘/메티콘실세스퀴옥세인크로스폴리머",
+    "normalizedName": "비닐다이메티콘메티콘실세스퀴옥세인크로스폴리머",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "비닐다이메티콘/메티콘실세스퀴옥세인크로스폴리머"
+    ]
+  },
+  {
+    "name": "비파나무잎추출물",
+    "normalizedName": "비파나무잎추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "비파나무잎추출물"
+    ]
+  },
+  {
+    "name": "사카라이드하이드롤리세이트",
+    "normalizedName": "사카라이드하이드롤리세이트",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "사카라이드하이드롤리세이트"
+    ]
+  },
+  {
+    "name": "삼나무잎추출물",
+    "normalizedName": "삼나무잎추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "삼나무잎추출물"
+    ]
+  },
+  {
+    "name": "상황버섯추출물",
+    "normalizedName": "상황버섯추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "상황버섯추출물"
+    ]
+  },
+  {
+    "name": "세라마이드엔지",
+    "normalizedName": "세라마이드엔지",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "세라마이드엔지"
+    ]
+  },
+  {
+    "name": "세이지오일",
+    "normalizedName": "세이지오일",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "세이지오일"
+    ]
+  },
+  {
+    "name": "셀룰로오스",
+    "normalizedName": "셀룰로오스",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "셀룰로오스"
+    ]
+  },
+  {
+    "name": "소듐메타포스페이트",
+    "normalizedName": "소듐메타포스페이트",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "소듐메타포스페이트"
+    ]
+  },
+  {
+    "name": "소듐설파이트",
+    "normalizedName": "소듐설파이트",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "소듐설파이트"
+    ]
+  },
+  {
+    "name": "소듐코코일글리시네이트",
+    "normalizedName": "소듐코코일글리시네이트",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "소듐코코일글리시네이트"
+    ]
+  },
+  {
+    "name": "소듐코코일알라니네이트",
+    "normalizedName": "소듐코코일알라니네이트",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "소듐코코일알라니네이트"
+    ]
+  },
+  {
+    "name": "소듐트라이메타포스페이트",
+    "normalizedName": "소듐트라이메타포스페이트",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "소듐트라이메타포스페이트"
+    ]
+  },
+  {
+    "name": "소듐피씨에이",
+    "normalizedName": "소듐피씨에이",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "소듐피씨에이"
+    ]
+  },
+  {
+    "name": "솔베스-30테트라올리에이트",
+    "normalizedName": "솔베스30테트라올리에이트",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "솔베스-30테트라올리에이트"
+    ]
+  },
+  {
+    "name": "스테아릴알코올",
+    "normalizedName": "스테아릴알코올",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "스테아릴알코올"
+    ]
+  },
+  {
+    "name": "쌀겨수",
+    "normalizedName": "쌀겨수",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "쌀겨수",
+      "쌀겨수 (71%)"
+    ]
+  },
+  {
+    "name": "쌀겨오일",
+    "normalizedName": "쌀겨오일",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "쌀겨오일"
+    ]
+  },
+  {
+    "name": "쌀추출물",
+    "normalizedName": "쌀추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "쌀추출물",
+      "쌀추출물 (3,753ppm)"
+    ]
+  },
+  {
+    "name": "쑥추출물",
+    "normalizedName": "쑥추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "쑥추출물 (11,760ppm)",
+      "쑥추출물 (10,045ppm)",
+      "쑥추출물 (10,094ppm)"
+    ]
+  },
+  {
+    "name": "아스코빌글루코사이드",
+    "normalizedName": "아스코빌글루코사이드",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "아스코빌글루코사이드"
+    ]
+  },
+  {
+    "name": "아이비고드열매추출물",
+    "normalizedName": "아이비고드열매추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "아이비고드열매추출물"
+    ]
+  },
+  {
+    "name": "안하이드로자일리톨",
+    "normalizedName": "안하이드로자일리톨",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "안하이드로자일리톨"
+    ]
+  },
+  {
+    "name": "알부틴",
+    "normalizedName": "알부틴",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "알부틴"
+    ]
+  },
+  {
+    "name": "애플민트잎추출물",
+    "normalizedName": "애플민트잎추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "애플민트잎추출물"
+    ]
+  },
+  {
+    "name": "어성초꽃/잎/줄기수",
+    "normalizedName": "어성초꽃잎줄기수",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "어성초꽃/잎/줄기수"
+    ]
+  },
+  {
+    "name": "에틸헥실스테아레이트",
+    "normalizedName": "에틸헥실스테아레이트",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "에틸헥실스테아레이트"
+    ]
+  },
+  {
+    "name": "연꽃잎추출물",
+    "normalizedName": "연꽃잎추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "연꽃잎추출물"
+    ]
+  },
+  {
+    "name": "옥틸도데세스-16",
+    "normalizedName": "옥틸도데세스16",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "옥틸도데세스-16"
+    ]
+  },
+  {
+    "name": "올리브오일",
+    "normalizedName": "올리브오일",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "올리브오일"
+    ]
+  },
+  {
+    "name": "위치하젤추출물",
+    "normalizedName": "위치하젤추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "위치하젤추출물"
+    ]
+  },
+  {
+    "name": "카프릴릴/카프릴글루코사이드",
+    "normalizedName": "카프릴릴카프릴글루코사이드",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "카프릴릴/카프릴글루코사이드"
+    ]
+  },
+  {
+    "name": "캐모마일꽃오일",
+    "normalizedName": "캐모마일꽃오일",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "캐모마일꽃오일"
+    ]
+  },
+  {
+    "name": "케이프알로에잎추출물",
+    "normalizedName": "케이프알로에잎추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "케이프알로에잎추출물"
+    ]
+  },
+  {
+    "name": "클로페네신",
+    "normalizedName": "클로페네신",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "클로페네신"
+    ]
+  },
+  {
+    "name": "토코트리에놀",
+    "normalizedName": "토코트리에놀",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "토코트리에놀"
+    ]
+  },
+  {
+    "name": "티타늄디옥사이드 (CI 77891)",
+    "normalizedName": "티타늄디옥사이드ci77891",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "티타늄디옥사이드 (CI 77891)"
+    ]
+  },
+  {
+    "name": "티트리잎추출물",
+    "normalizedName": "티트리잎추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "티트리잎추출물"
+    ]
+  },
+  {
+    "name": "파스향나무잎추출물",
+    "normalizedName": "파스향나무잎추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "파스향나무잎추출물",
+      "파스향나무잎추출물(100ppb)"
+    ]
+  },
+  {
+    "name": "판토락톤",
+    "normalizedName": "판토락톤",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "판토락톤"
+    ]
+  },
+  {
+    "name": "판토테닉애씨드",
+    "normalizedName": "판토테닉애씨드",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "판토테닉애씨드"
+    ]
+  },
+  {
+    "name": "팥씨추출물",
+    "normalizedName": "팥씨추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "팥씨추출물"
+    ]
+  },
+  {
+    "name": "팥추출물",
+    "normalizedName": "팥추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "팥추출물",
+      "팥추출물(300ppm)"
+    ]
+  },
+  {
+    "name": "펜타에리스리틸테트라에틸헥사노에이트",
+    "normalizedName": "펜타에리스리틸테트라에틸헥사노에이트",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "펜타에리스리틸테트라에틸헥사노에이트"
+    ]
+  },
+  {
+    "name": "편백잎추출물",
+    "normalizedName": "편백잎추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "편백잎추출물"
+    ]
+  },
+  {
+    "name": "포스파티딜콜린",
+    "normalizedName": "포스파티딜콜린",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "포스파티딜콜린"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-2다이폴리하이드록시스테아레이트",
+    "normalizedName": "폴리글리세릴2다이폴리하이드록시스테아레이트",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "폴리글리세릴-2다이폴리하이드록시스테아레이트"
+    ]
+  },
+  {
+    "name": "폴리솔베이트60",
+    "normalizedName": "폴리솔베이트60",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "폴리솔베이트60"
+    ]
+  },
+  {
+    "name": "폴리실리콘-15",
+    "normalizedName": "폴리실리콘15",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "폴리실리콘-15"
+    ]
+  },
+  {
+    "name": "폴리C10-30알킬아크릴레이트",
+    "normalizedName": "폴리c1030알킬아크릴레이트",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "폴리C10-30알킬아크릴레이트"
+    ]
+  },
+  {
+    "name": "피씨에이",
+    "normalizedName": "피씨에이",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "피씨에이"
+    ]
+  },
+  {
+    "name": "피이지-100스테아레이트",
+    "normalizedName": "피이지100스테아레이트",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "피이지-100스테아레이트"
+    ]
+  },
+  {
+    "name": "하이드록시스테아릭애씨드",
+    "normalizedName": "하이드록시스테아릭애씨드",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "하이드록시스테아릭애씨드"
+    ]
+  },
+  {
+    "name": "하이드롤라이즈드옥수수전분",
+    "normalizedName": "하이드롤라이즈드옥수수전분",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "하이드롤라이즈드옥수수전분"
+    ]
+  },
+  {
+    "name": "하이드롤라이즈드익스텐신",
+    "normalizedName": "하이드롤라이즈드익스텐신",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "하이드롤라이즈드익스텐신",
+      "하이드롤라이즈드익스텐신(3ppm)"
+    ]
+  },
+  {
+    "name": "한련초잎추출물",
+    "normalizedName": "한련초잎추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "한련초잎추출물"
+    ]
+  },
+  {
+    "name": "한련초추출물",
+    "normalizedName": "한련초추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "한련초추출물"
+    ]
+  },
+  {
+    "name": "합성왁스",
+    "normalizedName": "합성왁스",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "합성왁스"
+    ]
+  },
+  {
+    "name": "헵틸운데실레네이트",
+    "normalizedName": "헵틸운데실레네이트",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "헵틸운데실레네이트"
+    ]
+  },
+  {
+    "name": "호장근뿌리추출물",
+    "normalizedName": "호장근뿌리추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "호장근뿌리추출물"
+    ]
+  },
+  {
+    "name": "황색산화철",
+    "normalizedName": "황색산화철",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "황색산화철"
+    ]
+  },
+  {
+    "name": "흰버드나무껍질추출물",
+    "normalizedName": "흰버드나무껍질추출물",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "흰버드나무껍질추출물"
+    ]
+  },
+  {
+    "name": "C12-14파레스-12",
+    "normalizedName": "c1214파레스12",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "C12-14파레스-12"
+    ]
+  },
+  {
+    "name": "C12-16알코올",
+    "normalizedName": "c1216알코올",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "C12-16알코올"
+    ]
+  },
+  {
+    "name": "t-부틸알코올",
+    "normalizedName": "t부틸알코올",
+    "occurrenceCount": 3,
+    "productCount": 3,
+    "exampleRawNames": [
+      "t-부틸알코올"
+    ]
+  },
+  {
+    "name": "4-터피네올",
+    "normalizedName": "4터피네올",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "4-터피네올"
+    ]
+  },
+  {
+    "name": "가수분해치자추출물",
+    "normalizedName": "가수분해치자추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "가수분해치자추출물"
+    ]
+  },
+  {
+    "name": "감초뿌리추출물",
+    "normalizedName": "감초뿌리추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "감초뿌리추출물"
+    ]
+  },
+  {
+    "name": "개똥쑥추출물",
+    "normalizedName": "개똥쑥추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "개똥쑥추출물"
+    ]
+  },
+  {
+    "name": "귤껍질추출물",
+    "normalizedName": "귤껍질추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "귤껍질추출물"
+    ]
+  },
+  {
+    "name": "글라이콜다이스테아레이트",
+    "normalizedName": "글라이콜다이스테아레이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "글라이콜다이스테아레이트"
+    ]
+  },
+  {
+    "name": "글리세레스-25피씨에이아이소스테아레이트",
+    "normalizedName": "글리세레스25피씨에이아이소스테아레이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "글리세레스-25피씨에이아이소스테아레이트"
+    ]
+  },
+  {
+    "name": "꽃가루추출물",
+    "normalizedName": "꽃가루추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "꽃가루추출물"
+    ]
+  },
+  {
+    "name": "녹두가루",
+    "normalizedName": "녹두가루",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "녹두가루(9,000ppm)",
+      "녹두가루(6,099ppm)"
+    ]
+  },
+  {
+    "name": "다마스크장미꽃수",
+    "normalizedName": "다마스크장미꽃수",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "다마스크장미꽃수"
+    ]
+  },
+  {
+    "name": "다발방패버섯추출물",
+    "normalizedName": "다발방패버섯추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "다발방패버섯추출물"
+    ]
+  },
+  {
+    "name": "다이메티코놀",
+    "normalizedName": "다이메티코놀",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "다이메티코놀"
+    ]
+  },
+  {
+    "name": "다이메티콘크로스폴리머",
+    "normalizedName": "다이메티콘크로스폴리머",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "다이메티콘크로스폴리머"
+    ]
+  },
+  {
+    "name": "다이소듐라우레스설포석시네이트",
+    "normalizedName": "다이소듐라우레스설포석시네이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "다이소듐라우레스설포석시네이트"
+    ]
+  },
+  {
+    "name": "다이펩타이드-2",
+    "normalizedName": "다이펩타이드2",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "다이펩타이드-2"
+    ]
+  },
+  {
+    "name": "달맞이꽃오일",
+    "normalizedName": "달맞이꽃오일",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "달맞이꽃오일"
+    ]
+  },
+  {
+    "name": "당호박추출물",
+    "normalizedName": "당호박추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "당호박추출물"
+    ]
+  },
+  {
+    "name": "대왕소나무잎추출물",
+    "normalizedName": "대왕소나무잎추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "대왕소나무잎추출물"
+    ]
+  },
+  {
+    "name": "돌콩오일불검화물",
+    "normalizedName": "돌콩오일불검화물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "돌콩오일불검화물"
+    ]
+  },
+  {
+    "name": "동백나무잎추출물",
+    "normalizedName": "동백나무잎추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "동백나무잎추출물"
+    ]
+  },
+  {
+    "name": "드럼스틱씨오일",
+    "normalizedName": "드럼스틱씨오일",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "드럼스틱씨오일"
+    ]
+  },
+  {
+    "name": "라이신에이치씨엘",
+    "normalizedName": "라이신에이치씨엘",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "라이신에이치씨엘"
+    ]
+  },
+  {
+    "name": "라피노오스",
+    "normalizedName": "라피노오스",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "라피노오스"
+    ]
+  },
+  {
+    "name": "레티놀",
+    "normalizedName": "레티놀",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "레티놀 (0.1%)",
+      "레티놀 (0.3%)"
+    ]
+  },
+  {
+    "name": "루틴",
+    "normalizedName": "루틴",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "루틴"
+    ]
+  },
+  {
+    "name": "류코노스톡/무발효여과물",
+    "normalizedName": "류코노스톡무발효여과물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "류코노스톡/무발효여과물"
+    ]
+  },
+  {
+    "name": "마이크로크리스탈린셀룰로오스",
+    "normalizedName": "마이크로크리스탈린셀룰로오스",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "마이크로크리스탈린셀룰로오스"
+    ]
+  },
+  {
+    "name": "마이크로크리스탈린왁스",
+    "normalizedName": "마이크로크리스탈린왁스",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "마이크로크리스탈린왁스"
+    ]
+  },
+  {
+    "name": "마트리카리아꽃오일",
+    "normalizedName": "마트리카리아꽃오일",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "마트리카리아꽃오일"
+    ]
+  },
+  {
+    "name": "만델릭애씨드",
+    "normalizedName": "만델릭애씨드",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "만델릭애씨드"
+    ]
+  },
+  {
+    "name": "매실열매수",
+    "normalizedName": "매실열매수",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "매실열매수"
+    ]
+  },
+  {
+    "name": "메틸글루세스-10",
+    "normalizedName": "메틸글루세스10",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "메틸글루세스-10"
+    ]
+  },
+  {
+    "name": "멕시칸치아씨추출물",
+    "normalizedName": "멕시칸치아씨추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "멕시칸치아씨추출물"
+    ]
+  },
+  {
+    "name": "멘틸락테이트",
+    "normalizedName": "멘틸락테이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "멘틸락테이트"
+    ]
+  },
+  {
+    "name": "모링가씨오일",
+    "normalizedName": "모링가씨오일",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "모링가씨오일"
+    ]
+  },
+  {
+    "name": "무화과열매추출물",
+    "normalizedName": "무화과열매추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "무화과열매추출물"
+    ]
+  },
+  {
+    "name": "미리스틸글루코사이드",
+    "normalizedName": "미리스틸글루코사이드",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "미리스틸글루코사이드"
+    ]
+  },
+  {
+    "name": "밀배아오일불검화물",
+    "normalizedName": "밀배아오일불검화물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "밀배아오일불검화물"
+    ]
+  },
+  {
+    "name": "바오밥나무씨오일",
+    "normalizedName": "바오밥나무씨오일",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "바오밥나무씨오일"
+    ]
+  },
+  {
+    "name": "배열매추출물",
+    "normalizedName": "배열매추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "배열매추출물"
+    ]
+  },
+  {
+    "name": "베르가모트열매오일",
+    "normalizedName": "베르가모트열매오일",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "베르가모트열매오일"
+    ]
+  },
+  {
+    "name": "벤질글라이콜",
+    "normalizedName": "벤질글라이콜",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "벤질글라이콜"
+    ]
+  },
+  {
+    "name": "벤토나이트",
+    "normalizedName": "벤토나이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "벤토나이트(7.5%)",
+      "벤토나이트"
+    ]
+  },
+  {
+    "name": "병풀뿌리추출물",
+    "normalizedName": "병풀뿌리추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "병풀뿌리추출물"
+    ]
+  },
+  {
+    "name": "보론나이트라이드",
+    "normalizedName": "보론나이트라이드",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "보론나이트라이드"
+    ]
+  },
+  {
+    "name": "비스-다이글리세릴폴리아실아디페이트-2",
+    "normalizedName": "비스다이글리세릴폴리아실아디페이트2",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "비스-다이글리세릴폴리아실아디페이트-2"
+    ]
+  },
+  {
+    "name": "비타민나무열매오일",
+    "normalizedName": "비타민나무열매오일",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "비타민나무열매오일"
+    ]
+  },
+  {
+    "name": "비타민나무열매추출물",
+    "normalizedName": "비타민나무열매추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "비타민나무열매추출물"
+    ]
+  },
+  {
+    "name": "비피다발효여과물",
+    "normalizedName": "비피다발효여과물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "비피다발효여과물"
+    ]
+  },
+  {
+    "name": "빙하수",
+    "normalizedName": "빙하수",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "빙하수"
+    ]
+  },
+  {
+    "name": "사과열매수",
+    "normalizedName": "사과열매수",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "사과열매수"
+    ]
+  },
+  {
+    "name": "사카로미세스발효물",
+    "normalizedName": "사카로미세스발효물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "사카로미세스발효물"
+    ]
+  },
+  {
+    "name": "사카로미세스발효여과물",
+    "normalizedName": "사카로미세스발효여과물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "사카로미세스발효여과물"
+    ]
+  },
+  {
+    "name": "센티드제라늄꽃오일",
+    "normalizedName": "센티드제라늄꽃오일",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "센티드제라늄꽃오일"
+    ]
+  },
+  {
+    "name": "소두구씨오일",
+    "normalizedName": "소두구씨오일",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "소두구씨오일"
+    ]
+  },
+  {
+    "name": "소듐글루코네이트",
+    "normalizedName": "소듐글루코네이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "소듐글루코네이트"
+    ]
+  },
+  {
+    "name": "소듐메틸스테아로일타우레이트",
+    "normalizedName": "소듐메틸스테아로일타우레이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "소듐메틸스테아로일타우레이트"
+    ]
+  },
+  {
+    "name": "소듐아이세티오네이트",
+    "normalizedName": "소듐아이세티오네이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "소듐아이세티오네이트"
+    ]
+  },
+  {
+    "name": "소듐이세티오네이트",
+    "normalizedName": "소듐이세티오네이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "소듐이세티오네이트"
+    ]
+  },
+  {
+    "name": "소듐코코일글라이시네이트",
+    "normalizedName": "소듐코코일글라이시네이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "소듐코코일글라이시네이트"
+    ]
+  },
+  {
+    "name": "소듐코코일글루타메이트",
+    "normalizedName": "소듐코코일글루타메이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "소듐코코일글루타메이트"
+    ]
+  },
+  {
+    "name": "소듐하이드록사이드",
+    "normalizedName": "소듐하이드록사이드",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "소듐하이드록사이드"
+    ]
+  },
+  {
+    "name": "소목줄기가루",
+    "normalizedName": "소목줄기가루",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "소목줄기가루"
+    ]
+  },
+  {
+    "name": "솔비탄스테아레이트",
+    "normalizedName": "솔비탄스테아레이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "솔비탄스테아레이트"
+    ]
+  },
+  {
+    "name": "수크로오스스테아레이트",
+    "normalizedName": "수크로오스스테아레이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "수크로오스스테아레이트"
+    ]
+  },
+  {
+    "name": "수크로오스팔미테이트",
+    "normalizedName": "수크로오스팔미테이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "수크로오스팔미테이트"
+    ]
+  },
+  {
+    "name": "쌀겨왁스",
+    "normalizedName": "쌀겨왁스",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "쌀겨왁스"
+    ]
+  },
+  {
+    "name": "쌀씨단백질",
+    "normalizedName": "쌀씨단백질",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "쌀씨단백질 (3,000ppb)",
+      "쌀씨단백질"
+    ]
+  },
+  {
+    "name": "아르간씨오일",
+    "normalizedName": "아르간씨오일",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "아르간씨오일"
+    ]
+  },
+  {
+    "name": "아미노부티릭애씨드",
+    "normalizedName": "아미노부티릭애씨드",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "아미노부티릭애씨드"
+    ]
+  },
+  {
+    "name": "아스코빌팔미테이트",
+    "normalizedName": "아스코빌팔미테이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "아스코빌팔미테이트"
+    ]
+  },
+  {
+    "name": "아이비잎/줄기추출물",
+    "normalizedName": "아이비잎줄기추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "아이비잎/줄기추출물"
+    ]
+  },
+  {
+    "name": "아이소프로필팔미테이트",
+    "normalizedName": "아이소프로필팔미테이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "아이소프로필팔미테이트"
+    ]
+  },
+  {
+    "name": "알루미늄/마그네슘하이드록사이드스테아레이트",
+    "normalizedName": "알루미늄마그네슘하이드록사이드스테아레이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "알루미늄/마그네슘하이드록사이드스테아레이트"
+    ]
+  },
+  {
+    "name": "에난티아 클로란타껍질추출물",
+    "normalizedName": "에난티아클로란타껍질추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "에난티아 클로란타껍질추출물"
+    ]
+  },
+  {
+    "name": "에칠헥실살리실레이트",
+    "normalizedName": "에칠헥실살리실레이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "에칠헥실살리실레이트"
+    ]
+  },
+  {
+    "name": "옥수수커넬추출물",
+    "normalizedName": "옥수수커넬추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "옥수수커넬추출물"
+    ]
+  },
+  {
+    "name": "옥탄다이올",
+    "normalizedName": "옥탄다이올",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "옥탄다이올"
+    ]
+  },
+  {
+    "name": "올레아놀릭애씨드",
+    "normalizedName": "올레아놀릭애씨드",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "올레아놀릭애씨드"
+    ]
+  },
+  {
+    "name": "올리고펩타이드-1",
+    "normalizedName": "올리고펩타이드1",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "올리고펩타이드-1"
+    ]
+  },
+  {
+    "name": "올리고펩타이드-2",
+    "normalizedName": "올리고펩타이드2",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "올리고펩타이드-2"
+    ]
+  },
+  {
+    "name": "올리브오일불검화물",
+    "normalizedName": "올리브오일불검화물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "올리브오일불검화물"
+    ]
+  },
+  {
+    "name": "우엉뿌리추출물",
+    "normalizedName": "우엉뿌리추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "우엉뿌리추출물"
+    ]
+  },
+  {
+    "name": "울트라마린",
+    "normalizedName": "울트라마린",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "울트라마린"
+    ]
+  },
+  {
+    "name": "유칼립투스잎추출물",
+    "normalizedName": "유칼립투스잎추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "유칼립투스잎추출물"
+    ]
+  },
+  {
+    "name": "이눌린라우릴카바메이트",
+    "normalizedName": "이눌린라우릴카바메이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "이눌린라우릴카바메이트"
+    ]
+  },
+  {
+    "name": "잇꽃꽃추출물",
+    "normalizedName": "잇꽃꽃추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "잇꽃꽃추출물"
+    ]
+  },
+  {
+    "name": "적색산화철",
+    "normalizedName": "적색산화철",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "적색산화철"
+    ]
+  },
+  {
+    "name": "적색산화철(CI 77491)",
+    "normalizedName": "적색산화철ci77491",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "적색산화철(CI 77491)",
+      "적색산화철 (CI 77491)"
+    ]
+  },
+  {
+    "name": "제라니올",
+    "normalizedName": "제라니올",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "제라니올"
+    ]
+  },
+  {
+    "name": "카나우바왁스",
+    "normalizedName": "카나우바왁스",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "카나우바왁스"
+    ]
+  },
+  {
+    "name": "카나우바왁스추출물",
+    "normalizedName": "카나우바왁스추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "카나우바왁스추출물"
+    ]
+  },
+  {
+    "name": "카프로익애씨드",
+    "normalizedName": "카프로익애씨드",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "카프로익애씨드"
+    ]
+  },
+  {
+    "name": "칸디다 봄비콜라/글루코오스/메틸레이프씨데이트발효물",
+    "normalizedName": "칸디다봄비콜라글루코오스메틸레이프씨데이트발효물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "칸디다 봄비콜라/글루코오스/메틸레이프씨데이트발효물"
+    ]
+  },
+  {
+    "name": "칼라민",
+    "normalizedName": "칼라민",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "칼라민"
+    ]
+  },
+  {
+    "name": "코치닐선인장열매추출물",
+    "normalizedName": "코치닐선인장열매추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "코치닐선인장열매추출물"
+    ]
+  },
+  {
+    "name": "코카미도프로필베타인",
+    "normalizedName": "코카미도프로필베타인",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "코카미도프로필베타인"
+    ]
+  },
+  {
+    "name": "콜라겐추출물",
+    "normalizedName": "콜라겐추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "콜라겐추출물(100 ppm)",
+      "콜라겐추출물"
+    ]
+  },
+  {
+    "name": "퀸즈랜드넛오일",
+    "normalizedName": "퀸즈랜드넛오일",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "퀸즈랜드넛오일"
+    ]
+  },
+  {
+    "name": "퀼라야나무껍질추출물",
+    "normalizedName": "퀼라야나무껍질추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "퀼라야나무껍질추출물"
+    ]
+  },
+  {
+    "name": "클로렐라 불가리스추출물",
+    "normalizedName": "클로렐라불가리스추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "클로렐라 불가리스추출물",
+      "클로렐라불가리스추출물"
+    ]
+  },
+  {
+    "name": "클로렐라추출물",
+    "normalizedName": "클로렐라추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "클로렐라추출물"
+    ]
+  },
+  {
+    "name": "타임추출물",
+    "normalizedName": "타임추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "타임추출물"
+    ]
+  },
+  {
+    "name": "테트라아세틸피토스핑고신",
+    "normalizedName": "테트라아세틸피토스핑고신",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "테트라아세틸피토스핑고신"
+    ]
+  },
+  {
+    "name": "트라이데세스-10",
+    "normalizedName": "트라이데세스10",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "트라이데세스-10"
+    ]
+  },
+  {
+    "name": "티몰트라이메톡시신나메이트",
+    "normalizedName": "티몰트라이메톡시신나메이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "티몰트라이메톡시신나메이트"
+    ]
+  },
+  {
+    "name": "파파인",
+    "normalizedName": "파파인",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "파파인"
+    ]
+  },
+  {
+    "name": "팥씨가루",
+    "normalizedName": "팥씨가루",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "팥씨가루"
+    ]
+  },
+  {
+    "name": "페네틸알코올",
+    "normalizedName": "페네틸알코올",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "페네틸알코올"
+    ]
+  },
+  {
+    "name": "펜타에리스리틸테트라-다이-t-부틸하이드록시하이드로신나메이트",
+    "normalizedName": "펜타에리스리틸테트라다이t부틸하이드록시하이드로신나메이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "펜타에리스리틸테트라-다이-t-부틸하이드록시하이드로신나메이트"
+    ]
+  },
+  {
+    "name": "포도추출물",
+    "normalizedName": "포도추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "포도추출물"
+    ]
+  },
+  {
+    "name": "포스포리피드",
+    "normalizedName": "포스포리피드",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "포스포리피드"
+    ]
+  },
+  {
+    "name": "포타슘라우레이트",
+    "normalizedName": "포타슘라우레이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "포타슘라우레이트"
+    ]
+  },
+  {
+    "name": "포타슘코코에이트",
+    "normalizedName": "포타슘코코에이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "포타슘코코에이트"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-2스테아레이트",
+    "normalizedName": "폴리글리세릴2스테아레이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "폴리글리세릴-2스테아레이트"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-4다이아이소스테아레이트/폴리하이드록시스테아레이트/세바케이트",
+    "normalizedName": "폴리글리세릴4다이아이소스테아레이트폴리하이드록시스테아레이트세바케이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "폴리글리세릴-4다이아이소스테아레이트/폴리하이드록시스테아레이트/세바케이트"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-4올리에이트",
+    "normalizedName": "폴리글리세릴4올리에이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "폴리글리세릴-4올리에이트"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-6라우레이트",
+    "normalizedName": "폴리글리세릴6라우레이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "폴리글리세릴-6라우레이트"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-6폴리리시놀리에이트",
+    "normalizedName": "폴리글리세릴6폴리리시놀리에이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "폴리글리세릴-6폴리리시놀리에이트"
+    ]
+  },
+  {
+    "name": "폴리솔베이트80",
+    "normalizedName": "폴리솔베이트80",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "폴리솔베이트80"
+    ]
+  },
+  {
+    "name": "폴리실리콘-11",
+    "normalizedName": "폴리실리콘11",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "폴리실리콘-11"
+    ]
+  },
+  {
+    "name": "폴리아크릴레이트-13",
+    "normalizedName": "폴리아크릴레이트13",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "폴리아크릴레이트-13"
+    ]
+  },
+  {
+    "name": "폴리에터-1",
+    "normalizedName": "폴리에터1",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "폴리에터-1"
+    ]
+  },
+  {
+    "name": "폴리에틸렌",
+    "normalizedName": "폴리에틸렌",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "폴리에틸렌"
+    ]
+  },
+  {
+    "name": "풀루란",
+    "normalizedName": "풀루란",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "풀루란"
+    ]
+  },
+  {
+    "name": "프로테아제",
+    "normalizedName": "프로테아제",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "프로테아제"
+    ]
+  },
+  {
+    "name": "프룩탄",
+    "normalizedName": "프룩탄",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "프룩탄"
+    ]
+  },
+  {
+    "name": "하이드록시신나믹애씨드",
+    "normalizedName": "하이드록시신나믹애씨드",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "하이드록시신나믹애씨드"
+    ]
+  },
+  {
+    "name": "하이드록시프로필메틸셀룰로오스",
+    "normalizedName": "하이드록시프로필메틸셀룰로오스",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "하이드록시프로필메틸셀룰로오스"
+    ]
+  },
+  {
+    "name": "하이드록시프로필메틸셀룰로오스스테아록시에터",
+    "normalizedName": "하이드록시프로필메틸셀룰로오스스테아록시에터",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "하이드록시프로필메틸셀룰로오스스테아록시에터"
+    ]
+  },
+  {
+    "name": "하이드롤라이즈드글라이코사미노글리칸",
+    "normalizedName": "하이드롤라이즈드글라이코사미노글리칸",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "하이드롤라이즈드글라이코사미노글리칸"
+    ]
+  },
+  {
+    "name": "하이드롤라이즈드맥아추출물",
+    "normalizedName": "하이드롤라이즈드맥아추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "하이드롤라이즈드맥아추출물"
+    ]
+  },
+  {
+    "name": "하이드롤라이즈드식물성단백질",
+    "normalizedName": "하이드롤라이즈드식물성단백질",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "하이드롤라이즈드식물성단백질"
+    ]
+  },
+  {
+    "name": "하이드롤라이즈드쌀단백질",
+    "normalizedName": "하이드롤라이즈드쌀단백질",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "하이드롤라이즈드쌀단백질 (3,000ppb)",
+      "하이드롤라이즈드쌀단백질"
+    ]
+  },
+  {
+    "name": "하이드롤라이즈드콜라겐",
+    "normalizedName": "하이드롤라이즈드콜라겐",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "하이드롤라이즈드콜라겐(100 ppm)",
+      "하이드롤라이즈드콜라겐(250 ppm)"
+    ]
+  },
+  {
+    "name": "헥토라이트",
+    "normalizedName": "헥토라이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "헥토라이트"
+    ]
+  },
+  {
+    "name": "헵타소듐헥사카복시메틸다이펩타이드-12",
+    "normalizedName": "헵타소듐헥사카복시메틸다이펩타이드12",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "헵타소듐헥사카복시메틸다이펩타이드-12"
+    ]
+  },
+  {
+    "name": "호모살레이트",
+    "normalizedName": "호모살레이트",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "호모살레이트 9.5%",
+      "호모살레이트"
+    ]
+  },
+  {
+    "name": "호박가루",
+    "normalizedName": "호박가루",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "호박가루"
+    ]
+  },
+  {
+    "name": "호호바에스터",
+    "normalizedName": "호호바에스터",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "호호바에스터"
+    ]
+  },
+  {
+    "name": "홍화꽃추출물",
+    "normalizedName": "홍화꽃추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "홍화꽃추출물"
+    ]
+  },
+  {
+    "name": "황금뿌리추출물",
+    "normalizedName": "황금뿌리추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "황금뿌리추출물"
+    ]
+  },
+  {
+    "name": "황벽나무나무껍질추출물",
+    "normalizedName": "황벽나무나무껍질추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "황벽나무나무껍질추출물"
+    ]
+  },
+  {
+    "name": "효모발효추출물",
+    "normalizedName": "효모발효추출물",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "효모발효추출물"
+    ]
+  },
+  {
+    "name": "흰버드나무나무껍질수",
+    "normalizedName": "흰버드나무나무껍질수",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "흰버드나무나무껍질수"
+    ]
+  },
+  {
+    "name": "C18-21알케인",
+    "normalizedName": "c1821알케인",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "C18-21알케인"
+    ]
+  },
+  {
+    "name": "C30-45알킬세테아릴다이메티콘크로스폴리머",
+    "normalizedName": "c3045알킬세테아릴다이메티콘크로스폴리머",
+    "occurrenceCount": 2,
+    "productCount": 2,
+    "exampleRawNames": [
+      "C30-45알킬세테아릴다이메티콘크로스폴리머"
+    ]
+  },
+  {
+    "name": "1,2-헥산디올",
+    "normalizedName": "12헥산디올",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "1,2-헥산디올"
+    ]
+  },
+  {
+    "name": "가수분해삼색제비꽃추출물",
+    "normalizedName": "가수분해삼색제비꽃추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "가수분해삼색제비꽃추출물"
+    ]
+  },
+  {
+    "name": "가수분해오크라추출물",
+    "normalizedName": "가수분해오크라추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "가수분해오크라추출물"
+    ]
+  },
+  {
+    "name": "개박하추출물",
+    "normalizedName": "개박하추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "개박하추출물"
+    ]
+  },
+  {
+    "name": "고수추출물",
+    "normalizedName": "고수추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "고수추출물"
+    ]
+  },
+  {
+    "name": "구기자열매추출물",
+    "normalizedName": "구기자열매추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "구기자열매추출물"
+    ]
+  },
+  {
+    "name": "구아하이드록시프로필트라이모늄클로라이드",
+    "normalizedName": "구아하이드록시프로필트라이모늄클로라이드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "구아하이드록시프로필트라이모늄클로라이드"
+    ]
+  },
+  {
+    "name": "귀리단백질추출물",
+    "normalizedName": "귀리단백질추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "귀리단백질추출물"
+    ]
+  },
+  {
+    "name": "귀리커넬가루",
+    "normalizedName": "귀리커넬가루",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "귀리커넬가루"
+    ]
+  },
+  {
+    "name": "귀리커넬추출물",
+    "normalizedName": "귀리커넬추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "귀리커넬추출물"
+    ]
+  },
+  {
+    "name": "규조토",
+    "normalizedName": "규조토",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "규조토"
+    ]
+  },
+  {
+    "name": "글라이코실트레할로오스",
+    "normalizedName": "글라이코실트레할로오스",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "글라이코실트레할로오스"
+    ]
+  },
+  {
+    "name": "글라이코젠",
+    "normalizedName": "글라이코젠",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "글라이코젠"
+    ]
+  },
+  {
+    "name": "글루코닉애씨드",
+    "normalizedName": "글루코닉애씨드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "글루코닉애씨드"
+    ]
+  },
+  {
+    "name": "글리세릴리놀리네이트",
+    "normalizedName": "글리세릴리놀리네이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "글리세릴리놀리네이트"
+    ]
+  },
+  {
+    "name": "글리세릴리놀리에이트",
+    "normalizedName": "글리세릴리놀리에이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "글리세릴리놀리에이트"
+    ]
+  },
+  {
+    "name": "글리세릴아라키도네이트",
+    "normalizedName": "글리세릴아라키도네이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "글리세릴아라키도네이트"
+    ]
+  },
+  {
+    "name": "글리세릴올리에이트",
+    "normalizedName": "글리세릴올리에이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "글리세릴올리에이트"
+    ]
+  },
+  {
+    "name": "난추출물",
+    "normalizedName": "난추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "난추출물"
+    ]
+  },
+  {
+    "name": "낫토검",
+    "normalizedName": "낫토검",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "낫토검"
+    ]
+  },
+  {
+    "name": "노나펩타이드-1",
+    "normalizedName": "노나펩타이드1",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "노나펩타이드-1"
+    ]
+  },
+  {
+    "name": "노니꽃추출물",
+    "normalizedName": "노니꽃추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "노니꽃추출물"
+    ]
+  },
+  {
+    "name": "노니잎추출물",
+    "normalizedName": "노니잎추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "노니잎추출물"
+    ]
+  },
+  {
+    "name": "노니추출물",
+    "normalizedName": "노니추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "노니추출물(300ppm)"
+    ]
+  },
+  {
+    "name": "녹나무잎추출물",
+    "normalizedName": "녹나무잎추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "녹나무잎추출물"
+    ]
+  },
+  {
+    "name": "녹두씨가루",
+    "normalizedName": "녹두씨가루",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "녹두씨가루"
+    ]
+  },
+  {
+    "name": "녹차가루",
+    "normalizedName": "녹차가루",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "녹차가루"
+    ]
+  },
+  {
+    "name": "녹차잎수",
+    "normalizedName": "녹차잎수",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "녹차잎수"
+    ]
+  },
+  {
+    "name": "녹차카테킨",
+    "normalizedName": "녹차카테킨",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "녹차카테킨"
+    ]
+  },
+  {
+    "name": "님나무껍질추출물",
+    "normalizedName": "님나무껍질추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "님나무껍질추출물"
+    ]
+  },
+  {
+    "name": "다마스크장미꽃오일",
+    "normalizedName": "다마스크장미꽃오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "다마스크장미꽃오일"
+    ]
+  },
+  {
+    "name": "다이메틸실라놀하이알루로네이트",
+    "normalizedName": "다이메틸실라놀하이알루로네이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "다이메틸실라놀하이알루로네이트"
+    ]
+  },
+  {
+    "name": "다이부틸라우로일글루타마이드",
+    "normalizedName": "다이부틸라우로일글루타마이드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "다이부틸라우로일글루타마이드"
+    ]
+  },
+  {
+    "name": "다이부틸에틸헥사노일글루타마이드",
+    "normalizedName": "다이부틸에틸헥사노일글루타마이드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "다이부틸에틸헥사노일글루타마이드"
+    ]
+  },
+  {
+    "name": "다이소듐스테아로일글루타메이트",
+    "normalizedName": "다이소듐스테아로일글루타메이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "다이소듐스테아로일글루타메이트"
+    ]
+  },
+  {
+    "name": "다이소듐코코일글루타메이트",
+    "normalizedName": "다이소듐코코일글루타메이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "다이소듐코코일글루타메이트"
+    ]
+  },
+  {
+    "name": "다이실록세인",
+    "normalizedName": "다이실록세인",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "다이실록세인"
+    ]
+  },
+  {
+    "name": "다이아이소프로필세바케이트",
+    "normalizedName": "다이아이소프로필세바케이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "다이아이소프로필세바케이트"
+    ]
+  },
+  {
+    "name": "다이에틸헥실2,6-나프탈레이트",
+    "normalizedName": "다이에틸헥실26나프탈레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "다이에틸헥실2,6-나프탈레이트"
+    ]
+  },
+  {
+    "name": "다이에틸헥실석시네이트",
+    "normalizedName": "다이에틸헥실석시네이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "다이에틸헥실석시네이트"
+    ]
+  },
+  {
+    "name": "다이에틸헥실카보네이트",
+    "normalizedName": "다이에틸헥실카보네이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "다이에틸헥실카보네이트"
+    ]
+  },
+  {
+    "name": "다이페닐실록시페닐트라이메티콘",
+    "normalizedName": "다이페닐실록시페닐트라이메티콘",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "다이페닐실록시페닐트라이메티콘"
+    ]
+  },
+  {
+    "name": "다이포타슘포스페이트",
+    "normalizedName": "다이포타슘포스페이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "다이포타슘포스페이트"
+    ]
+  },
+  {
+    "name": "당근씨오일",
+    "normalizedName": "당근씨오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "당근씨오일"
+    ]
+  },
+  {
+    "name": "당근추출물",
+    "normalizedName": "당근추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "당근추출물"
+    ]
+  },
+  {
+    "name": "데하이드로아세틱애씨드",
+    "normalizedName": "데하이드로아세틱애씨드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "데하이드로아세틱애씨드"
+    ]
+  },
+  {
+    "name": "덱스트란",
+    "normalizedName": "덱스트란",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "덱스트란"
+    ]
+  },
+  {
+    "name": "덱스트린팔미테이트",
+    "normalizedName": "덱스트린팔미테이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "덱스트린팔미테이트"
+    ]
+  },
+  {
+    "name": "돌나물추출물",
+    "normalizedName": "돌나물추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "돌나물추출물"
+    ]
+  },
+  {
+    "name": "돌콩추출물",
+    "normalizedName": "돌콩추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "돌콩추출물"
+    ]
+  },
+  {
+    "name": "동백나무꽃추출물",
+    "normalizedName": "동백나무꽃추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "동백나무꽃추출물"
+    ]
+  },
+  {
+    "name": "동백나무씨오일",
+    "normalizedName": "동백나무씨오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "동백나무씨오일"
+    ]
+  },
+  {
+    "name": "드로메트리졸트리실록산",
+    "normalizedName": "드로메트리졸트리실록산",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "드로메트리졸트리실록산"
+    ]
+  },
+  {
+    "name": "들깨추출물",
+    "normalizedName": "들깨추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "들깨추출물"
+    ]
+  },
+  {
+    "name": "디메치콘",
+    "normalizedName": "디메치콘",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "디메치콘"
+    ]
+  },
+  {
+    "name": "디소듐이디티에이",
+    "normalizedName": "디소듐이디티에이",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "디소듐이디티에이"
+    ]
+  },
+  {
+    "name": "디에칠헥실부타미도트리아존",
+    "normalizedName": "디에칠헥실부타미도트리아존",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "디에칠헥실부타미도트리아존"
+    ]
+  },
+  {
+    "name": "딸기열매추출물",
+    "normalizedName": "딸기열매추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "딸기열매추출물"
+    ]
+  },
+  {
+    "name": "때죽나무가지/열매/잎추출물",
+    "normalizedName": "때죽나무가지열매잎추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "때죽나무가지/열매/잎추출물"
+    ]
+  },
+  {
+    "name": "라즈베리케톤",
+    "normalizedName": "라즈베리케톤",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "라즈베리케톤"
+    ]
+  },
+  {
+    "name": "락토바실러스",
+    "normalizedName": "락토바실러스",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "락토바실러스"
+    ]
+  },
+  {
+    "name": "락토바실러스/두유발효여과물",
+    "normalizedName": "락토바실러스두유발효여과물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "락토바실러스/두유발효여과물"
+    ]
+  },
+  {
+    "name": "락토바실러스/쌀발효물",
+    "normalizedName": "락토바실러스쌀발효물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "락토바실러스/쌀발효물"
+    ]
+  },
+  {
+    "name": "락토바실러스/콩발효추출물",
+    "normalizedName": "락토바실러스콩발효추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "락토바실러스/콩발효추출물"
+    ]
+  },
+  {
+    "name": "락토바실러스/호밀가루발효물",
+    "normalizedName": "락토바실러스호밀가루발효물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "락토바실러스/호밀가루발효물"
+    ]
+  },
+  {
+    "name": "락토바실러스/히비스커스꽃발효여과물",
+    "normalizedName": "락토바실러스히비스커스꽃발효여과물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "락토바실러스/히비스커스꽃발효여과물"
+    ]
+  },
+  {
+    "name": "락토바실러스발효용해물",
+    "normalizedName": "락토바실러스발효용해물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "락토바실러스발효용해물"
+    ]
+  },
+  {
+    "name": "락토바이오닉애씨드",
+    "normalizedName": "락토바이오닉애씨드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "락토바이오닉애씨드"
+    ]
+  },
+  {
+    "name": "락토오스",
+    "normalizedName": "락토오스",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "락토오스"
+    ]
+  },
+  {
+    "name": "락토코쿠스발효용해물",
+    "normalizedName": "락토코쿠스발효용해물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "락토코쿠스발효용해물"
+    ]
+  },
+  {
+    "name": "락틱애씨드/글라이콜릭애씨드코폴리머",
+    "normalizedName": "락틱애씨드글라이콜릭애씨드코폴리머",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "락틱애씨드/글라이콜릭애씨드코폴리머"
+    ]
+  },
+  {
+    "name": "레드클로버꽃추출물",
+    "normalizedName": "레드클로버꽃추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "레드클로버꽃추출물"
+    ]
+  },
+  {
+    "name": "레몬그라스추출물",
+    "normalizedName": "레몬그라스추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "레몬그라스추출물"
+    ]
+  },
+  {
+    "name": "레몬열매추출물",
+    "normalizedName": "레몬열매추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "레몬열매추출물"
+    ]
+  },
+  {
+    "name": "레스베라트롤",
+    "normalizedName": "레스베라트롤",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "레스베라트롤"
+    ]
+  },
+  {
+    "name": "레틴알",
+    "normalizedName": "레틴알",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "레틴알(0.1%)"
+    ]
+  },
+  {
+    "name": "로우스위트블루베리추출물",
+    "normalizedName": "로우스위트블루베리추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "로우스위트블루베리추출물"
+    ]
+  },
+  {
+    "name": "로즈마리잎추출물",
+    "normalizedName": "로즈마리잎추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "로즈마리잎추출물"
+    ]
+  },
+  {
+    "name": "로켓잎추출물",
+    "normalizedName": "로켓잎추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "로켓잎추출물"
+    ]
+  },
+  {
+    "name": "류코노스톡/무뿌리발효여과물",
+    "normalizedName": "류코노스톡무뿌리발효여과물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "류코노스톡/무뿌리발효여과물"
+    ]
+  },
+  {
+    "name": "리놀레닉애씨드",
+    "normalizedName": "리놀레닉애씨드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "리놀레닉애씨드"
+    ]
+  },
+  {
+    "name": "리보플라빈",
+    "normalizedName": "리보플라빈",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "리보플라빈"
+    ]
+  },
+  {
+    "name": "마그네슘글루코네이트",
+    "normalizedName": "마그네슘글루코네이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "마그네슘글루코네이트"
+    ]
+  },
+  {
+    "name": "마그네슘아스코빌포스페이트",
+    "normalizedName": "마그네슘아스코빌포스페이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "마그네슘아스코빌포스페이트"
+    ]
+  },
+  {
+    "name": "마그네슘클로라이드",
+    "normalizedName": "마그네슘클로라이드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "마그네슘클로라이드"
+    ]
+  },
+  {
+    "name": "마니쿠아강클레이",
+    "normalizedName": "마니쿠아강클레이",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "마니쿠아강클레이"
+    ]
+  },
+  {
+    "name": "마트리카리아꽃추출물",
+    "normalizedName": "마트리카리아꽃추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "마트리카리아꽃추출물"
+    ]
+  },
+  {
+    "name": "만다린껍질추출물",
+    "normalizedName": "만다린껍질추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "만다린껍질추출물"
+    ]
+  },
+  {
+    "name": "망고스틴껍질추출물",
+    "normalizedName": "망고스틴껍질추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "망고스틴껍질추출물"
+    ]
+  },
+  {
+    "name": "매실열매추출물",
+    "normalizedName": "매실열매추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "매실열매추출물"
+    ]
+  },
+  {
+    "name": "매실추출물",
+    "normalizedName": "매실추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "매실추출물"
+    ]
+  },
+  {
+    "name": "메칠렌비스-벤조트리아졸릴테트라메칠부틸페놀",
+    "normalizedName": "메칠렌비스벤조트리아졸릴테트라메칠부틸페놀",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "메칠렌비스-벤조트리아졸릴테트라메칠부틸페놀"
+    ]
+  },
+  {
+    "name": "메틸글루코오스세스퀴스테아레이트",
+    "normalizedName": "메틸글루코오스세스퀴스테아레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "메틸글루코오스세스퀴스테아레이트"
+    ]
+  },
+  {
+    "name": "멕시칸주니퍼오일",
+    "normalizedName": "멕시칸주니퍼오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "멕시칸주니퍼오일"
+    ]
+  },
+  {
+    "name": "멜론열매추출물",
+    "normalizedName": "멜론열매추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "멜론열매추출물"
+    ]
+  },
+  {
+    "name": "모링가씨추출물",
+    "normalizedName": "모링가씨추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "모링가씨추출물"
+    ]
+  },
+  {
+    "name": "모즈쿠추출물",
+    "normalizedName": "모즈쿠추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "모즈쿠추출물"
+    ]
+  },
+  {
+    "name": "몬모릴로나이트",
+    "normalizedName": "몬모릴로나이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "몬모릴로나이트"
+    ]
+  },
+  {
+    "name": "무씨추출물",
+    "normalizedName": "무씨추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "무씨추출물"
+    ]
+  },
+  {
+    "name": "물푸레나무추출물",
+    "normalizedName": "물푸레나무추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "물푸레나무추출물"
+    ]
+  },
+  {
+    "name": "미로탐누스 플라벨리폴리아잎/줄기추출물",
+    "normalizedName": "미로탐누스플라벨리폴리아잎줄기추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "미로탐누스 플라벨리폴리아잎/줄기추출물"
+    ]
+  },
+  {
+    "name": "미역취추출물",
+    "normalizedName": "미역취추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "미역취추출물"
+    ]
+  },
+  {
+    "name": "밀랍",
+    "normalizedName": "밀랍",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "밀랍"
+    ]
+  },
+  {
+    "name": "바나나꽃추출물",
+    "normalizedName": "바나나꽃추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "바나나꽃추출물"
+    ]
+  },
+  {
+    "name": "바닐라열매추출물",
+    "normalizedName": "바닐라열매추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "바닐라열매추출물"
+    ]
+  },
+  {
+    "name": "바다포도추출물",
+    "normalizedName": "바다포도추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "바다포도추출물"
+    ]
+  },
+  {
+    "name": "바실러스/콩발효추출물",
+    "normalizedName": "바실러스콩발효추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "바실러스/콩발효추출물"
+    ]
+  },
+  {
+    "name": "바실러스발효물",
+    "normalizedName": "바실러스발효물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "바실러스발효물"
+    ]
+  },
+  {
+    "name": "바이오틴",
+    "normalizedName": "바이오틴",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "바이오틴"
+    ]
+  },
+  {
+    "name": "바질꽃/잎/줄기추출물",
+    "normalizedName": "바질꽃잎줄기추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "바질꽃/잎/줄기추출물"
+    ]
+  },
+  {
+    "name": "바쿠치올",
+    "normalizedName": "바쿠치올",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "바쿠치올"
+    ]
+  },
+  {
+    "name": "발삼아미리스껍질오일",
+    "normalizedName": "발삼아미리스껍질오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "발삼아미리스껍질오일"
+    ]
+  },
+  {
+    "name": "발삼코파이바수지",
+    "normalizedName": "발삼코파이바수지",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "발삼코파이바수지"
+    ]
+  },
+  {
+    "name": "밤부사 불가리스잎추출물",
+    "normalizedName": "밤부사불가리스잎추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "밤부사 불가리스잎추출물"
+    ]
+  },
+  {
+    "name": "배꽃추출물",
+    "normalizedName": "배꽃추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "배꽃추출물"
+    ]
+  },
+  {
+    "name": "버지니아풍년화추출물",
+    "normalizedName": "버지니아풍년화추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "버지니아풍년화추출물"
+    ]
+  },
+  {
+    "name": "벌노랑이씨추출물",
+    "normalizedName": "벌노랑이씨추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "벌노랑이씨추출물"
+    ]
+  },
+  {
+    "name": "베르가모트오일",
+    "normalizedName": "베르가모트오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "베르가모트오일"
+    ]
+  },
+  {
+    "name": "베르가모트잎추출물",
+    "normalizedName": "베르가모트잎추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "베르가모트잎추출물"
+    ]
+  },
+  {
+    "name": "베툴린",
+    "normalizedName": "베툴린",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "베툴린"
+    ]
+  },
+  {
+    "name": "베헤닉애씨드",
+    "normalizedName": "베헤닉애씨드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "베헤닉애씨드"
+    ]
+  },
+  {
+    "name": "벤조익애씨드",
+    "normalizedName": "벤조익애씨드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "벤조익애씨드"
+    ]
+  },
+  {
+    "name": "벤조트라이아졸릴도데실p-크레솔",
+    "normalizedName": "벤조트라이아졸릴도데실p크레솔",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "벤조트라이아졸릴도데실p-크레솔"
+    ]
+  },
+  {
+    "name": "벤질살리실레이트",
+    "normalizedName": "벤질살리실레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "벤질살리실레이트"
+    ]
+  },
+  {
+    "name": "병풀꽃/잎/줄기추출물",
+    "normalizedName": "병풀꽃잎줄기추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "병풀꽃/잎/줄기추출물"
+    ]
+  },
+  {
+    "name": "병풀잎수",
+    "normalizedName": "병풀잎수",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "병풀잎수"
+    ]
+  },
+  {
+    "name": "보리지씨오일",
+    "normalizedName": "보리지씨오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "보리지씨오일"
+    ]
+  },
+  {
+    "name": "보리지추출물",
+    "normalizedName": "보리지추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "보리지추출물"
+    ]
+  },
+  {
+    "name": "복숭아추출물",
+    "normalizedName": "복숭아추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "복숭아추출물"
+    ]
+  },
+  {
+    "name": "봉의꼬리추출물",
+    "normalizedName": "봉의꼬리추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "봉의꼬리추출물"
+    ]
+  },
+  {
+    "name": "부들레야추출물",
+    "normalizedName": "부들레야추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "부들레야추출물"
+    ]
+  },
+  {
+    "name": "부틸렌/에틸렌/스타이렌코폴리머",
+    "normalizedName": "부틸렌에틸렌스타이렌코폴리머",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "부틸렌/에틸렌/스타이렌코폴리머"
+    ]
+  },
+  {
+    "name": "부틸메톡시다이벤조일메탄",
+    "normalizedName": "부틸메톡시다이벤조일메탄",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "부틸메톡시다이벤조일메탄"
+    ]
+  },
+  {
+    "name": "부틸아보카데이트",
+    "normalizedName": "부틸아보카데이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "부틸아보카데이트"
+    ]
+  },
+  {
+    "name": "분비나무오일",
+    "normalizedName": "분비나무오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "분비나무오일"
+    ]
+  },
+  {
+    "name": "브로콜리싹추출물",
+    "normalizedName": "브로콜리싹추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "브로콜리싹추출물"
+    ]
+  },
+  {
+    "name": "브루셀스프라우트추출물",
+    "normalizedName": "브루셀스프라우트추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "브루셀스프라우트추출물"
+    ]
+  },
+  {
+    "name": "브이피/에이코신코폴리머",
+    "normalizedName": "브이피에이코신코폴리머",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "브이피/에이코신코폴리머"
+    ]
+  },
+  {
+    "name": "블루베리열매추출물",
+    "normalizedName": "블루베리열매추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "블루베리열매추출물"
+    ]
+  },
+  {
+    "name": "블루아가베잎추출물",
+    "normalizedName": "블루아가베잎추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "블루아가베잎추출물"
+    ]
+  },
+  {
+    "name": "비누풀추출물",
+    "normalizedName": "비누풀추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "비누풀추출물"
+    ]
+  },
+  {
+    "name": "비름씨추출물",
+    "normalizedName": "비름씨추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "비름씨추출물"
+    ]
+  },
+  {
+    "name": "비스-베헤닐/아이소스테아릴/파이토스테릴다이머다이리놀레일다이머다이리놀리에이트",
+    "normalizedName": "비스베헤닐아이소스테아릴파이토스테릴다이머다이리놀레일다이머다이리놀리에이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "비스-베헤닐/아이소스테아릴/파이토스테릴다이머다이리놀레일다이머다이리놀리에이트"
+    ]
+  },
+  {
+    "name": "비스-하이드록시에톡시프로필다이메티콘",
+    "normalizedName": "비스하이드록시에톡시프로필다이메티콘",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "비스-하이드록시에톡시프로필다이메티콘"
+    ]
+  },
+  {
+    "name": "비에이치티",
+    "normalizedName": "비에이치티",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "비에이치티"
+    ]
+  },
+  {
+    "name": "비타민나무수",
+    "normalizedName": "비타민나무수",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "비타민나무수"
+    ]
+  },
+  {
+    "name": "사과수",
+    "normalizedName": "사과수",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "사과수"
+    ]
+  },
+  {
+    "name": "사과열매추출물",
+    "normalizedName": "사과열매추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "사과열매추출물"
+    ]
+  },
+  {
+    "name": "사과잎추출물",
+    "normalizedName": "사과잎추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "사과잎추출물"
+    ]
+  },
+  {
+    "name": "사과즙",
+    "normalizedName": "사과즙",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "사과즙"
+    ]
+  },
+  {
+    "name": "사이아노코발아민",
+    "normalizedName": "사이아노코발아민",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "사이아노코발아민"
+    ]
+  },
+  {
+    "name": "사철쑥추출물",
+    "normalizedName": "사철쑥추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "사철쑥추출물(976ppb)"
+    ]
+  },
+  {
+    "name": "생강뿌리추출물",
+    "normalizedName": "생강뿌리추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "생강뿌리추출물"
+    ]
+  },
+  {
+    "name": "샤프란꽃추출물",
+    "normalizedName": "샤프란꽃추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "샤프란꽃추출물"
+    ]
+  },
+  {
+    "name": "서양송악잎/줄기추출물",
+    "normalizedName": "서양송악잎줄기추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "서양송악잎/줄기추출물"
+    ]
+  },
+  {
+    "name": "석류나무꽃추출물",
+    "normalizedName": "석류나무꽃추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "석류나무꽃추출물"
+    ]
+  },
+  {
+    "name": "석송추출물",
+    "normalizedName": "석송추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "석송추출물"
+    ]
+  },
+  {
+    "name": "세레신",
+    "normalizedName": "세레신",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "세레신"
+    ]
+  },
+  {
+    "name": "세륨옥사이드",
+    "normalizedName": "세륨옥사이드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "세륨옥사이드"
+    ]
+  },
+  {
+    "name": "세틸-피지하이드록시에틸팔미타마이드",
+    "normalizedName": "세틸피지하이드록시에틸팔미타마이드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "세틸-피지하이드록시에틸팔미타마이드"
+    ]
+  },
+  {
+    "name": "세틸에칠헥사노에이트",
+    "normalizedName": "세틸에칠헥사노에이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "세틸에칠헥사노에이트"
+    ]
+  },
+  {
+    "name": "센티드제라늄추출물",
+    "normalizedName": "센티드제라늄추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "센티드제라늄추출물"
+    ]
+  },
+  {
+    "name": "소두구씨추출물",
+    "normalizedName": "소두구씨추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "소두구씨추출물"
+    ]
+  },
+  {
+    "name": "소듐글리세로포스페이트",
+    "normalizedName": "소듐글리세로포스페이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "소듐글리세로포스페이트"
+    ]
+  },
+  {
+    "name": "소듐데하이드로아세테이트",
+    "normalizedName": "소듐데하이드로아세테이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "소듐데하이드로아세테이트"
+    ]
+  },
+  {
+    "name": "소듐라우로일락틸레이트",
+    "normalizedName": "소듐라우로일락틸레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "소듐라우로일락틸레이트"
+    ]
+  },
+  {
+    "name": "소듐라우로일메틸아이세티오네이트",
+    "normalizedName": "소듐라우로일메틸아이세티오네이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "소듐라우로일메틸아이세티오네이트"
+    ]
+  },
+  {
+    "name": "소듐라우릴글루코오스카복실레이트",
+    "normalizedName": "소듐라우릴글루코오스카복실레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "소듐라우릴글루코오스카복실레이트"
+    ]
+  },
+  {
+    "name": "소듐메틸올레오일타우레이트",
+    "normalizedName": "소듐메틸올레오일타우레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "소듐메틸올레오일타우레이트"
+    ]
+  },
+  {
+    "name": "소듐아스코빌포스페이트",
+    "normalizedName": "소듐아스코빌포스페이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "소듐아스코빌포스페이트"
+    ]
+  },
+  {
+    "name": "소듐아크릴릭애씨드/엠에이코폴리머",
+    "normalizedName": "소듐아크릴릭애씨드엠에이코폴리머",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "소듐아크릴릭애씨드/엠에이코폴리머"
+    ]
+  },
+  {
+    "name": "소듐올리에이트",
+    "normalizedName": "소듐올리에이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "소듐올리에이트"
+    ]
+  },
+  {
+    "name": "소듐카보머",
+    "normalizedName": "소듐카보머",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "소듐카보머"
+    ]
+  },
+  {
+    "name": "소듐하이알루로네이트다이메틸실라놀",
+    "normalizedName": "소듐하이알루로네이트다이메틸실라놀",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "소듐하이알루로네이트다이메틸실라놀"
+    ]
+  },
+  {
+    "name": "소르빅애씨드",
+    "normalizedName": "소르빅애씨드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "소르빅애씨드"
+    ]
+  },
+  {
+    "name": "소시지트리열매추출물",
+    "normalizedName": "소시지트리열매추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "소시지트리열매추출물"
+    ]
+  },
+  {
+    "name": "솔잣나무잎추출물",
+    "normalizedName": "솔잣나무잎추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "솔잣나무잎추출물"
+    ]
+  },
+  {
+    "name": "쇠뜨기추출물",
+    "normalizedName": "쇠뜨기추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "쇠뜨기추출물"
+    ]
+  },
+  {
+    "name": "수레국화꽃추출물",
+    "normalizedName": "수레국화꽃추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "수레국화꽃추출물"
+    ]
+  },
+  {
+    "name": "수크로오스코코에이트",
+    "normalizedName": "수크로오스코코에이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "수크로오스코코에이트"
+    ]
+  },
+  {
+    "name": "스위트아몬드오일",
+    "normalizedName": "스위트아몬드오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "스위트아몬드오일"
+    ]
+  },
+  {
+    "name": "스타이렌/브이피코폴리머",
+    "normalizedName": "스타이렌브이피코폴리머",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "스타이렌/브이피코폴리머"
+    ]
+  },
+  {
+    "name": "스테아트라이모늄메토설페이트",
+    "normalizedName": "스테아트라이모늄메토설페이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "스테아트라이모늄메토설페이트"
+    ]
+  },
+  {
+    "name": "스트렙토코쿠스 테르모필루스발효물",
+    "normalizedName": "스트렙토코쿠스테르모필루스발효물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "스트렙토코쿠스 테르모필루스발효물"
+    ]
+  },
+  {
+    "name": "스트렙토코쿠스써모필루스발효물",
+    "normalizedName": "스트렙토코쿠스써모필루스발효물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "스트렙토코쿠스써모필루스발효물"
+    ]
+  },
+  {
+    "name": "시메티콘",
+    "normalizedName": "시메티콘",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "시메티콘"
+    ]
+  },
+  {
+    "name": "식물성스쿠알란",
+    "normalizedName": "식물성스쿠알란",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "식물성스쿠알란"
+    ]
+  },
+  {
+    "name": "식물성오일",
+    "normalizedName": "식물성오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "식물성오일"
+    ]
+  },
+  {
+    "name": "식초",
+    "normalizedName": "식초",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "식초"
+    ]
+  },
+  {
+    "name": "신선초추출물",
+    "normalizedName": "신선초추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "신선초추출물"
+    ]
+  },
+  {
+    "name": "실리카다이메틸실릴레이트",
+    "normalizedName": "실리카다이메틸실릴레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "실리카다이메틸실릴레이트"
+    ]
+  },
+  {
+    "name": "실리카실릴레이트",
+    "normalizedName": "실리카실릴레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "실리카실릴레이트"
+    ]
+  },
+  {
+    "name": "쌀가루",
+    "normalizedName": "쌀가루",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "쌀가루"
+    ]
+  },
+  {
+    "name": "쌀겨",
+    "normalizedName": "쌀겨",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "쌀겨"
+    ]
+  },
+  {
+    "name": "아가",
+    "normalizedName": "아가",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "아가"
+    ]
+  },
+  {
+    "name": "아르간커넬오일",
+    "normalizedName": "아르간커넬오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "아르간커넬오일"
+    ]
+  },
+  {
+    "name": "아르니카 몬타나꽃추출물",
+    "normalizedName": "아르니카몬타나꽃추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "아르니카 몬타나꽃추출물"
+    ]
+  },
+  {
+    "name": "아마씨추출물",
+    "normalizedName": "아마씨추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "아마씨추출물"
+    ]
+  },
+  {
+    "name": "아보벤존",
+    "normalizedName": "아보벤존",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "아보벤존 3%"
+    ]
+  },
+  {
+    "name": "아보카도열매추출물",
+    "normalizedName": "아보카도열매추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "아보카도열매추출물"
+    ]
+  },
+  {
+    "name": "아보카도오일",
+    "normalizedName": "아보카도오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "아보카도오일"
+    ]
+  },
+  {
+    "name": "아세틸글루타민",
+    "normalizedName": "아세틸글루타민",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "아세틸글루타민"
+    ]
+  },
+  {
+    "name": "아세틸헥사펩타이드-1",
+    "normalizedName": "아세틸헥사펩타이드1",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "아세틸헥사펩타이드-1"
+    ]
+  },
+  {
+    "name": "아스코빅애씨드폴리펩타이드",
+    "normalizedName": "아스코빅애씨드폴리펩타이드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "아스코빅애씨드폴리펩타이드"
+    ]
+  },
+  {
+    "name": "아스코빌테트라이소팔미테이트",
+    "normalizedName": "아스코빌테트라이소팔미테이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "아스코빌테트라이소팔미테이트"
+    ]
+  },
+  {
+    "name": "아이소말트",
+    "normalizedName": "아이소말트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "아이소말트"
+    ]
+  },
+  {
+    "name": "아이소스테아릴아이소스테아레이트",
+    "normalizedName": "아이소스테아릴아이소스테아레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "아이소스테아릴아이소스테아레이트"
+    ]
+  },
+  {
+    "name": "아이소트라이데실아이소노나노에이트",
+    "normalizedName": "아이소트라이데실아이소노나노에이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "아이소트라이데실아이소노나노에이트"
+    ]
+  },
+  {
+    "name": "아이소프로필알코올",
+    "normalizedName": "아이소프로필알코올",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "아이소프로필알코올"
+    ]
+  },
+  {
+    "name": "아이소헥사데칸",
+    "normalizedName": "아이소헥사데칸",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "아이소헥사데칸"
+    ]
+  },
+  {
+    "name": "아이소헥사디칸",
+    "normalizedName": "아이소헥사디칸",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "아이소헥사디칸"
+    ]
+  },
+  {
+    "name": "아카시아세네갈검",
+    "normalizedName": "아카시아세네갈검",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "아카시아세네갈검"
+    ]
+  },
+  {
+    "name": "아크릴레이트/다이메티콘코폴리머",
+    "normalizedName": "아크릴레이트다이메티콘코폴리머",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "아크릴레이트/다이메티콘코폴리머"
+    ]
+  },
+  {
+    "name": "아크릴레이트/폴리트라이메틸실록시메타크릴레이트코폴리머",
+    "normalizedName": "아크릴레이트폴리트라이메틸실록시메타크릴레이트코폴리머",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "아크릴레이트/폴리트라이메틸실록시메타크릴레이트코폴리머"
+    ]
+  },
+  {
+    "name": "아크릴레이트/C10-20알킬아크릴레이트크로스폴리머",
+    "normalizedName": "아크릴레이트c1020알킬아크릴레이트크로스폴리머",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "아크릴레이트/C10-20알킬아크릴레이트크로스폴리머"
+    ]
+  },
+  {
+    "name": "아티초크잎추출물",
+    "normalizedName": "아티초크잎추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "아티초크잎추출물"
+    ]
+  },
+  {
+    "name": "알로에베라잎즙",
+    "normalizedName": "알로에베라잎즙",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "알로에베라잎즙"
+    ]
+  },
+  {
+    "name": "알루미나",
+    "normalizedName": "알루미나",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "알루미나"
+    ]
+  },
+  {
+    "name": "알루미늄스테아레이트",
+    "normalizedName": "알루미늄스테아레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "알루미늄스테아레이트"
+    ]
+  },
+  {
+    "name": "알지닌페룰레이트",
+    "normalizedName": "알지닌페룰레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "알지닌페룰레이트"
+    ]
+  },
+  {
+    "name": "알진",
+    "normalizedName": "알진",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "알진"
+    ]
+  },
+  {
+    "name": "알파-비사보롤",
+    "normalizedName": "알파비사보롤",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "알파-비사보롤"
+    ]
+  },
+  {
+    "name": "암모늄아크릴로일다이메틸타우레이트/베헤네스-25메타크릴레이트크로스폴리머",
+    "normalizedName": "암모늄아크릴로일다이메틸타우레이트베헤네스25메타크릴레이트크로스폴리머",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "암모늄아크릴로일다이메틸타우레이트/베헤네스-25메타크릴레이트크로스폴리머"
+    ]
+  },
+  {
+    "name": "양까막까치밥나무잎추출물",
+    "normalizedName": "양까막까치밥나무잎추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "양까막까치밥나무잎추출물"
+    ]
+  },
+  {
+    "name": "어성초가루",
+    "normalizedName": "어성초가루",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "어성초가루"
+    ]
+  },
+  {
+    "name": "얼룩파인애플추출물",
+    "normalizedName": "얼룩파인애플추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "얼룩파인애플추출물"
+    ]
+  },
+  {
+    "name": "에스에이치-올리고펩타이드-1",
+    "normalizedName": "에스에이치올리고펩타이드1",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "에스에이치-올리고펩타이드-1"
+    ]
+  },
+  {
+    "name": "에스에이치-올리고펩타이드-2",
+    "normalizedName": "에스에이치올리고펩타이드2",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "에스에이치-올리고펩타이드-2"
+    ]
+  },
+  {
+    "name": "에스에이치-폴리펩타이드-1",
+    "normalizedName": "에스에이치폴리펩타이드1",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "에스에이치-폴리펩타이드-1"
+    ]
+  },
+  {
+    "name": "에스에이치-폴리펩타이드-121",
+    "normalizedName": "에스에이치폴리펩타이드121",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "에스에이치-폴리펩타이드-121"
+    ]
+  },
+  {
+    "name": "에우파토리아짚신나물추출물",
+    "normalizedName": "에우파토리아짚신나물추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "에우파토리아짚신나물추출물"
+    ]
+  },
+  {
+    "name": "에칠헥실글리세린",
+    "normalizedName": "에칠헥실글리세린",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "에칠헥실글리세린"
+    ]
+  },
+  {
+    "name": "에칠헥실메톡시신나메이트",
+    "normalizedName": "에칠헥실메톡시신나메이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "에칠헥실메톡시신나메이트"
+    ]
+  },
+  {
+    "name": "에톡시다이글라이콜",
+    "normalizedName": "에톡시다이글라이콜",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "에톡시다이글라이콜"
+    ]
+  },
+  {
+    "name": "에틸렌/프로필렌/스타이렌코폴리머",
+    "normalizedName": "에틸렌프로필렌스타이렌코폴리머",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "에틸렌/프로필렌/스타이렌코폴리머"
+    ]
+  },
+  {
+    "name": "에틸렌/프로필렌코폴리머",
+    "normalizedName": "에틸렌프로필렌코폴리머",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "에틸렌/프로필렌코폴리머"
+    ]
+  },
+  {
+    "name": "에틸헥실아이소노나노에이트",
+    "normalizedName": "에틸헥실아이소노나노에이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "에틸헥실아이소노나노에이트"
+    ]
+  },
+  {
+    "name": "에피갈로카테킨갈레이트",
+    "normalizedName": "에피갈로카테킨갈레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "에피갈로카테킨갈레이트"
+    ]
+  },
+  {
+    "name": "연꽃꽃추출물",
+    "normalizedName": "연꽃꽃추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "연꽃꽃추출물"
+    ]
+  },
+  {
+    "name": "연꽃뿌리추출물",
+    "normalizedName": "연꽃뿌리추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "연꽃뿌리추출물"
+    ]
+  },
+  {
+    "name": "오렌지껍질오일",
+    "normalizedName": "오렌지껍질오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "오렌지껍질오일"
+    ]
+  },
+  {
+    "name": "오렌지오일",
+    "normalizedName": "오렌지오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "오렌지오일"
+    ]
+  },
+  {
+    "name": "오크라열매추출물",
+    "normalizedName": "오크라열매추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "오크라열매추출물"
+    ]
+  },
+  {
+    "name": "옥타데케인",
+    "normalizedName": "옥타데케인",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "옥타데케인"
+    ]
+  },
+  {
+    "name": "옥토크릴렌",
+    "normalizedName": "옥토크릴렌",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "옥토크릴렌 5%"
+    ]
+  },
+  {
+    "name": "옥티살레이트",
+    "normalizedName": "옥티살레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "옥티살레이트 4.5%"
+    ]
+  },
+  {
+    "name": "올레라케아아크멜라추출물",
+    "normalizedName": "올레라케아아크멜라추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "올레라케아아크멜라추출물"
+    ]
+  },
+  {
+    "name": "올리고펩타이드-68",
+    "normalizedName": "올리고펩타이드68",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "올리고펩타이드-68"
+    ]
+  },
+  {
+    "name": "우레아",
+    "normalizedName": "우레아",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "우레아"
+    ]
+  },
+  {
+    "name": "우릭애씨드",
+    "normalizedName": "우릭애씨드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "우릭애씨드"
+    ]
+  },
+  {
+    "name": "워터민트추출물",
+    "normalizedName": "워터민트추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "워터민트추출물"
+    ]
+  },
+  {
+    "name": "위치하젤잎수",
+    "normalizedName": "위치하젤잎수",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "위치하젤잎수"
+    ]
+  },
+  {
+    "name": "위치하젤잎추출물",
+    "normalizedName": "위치하젤잎추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "위치하젤잎추출물"
+    ]
+  },
+  {
+    "name": "유제놀",
+    "normalizedName": "유제놀",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "유제놀"
+    ]
+  },
+  {
+    "name": "유채스테롤",
+    "normalizedName": "유채스테롤",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "유채스테롤"
+    ]
+  },
+  {
+    "name": "유채싹추출물",
+    "normalizedName": "유채싹추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "유채싹추출물"
+    ]
+  },
+  {
+    "name": "유칼립투스잎오일",
+    "normalizedName": "유칼립투스잎오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "유칼립투스잎오일"
+    ]
+  },
+  {
+    "name": "유향나무오일",
+    "normalizedName": "유향나무오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "유향나무오일"
+    ]
+  },
+  {
+    "name": "율무씨가루",
+    "normalizedName": "율무씨가루",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "율무씨가루"
+    ]
+  },
+  {
+    "name": "은행나무잎추출물",
+    "normalizedName": "은행나무잎추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "은행나무잎추출물"
+    ]
+  },
+  {
+    "name": "인삼뿌리수",
+    "normalizedName": "인삼뿌리수",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "인삼뿌리수"
+    ]
+  },
+  {
+    "name": "일라이트",
+    "normalizedName": "일라이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "일라이트"
+    ]
+  },
+  {
+    "name": "자두열매추출물",
+    "normalizedName": "자두열매추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "자두열매추출물"
+    ]
+  },
+  {
+    "name": "자몽껍질오일",
+    "normalizedName": "자몽껍질오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "자몽껍질오일"
+    ]
+  },
+  {
+    "name": "자일로오스",
+    "normalizedName": "자일로오스",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "자일로오스"
+    ]
+  },
+  {
+    "name": "자주개자리추출물",
+    "normalizedName": "자주개자리추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "자주개자리추출물"
+    ]
+  },
+  {
+    "name": "조선현호색뿌리추출물",
+    "normalizedName": "조선현호색뿌리추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "조선현호색뿌리추출물"
+    ]
+  },
+  {
+    "name": "진주가루",
+    "normalizedName": "진주가루",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "진주가루"
+    ]
+  },
+  {
+    "name": "진흙버섯추출물",
+    "normalizedName": "진흙버섯추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "진흙버섯추출물"
+    ]
+  },
+  {
+    "name": "징크리시놀리에이트",
+    "normalizedName": "징크리시놀리에이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "징크리시놀리에이트"
+    ]
+  },
+  {
+    "name": "징크스테아레이트",
+    "normalizedName": "징크스테아레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "징크스테아레이트"
+    ]
+  },
+  {
+    "name": "징크옥사이드 (CI 77947)",
+    "normalizedName": "징크옥사이드ci77947",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "징크옥사이드 (CI 77947)"
+    ]
+  },
+  {
+    "name": "징크클로라이드",
+    "normalizedName": "징크클로라이드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "징크클로라이드"
+    ]
+  },
+  {
+    "name": "징크하이드롤라이즈드하이알루로네이트",
+    "normalizedName": "징크하이드롤라이즈드하이알루로네이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "징크하이드롤라이즈드하이알루로네이트"
+    ]
+  },
+  {
+    "name": "첨차잎추출물",
+    "normalizedName": "첨차잎추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "첨차잎추출물"
+    ]
+  },
+  {
+    "name": "체이스트트리추출물",
+    "normalizedName": "체이스트트리추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "체이스트트리추출물"
+    ]
+  },
+  {
+    "name": "초피나무열매오일",
+    "normalizedName": "초피나무열매오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "초피나무열매오일"
+    ]
+  },
+  {
+    "name": "초피나무열매추출물",
+    "normalizedName": "초피나무열매추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "초피나무열매추출물"
+    ]
+  },
+  {
+    "name": "측백나무잎추출물",
+    "normalizedName": "측백나무잎추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "측백나무잎추출물"
+    ]
+  },
+  {
+    "name": "치자꽃추출물",
+    "normalizedName": "치자꽃추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "치자꽃추출물"
+    ]
+  },
+  {
+    "name": "카놀라오일",
+    "normalizedName": "카놀라오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "카놀라오일"
+    ]
+  },
+  {
+    "name": "카라기난",
+    "normalizedName": "카라기난",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "카라기난"
+    ]
+  },
+  {
+    "name": "카바카바잎/뿌리/줄기추출물",
+    "normalizedName": "카바카바잎뿌리줄기추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "카바카바잎/뿌리/줄기추출물"
+    ]
+  },
+  {
+    "name": "카프릴릭/카프릭트리글리세라이드",
+    "normalizedName": "카프릴릭카프릭트리글리세라이드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "카프릴릭/카프릭트리글리세라이드"
+    ]
+  },
+  {
+    "name": "카프릴릭애씨드",
+    "normalizedName": "카프릴릭애씨드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "카프릴릭애씨드"
+    ]
+  },
+  {
+    "name": "카프릴릴트라이메티콘",
+    "normalizedName": "카프릴릴트라이메티콘",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "카프릴릴트라이메티콘"
+    ]
+  },
+  {
+    "name": "카프릴하이드록사믹애씨드",
+    "normalizedName": "카프릴하이드록사믹애씨드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "카프릴하이드록사믹애씨드"
+    ]
+  },
+  {
+    "name": "칸데릴라/호호바/쌀겨폴리글리세릴-3에스터",
+    "normalizedName": "칸데릴라호호바쌀겨폴리글리세릴3에스터",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "칸데릴라/호호바/쌀겨폴리글리세릴-3에스터"
+    ]
+  },
+  {
+    "name": "칸데릴라왁스에스터",
+    "normalizedName": "칸데릴라왁스에스터",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "칸데릴라왁스에스터"
+    ]
+  },
+  {
+    "name": "칸디다봄비콜라/글루코오스/메틸레이프시데이트발효물",
+    "normalizedName": "칸디다봄비콜라글루코오스메틸레이프시데이트발효물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "칸디다봄비콜라/글루코오스/메틸레이프시데이트발효물"
+    ]
+  },
+  {
+    "name": "칼슘글루코네이트",
+    "normalizedName": "칼슘글루코네이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "칼슘글루코네이트"
+    ]
+  },
+  {
+    "name": "칼슘설페이트",
+    "normalizedName": "칼슘설페이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "칼슘설페이트"
+    ]
+  },
+  {
+    "name": "칼슘판토테네이트",
+    "normalizedName": "칼슘판토테네이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "칼슘판토테네이트"
+    ]
+  },
+  {
+    "name": "캐나다콜로이달클레이",
+    "normalizedName": "캐나다콜로이달클레이",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "캐나다콜로이달클레이"
+    ]
+  },
+  {
+    "name": "캐롭검",
+    "normalizedName": "캐롭검",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "캐롭검"
+    ]
+  },
+  {
+    "name": "캐모마일잎추출물",
+    "normalizedName": "캐모마일잎추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "캐모마일잎추출물"
+    ]
+  },
+  {
+    "name": "캐모마일추출물",
+    "normalizedName": "캐모마일추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "캐모마일추출물"
+    ]
+  },
+  {
+    "name": "캣츠클로추출물",
+    "normalizedName": "캣츠클로추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "캣츠클로추출물"
+    ]
+  },
+  {
+    "name": "커피씨추출물",
+    "normalizedName": "커피씨추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "커피씨추출물"
+    ]
+  },
+  {
+    "name": "커피콩추출물",
+    "normalizedName": "커피콩추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "커피콩추출물"
+    ]
+  },
+  {
+    "name": "케일잎추출물",
+    "normalizedName": "케일잎추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "케일잎추출물"
+    ]
+  },
+  {
+    "name": "코직애씨드",
+    "normalizedName": "코직애씨드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "코직애씨드"
+    ]
+  },
+  {
+    "name": "코카마이드메틸엠이에이",
+    "normalizedName": "코카마이드메틸엠이에이",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "코카마이드메틸엠이에이"
+    ]
+  },
+  {
+    "name": "코카미도프로필하이드록시설테인",
+    "normalizedName": "코카미도프로필하이드록시설테인",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "코카미도프로필하이드록시설테인"
+    ]
+  },
+  {
+    "name": "코코넛야자껍질가루",
+    "normalizedName": "코코넛야자껍질가루",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "코코넛야자껍질가루"
+    ]
+  },
+  {
+    "name": "코튼가루",
+    "normalizedName": "코튼가루",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "코튼가루"
+    ]
+  },
+  {
+    "name": "콘민트잎추출물",
+    "normalizedName": "콘민트잎추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "콘민트잎추출물"
+    ]
+  },
+  {
+    "name": "콘민트추출물",
+    "normalizedName": "콘민트추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "콘민트추출물"
+    ]
+  },
+  {
+    "name": "콩추출물",
+    "normalizedName": "콩추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "콩추출물 (0.001ppm)"
+    ]
+  },
+  {
+    "name": "쿼세틴",
+    "normalizedName": "쿼세틴",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "쿼세틴"
+    ]
+  },
+  {
+    "name": "퀘르세틴",
+    "normalizedName": "퀘르세틴",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "퀘르세틴"
+    ]
+  },
+  {
+    "name": "퀴노아씨추출물",
+    "normalizedName": "퀴노아씨추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "퀴노아씨추출물"
+    ]
+  },
+  {
+    "name": "크레아틴",
+    "normalizedName": "크레아틴",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "크레아틴"
+    ]
+  },
+  {
+    "name": "크로뮴옥사이드그린",
+    "normalizedName": "크로뮴옥사이드그린",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "크로뮴옥사이드그린"
+    ]
+  },
+  {
+    "name": "크로뮴옥사이드그린(CI 77288)",
+    "normalizedName": "크로뮴옥사이드그린ci77288",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "크로뮴옥사이드그린(CI 77288)"
+    ]
+  },
+  {
+    "name": "클라리세이지추출물",
+    "normalizedName": "클라리세이지추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "클라리세이지추출물"
+    ]
+  },
+  {
+    "name": "클레리오일",
+    "normalizedName": "클레리오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "클레리오일"
+    ]
+  },
+  {
+    "name": "클로렐라 불가리스가루",
+    "normalizedName": "클로렐라불가리스가루",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "클로렐라 불가리스가루"
+    ]
+  },
+  {
+    "name": "클로렐라가루",
+    "normalizedName": "클로렐라가루",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "클로렐라가루"
+    ]
+  },
+  {
+    "name": "클로브싹추출물",
+    "normalizedName": "클로브싹추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "클로브싹추출물"
+    ]
+  },
+  {
+    "name": "타마누씨오일",
+    "normalizedName": "타마누씨오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "타마누씨오일"
+    ]
+  },
+  {
+    "name": "타임잎추출물",
+    "normalizedName": "타임잎추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "타임잎추출물"
+    ]
+  },
+  {
+    "name": "탈지쌀겨",
+    "normalizedName": "탈지쌀겨",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "탈지쌀겨"
+    ]
+  },
+  {
+    "name": "탈지쌀겨추출물",
+    "normalizedName": "탈지쌀겨추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "탈지쌀겨추출물"
+    ]
+  },
+  {
+    "name": "테레프탈릴리덴디캠퍼설포닉애씨드",
+    "normalizedName": "테레프탈릴리덴디캠퍼설포닉애씨드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "테레프탈릴리덴디캠퍼설포닉애씨드"
+    ]
+  },
+  {
+    "name": "테트라데센",
+    "normalizedName": "테트라데센",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "테트라데센"
+    ]
+  },
+  {
+    "name": "테트라데실아미노부티로일발릴아미노부티릭우레아트라이플루오로아세테이트",
+    "normalizedName": "테트라데실아미노부티로일발릴아미노부티릭우레아트라이플루오로아세테이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "테트라데실아미노부티로일발릴아미노부티릭우레아트라이플루오로아세테이트"
+    ]
+  },
+  {
+    "name": "테트라소듐글루타메이트다이아세테이트",
+    "normalizedName": "테트라소듐글루타메이트다이아세테이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "테트라소듐글루타메이트다이아세테이트"
+    ]
+  },
+  {
+    "name": "테트라소듐이디티에이",
+    "normalizedName": "테트라소듐이디티에이",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "테트라소듐이디티에이"
+    ]
+  },
+  {
+    "name": "테트라소듐파이로포스페이트",
+    "normalizedName": "테트라소듐파이로포스페이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "테트라소듐파이로포스페이트"
+    ]
+  },
+  {
+    "name": "테트라아세틸파이토스핑고신",
+    "normalizedName": "테트라아세틸파이토스핑고신",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "테트라아세틸파이토스핑고신"
+    ]
+  },
+  {
+    "name": "테트라하이드로피페린",
+    "normalizedName": "테트라하이드로피페린",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "테트라하이드로피페린"
+    ]
+  },
+  {
+    "name": "토타롤",
+    "normalizedName": "토타롤",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "토타롤"
+    ]
+  },
+  {
+    "name": "튜베로즈추출물",
+    "normalizedName": "튜베로즈추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "튜베로즈추출물"
+    ]
+  },
+  {
+    "name": "트라이소듐포스페이트",
+    "normalizedName": "트라이소듐포스페이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "트라이소듐포스페이트"
+    ]
+  },
+  {
+    "name": "트라이아이소스테아린",
+    "normalizedName": "트라이아이소스테아린",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "트라이아이소스테아린"
+    ]
+  },
+  {
+    "name": "트루로즈오브예리코추출물",
+    "normalizedName": "트루로즈오브예리코추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "트루로즈오브예리코추출물"
+    ]
+  },
+  {
+    "name": "티아민에이치씨엘",
+    "normalizedName": "티아민에이치씨엘",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "티아민에이치씨엘"
+    ]
+  },
+  {
+    "name": "티트리추출물",
+    "normalizedName": "티트리추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "티트리추출물"
+    ]
+  },
+  {
+    "name": "파파야열매추출물",
+    "normalizedName": "파파야열매추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "파파야열매추출물"
+    ]
+  },
+  {
+    "name": "팔마로사오일",
+    "normalizedName": "팔마로사오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "팔마로사오일"
+    ]
+  },
+  {
+    "name": "팔미토일다이펩타이드-7",
+    "normalizedName": "팔미토일다이펩타이드7",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "팔미토일다이펩타이드-7"
+    ]
+  },
+  {
+    "name": "팔미토일트라이펩타이드-8",
+    "normalizedName": "팔미토일트라이펩타이드8",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "팔미토일트라이펩타이드-8"
+    ]
+  },
+  {
+    "name": "팔미토일헥사펩타이드-12",
+    "normalizedName": "팔미토일헥사펩타이드12",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "팔미토일헥사펩타이드-12"
+    ]
+  },
+  {
+    "name": "팜씨오일",
+    "normalizedName": "팜씨오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "팜씨오일"
+    ]
+  },
+  {
+    "name": "팥가루",
+    "normalizedName": "팥가루",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "팥가루(15,000ppm)"
+    ]
+  },
+  {
+    "name": "페네틸벤조에이트",
+    "normalizedName": "페네틸벤조에이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "페네틸벤조에이트"
+    ]
+  },
+  {
+    "name": "페룰릭애씨드",
+    "normalizedName": "페룰릭애씨드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "페룰릭애씨드"
+    ]
+  },
+  {
+    "name": "페트롤라툼",
+    "normalizedName": "페트롤라툼",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "페트롤라툼"
+    ]
+  },
+  {
+    "name": "페퍼민트잎추출물",
+    "normalizedName": "페퍼민트잎추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "페퍼민트잎추출물"
+    ]
+  },
+  {
+    "name": "펙틴",
+    "normalizedName": "펙틴",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "펙틴"
+    ]
+  },
+  {
+    "name": "펜타에리스리틸다이스테아레이트",
+    "normalizedName": "펜타에리스리틸다이스테아레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "펜타에리스리틸다이스테아레이트"
+    ]
+  },
+  {
+    "name": "펜타펩타이드-3",
+    "normalizedName": "펜타펩타이드3",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "펜타펩타이드-3"
+    ]
+  },
+  {
+    "name": "포도즙추출물",
+    "normalizedName": "포도즙추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "포도즙추출물"
+    ]
+  },
+  {
+    "name": "포스포릭애씨드",
+    "normalizedName": "포스포릭애씨드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "포스포릭애씨드"
+    ]
+  },
+  {
+    "name": "포타슘마그네슘아스파테이트",
+    "normalizedName": "포타슘마그네슘아스파테이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "포타슘마그네슘아스파테이트"
+    ]
+  },
+  {
+    "name": "포타슘미리스테이트",
+    "normalizedName": "포타슘미리스테이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "포타슘미리스테이트"
+    ]
+  },
+  {
+    "name": "포타슘솔베이트",
+    "normalizedName": "포타슘솔베이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "포타슘솔베이트"
+    ]
+  },
+  {
+    "name": "포타슘스테아레이트",
+    "normalizedName": "포타슘스테아레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "포타슘스테아레이트"
+    ]
+  },
+  {
+    "name": "포타슘클로라이드",
+    "normalizedName": "포타슘클로라이드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "포타슘클로라이드"
+    ]
+  },
+  {
+    "name": "포타슘팔미테이트",
+    "normalizedName": "포타슘팔미테이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "포타슘팔미테이트"
+    ]
+  },
+  {
+    "name": "폴리글리세린-6",
+    "normalizedName": "폴리글리세린6",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "폴리글리세린-6"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-10다이아이소스테아레이트",
+    "normalizedName": "폴리글리세릴10다이아이소스테아레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "폴리글리세릴-10다이아이소스테아레이트"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-10아이소스테아레이트",
+    "normalizedName": "폴리글리세릴10아이소스테아레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "폴리글리세릴-10아이소스테아레이트"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-2아이소스테아레이트/다이머다이리놀리에이트코폴리머",
+    "normalizedName": "폴리글리세릴2아이소스테아레이트다이머다이리놀리에이트코폴리머",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "폴리글리세릴-2아이소스테아레이트/다이머다이리놀리에이트코폴리머"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-2트라이아이소스테아레이트",
+    "normalizedName": "폴리글리세릴2트라이아이소스테아레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "폴리글리세릴-2트라이아이소스테아레이트"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-3폴리리시놀리에이트",
+    "normalizedName": "폴리글리세릴3폴리리시놀리에이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "폴리글리세릴-3폴리리시놀리에이트"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-4라우레이트",
+    "normalizedName": "폴리글리세릴4라우레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "폴리글리세릴-4라우레이트"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-4아이소스테아레이트",
+    "normalizedName": "폴리글리세릴4아이소스테아레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "폴리글리세릴-4아이소스테아레이트"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-5폴리리시놀리에이트",
+    "normalizedName": "폴리글리세릴5폴리리시놀리에이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "폴리글리세릴-5폴리리시놀리에이트"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-6다이스테아레이트",
+    "normalizedName": "폴리글리세릴6다이스테아레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "폴리글리세릴-6다이스테아레이트"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-6다이카프레이트",
+    "normalizedName": "폴리글리세릴6다이카프레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "폴리글리세릴-6다이카프레이트"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-6카프릴레이트",
+    "normalizedName": "폴리글리세릴6카프릴레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "폴리글리세릴-6카프릴레이트"
+    ]
+  },
+  {
+    "name": "폴리글리세릴-6폴리하이드록시스테아레이트",
+    "normalizedName": "폴리글리세릴6폴리하이드록시스테아레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "폴리글리세릴-6폴리하이드록시스테아레이트"
+    ]
+  },
+  {
+    "name": "폴리데센",
+    "normalizedName": "폴리데센",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "폴리데센"
+    ]
+  },
+  {
+    "name": "폴리메틸메타크릴레이트",
+    "normalizedName": "폴리메틸메타크릴레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "폴리메틸메타크릴레이트"
+    ]
+  },
+  {
+    "name": "폴리비닐알코올",
+    "normalizedName": "폴리비닐알코올",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "폴리비닐알코올"
+    ]
+  },
+  {
+    "name": "폴리쿼터늄-39",
+    "normalizedName": "폴리쿼터늄39",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "폴리쿼터늄-39"
+    ]
+  },
+  {
+    "name": "폴리쿼터늄-7",
+    "normalizedName": "폴리쿼터늄7",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "폴리쿼터늄-7"
+    ]
+  },
+  {
+    "name": "폴리프로필실세스퀴옥세인",
+    "normalizedName": "폴리프로필실세스퀴옥세인",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "폴리프로필실세스퀴옥세인"
+    ]
+  },
+  {
+    "name": "폴릭애씨드",
+    "normalizedName": "폴릭애씨드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "폴릭애씨드"
+    ]
+  },
+  {
+    "name": "풀러린",
+    "normalizedName": "풀러린",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "풀러린"
+    ]
+  },
+  {
+    "name": "프로필렌글라이콜다이벤조에이트",
+    "normalizedName": "프로필렌글라이콜다이벤조에이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "프로필렌글라이콜다이벤조에이트"
+    ]
+  },
+  {
+    "name": "프로필렌글라이콜라우레이트",
+    "normalizedName": "프로필렌글라이콜라우레이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "프로필렌글라이콜라우레이트"
+    ]
+  },
+  {
+    "name": "플랑크톤추출물",
+    "normalizedName": "플랑크톤추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "플랑크톤추출물"
+    ]
+  },
+  {
+    "name": "플로레틴",
+    "normalizedName": "플로레틴",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "플로레틴"
+    ]
+  },
+  {
+    "name": "피리독신",
+    "normalizedName": "피리독신",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "피리독신"
+    ]
+  },
+  {
+    "name": "피브이피",
+    "normalizedName": "피브이피",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "피브이피"
+    ]
+  },
+  {
+    "name": "피토스테릴/베헤닐/옥틸도데실라우로일글루타메이트",
+    "normalizedName": "피토스테릴베헤닐옥틸도데실라우로일글루타메이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "피토스테릴/베헤닐/옥틸도데실라우로일글루타메이트"
+    ]
+  },
+  {
+    "name": "피토스테릴/옥틸도데실라우로일글루타메이트",
+    "normalizedName": "피토스테릴옥틸도데실라우로일글루타메이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "피토스테릴/옥틸도데실라우로일글루타메이트"
+    ]
+  },
+  {
+    "name": "피톨",
+    "normalizedName": "피톨",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "피톨"
+    ]
+  },
+  {
+    "name": "하이드로제네이티드다이데센",
+    "normalizedName": "하이드로제네이티드다이데센",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "하이드로제네이티드다이데센"
+    ]
+  },
+  {
+    "name": "하이드로제네이티드스타치하이드롤리세이트",
+    "normalizedName": "하이드로제네이티드스타치하이드롤리세이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "하이드로제네이티드스타치하이드롤리세이트"
+    ]
+  },
+  {
+    "name": "하이드로제네이티드식물성오일",
+    "normalizedName": "하이드로제네이티드식물성오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "하이드로제네이티드식물성오일"
+    ]
+  },
+  {
+    "name": "하이드로제네이티드쌀겨오일",
+    "normalizedName": "하이드로제네이티드쌀겨오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "하이드로제네이티드쌀겨오일"
+    ]
+  },
+  {
+    "name": "하이드로제네이티드코코-글리세라이드",
+    "normalizedName": "하이드로제네이티드코코글리세라이드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "하이드로제네이티드코코-글리세라이드"
+    ]
+  },
+  {
+    "name": "하이드로제네이티드코코넛애씨드",
+    "normalizedName": "하이드로제네이티드코코넛애씨드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "하이드로제네이티드코코넛애씨드"
+    ]
+  },
+  {
+    "name": "하이드로제네이티드코코넛오일",
+    "normalizedName": "하이드로제네이티드코코넛오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "하이드로제네이티드코코넛오일"
+    ]
+  },
+  {
+    "name": "하이드로제네이티드팜애씨드",
+    "normalizedName": "하이드로제네이티드팜애씨드",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "하이드로제네이티드팜애씨드"
+    ]
+  },
+  {
+    "name": "하이드로제네이티드포스파티딜콜린",
+    "normalizedName": "하이드로제네이티드포스파티딜콜린",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "하이드로제네이티드포스파티딜콜린"
+    ]
+  },
+  {
+    "name": "하이드로젠다이메티콘",
+    "normalizedName": "하이드로젠다이메티콘",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "하이드로젠다이메티콘"
+    ]
+  },
+  {
+    "name": "하이드록시데실유비퀴논",
+    "normalizedName": "하이드록시데실유비퀴논",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "하이드록시데실유비퀴논"
+    ]
+  },
+  {
+    "name": "하이드록시시트로넬알",
+    "normalizedName": "하이드록시시트로넬알",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "하이드록시시트로넬알"
+    ]
+  },
+  {
+    "name": "하이드롤라이즈드삼색제비꽃추출물",
+    "normalizedName": "하이드롤라이즈드삼색제비꽃추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "하이드롤라이즈드삼색제비꽃추출물"
+    ]
+  },
+  {
+    "name": "하이드롤라이즈드치자추출물",
+    "normalizedName": "하이드롤라이즈드치자추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "하이드롤라이즈드치자추출물"
+    ]
+  },
+  {
+    "name": "하이드롤라이즈드콩단백질",
+    "normalizedName": "하이드롤라이즈드콩단백질",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "하이드롤라이즈드콩단백질"
+    ]
+  },
+  {
+    "name": "하이드롤라이즈드해면",
+    "normalizedName": "하이드롤라이즈드해면",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "하이드롤라이즈드해면"
+    ]
+  },
+  {
+    "name": "하이드롤라이즈드호호바에스터",
+    "normalizedName": "하이드롤라이즈드호호바에스터",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "하이드롤라이즈드호호바에스터"
+    ]
+  },
+  {
+    "name": "한천",
+    "normalizedName": "한천",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "한천"
+    ]
+  },
+  {
+    "name": "합성플루오르플로고파이트",
+    "normalizedName": "합성플루오르플로고파이트",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "합성플루오르플로고파이트"
+    ]
+  },
+  {
+    "name": "해바라기싹추출물",
+    "normalizedName": "해바라기싹추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "해바라기싹추출물"
+    ]
+  },
+  {
+    "name": "해바라기씨왁스",
+    "normalizedName": "해바라기씨왁스",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "해바라기씨왁스"
+    ]
+  },
+  {
+    "name": "해송나무껍질추출물",
+    "normalizedName": "해송나무껍질추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "해송나무껍질추출물"
+    ]
+  },
+  {
+    "name": "향기제비꽃잎추출물",
+    "normalizedName": "향기제비꽃잎추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "향기제비꽃잎추출물"
+    ]
+  },
+  {
+    "name": "향부자뿌리추출물",
+    "normalizedName": "향부자뿌리추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "향부자뿌리추출물"
+    ]
+  },
+  {
+    "name": "허니서클추출물",
+    "normalizedName": "허니서클추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "허니서클추출물"
+    ]
+  },
+  {
+    "name": "헥사데센",
+    "normalizedName": "헥사데센",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "헥사데센"
+    ]
+  },
+  {
+    "name": "헥실레조시놀",
+    "normalizedName": "헥실레조시놀",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "헥실레조시놀"
+    ]
+  },
+  {
+    "name": "홍화씨오일",
+    "normalizedName": "홍화씨오일",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "홍화씨오일"
+    ]
+  },
+  {
+    "name": "화이트루핀씨추출물",
+    "normalizedName": "화이트루핀씨추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "화이트루핀씨추출물"
+    ]
+  },
+  {
+    "name": "황금추출물",
+    "normalizedName": "황금추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "황금추출물"
+    ]
+  },
+  {
+    "name": "황마잎추출물",
+    "normalizedName": "황마잎추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "황마잎추출물"
+    ]
+  },
+  {
+    "name": "황벽나무껍질추출물",
+    "normalizedName": "황벽나무껍질추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "황벽나무껍질추출물"
+    ]
+  },
+  {
+    "name": "황색산화철 (CI 77492)",
+    "normalizedName": "황색산화철ci77492",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "황색산화철 (CI 77492)"
+    ]
+  },
+  {
+    "name": "회향씨추출물",
+    "normalizedName": "회향씨추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "회향씨추출물"
+    ]
+  },
+  {
+    "name": "효모발효물",
+    "normalizedName": "효모발효물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "효모발효물"
+    ]
+  },
+  {
+    "name": "흑색산화철",
+    "normalizedName": "흑색산화철",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "흑색산화철"
+    ]
+  },
+  {
+    "name": "흰루핀씨추출물",
+    "normalizedName": "흰루핀씨추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "흰루핀씨추출물"
+    ]
+  },
+  {
+    "name": "흰목이버섯추출물",
+    "normalizedName": "흰목이버섯추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "흰목이버섯추출물"
+    ]
+  },
+  {
+    "name": "흰버드나무나무껍질추출물",
+    "normalizedName": "흰버드나무나무껍질추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "흰버드나무나무껍질추출물"
+    ]
+  },
+  {
+    "name": "흰서양송로추출물",
+    "normalizedName": "흰서양송로추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "흰서양송로추출물"
+    ]
+  },
+  {
+    "name": "히비스커스꽃추출물",
+    "normalizedName": "히비스커스꽃추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "히비스커스꽃추출물(10ppm)"
+    ]
+  },
+  {
+    "name": "히아신스추출물",
+    "normalizedName": "히아신스추출물",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "히아신스추출물"
+    ]
+  },
+  {
+    "name": "C12-13알케스-9",
+    "normalizedName": "c1213알케스9",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "C12-13알케스-9"
+    ]
+  },
+  {
+    "name": "C13-15알케인",
+    "normalizedName": "c1315알케인",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "C13-15알케인"
+    ]
+  },
+  {
+    "name": "C13-16아이소알케인",
+    "normalizedName": "c1316아이소알케인",
+    "occurrenceCount": 1,
+    "productCount": 1,
+    "exampleRawNames": [
+      "C13-16아이소알케인"
+    ]
+  }
+]
