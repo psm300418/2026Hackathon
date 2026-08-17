@@ -1,0 +1,407 @@
+import { z } from "zod";
+import { createSupabaseAdminClient } from "../config/supabase.js";
+import {
+  listDailyRecordPresets,
+  listDailyRecordProducts,
+  listDailyRecords,
+  listSkinPhotos,
+  removeSkinPhotosForDailyRecord,
+  replaceDailyRecordPresets,
+  replaceDailyRecordProducts,
+  replaceSkinPhotoMetadata,
+  upsertDailyRecord
+} from "../repositories/daily-records.repository.js";
+import {
+  listProductPresetItems,
+  listProductPresets,
+  listProductPresetsByIds,
+  replaceProductPresetItems,
+  upsertProductPreset
+} from "../repositories/product-presets.repository.js";
+import { listUserProductsByIds } from "../repositories/user-products.repository.js";
+import { getUserProducts } from "./products.service.js";
+import { ApiError } from "../types/http.js";
+import type {
+  DailyRecordDto,
+  DailyRecordPresetRow,
+  DailyRecordProductRow,
+  DailyRecordRow,
+  ProductPresetDto,
+  ProductPresetRow,
+  RoutineProductRow,
+  SkinPhotoDto,
+  SkinPhotoRow
+} from "../types/records.js";
+import type { UserProductDto } from "../types/products.js";
+
+const SKIN_PHOTO_BUCKET = "skin-photos";
+const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
+const ACCEPTED_PHOTO_TYPES = new Set(["image/jpeg", "image/png"]);
+
+const todayInSeoul = () =>
+  new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Seoul",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).format(new Date());
+
+const parseJsonStringArray = (value: unknown): string[] => {
+  if (value === undefined || value === null || value === "") {
+    return [];
+  }
+
+  if (Array.isArray(value)) {
+    return value.map((item) => String(item));
+  }
+
+  if (typeof value === "string") {
+    const parsed: unknown = JSON.parse(value);
+    if (!Array.isArray(parsed)) {
+      throw new ApiError(400, "BAD_REQUEST", "배열 형식이 올바르지 않습니다.");
+    }
+
+    return parsed.map((item) => String(item));
+  }
+
+  throw new ApiError(400, "BAD_REQUEST", "배열 형식이 올바르지 않습니다.");
+};
+
+const uniqueStrings = (values: string[]) => [...new Set(values)];
+
+const scoreSchema = z.coerce.number().int().min(0).max(5);
+
+const dailyRecordInputSchema = z.object({
+  recordDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).default(todayInSeoul()),
+  dryness: scoreSchema,
+  oiliness: scoreSchema,
+  redness: scoreSchema,
+  trouble: scoreSchema,
+  sleepHours: z.coerce.number().min(0).max(24).multipleOf(0.1),
+  userProductIds: z.preprocess(parseJsonStringArray, z.array(z.string().uuid())).default([]),
+  appliedPresetIds: z.preprocess(parseJsonStringArray, z.array(z.string().uuid())).default([]),
+  memo: z.string().trim().max(1000).optional().nullable()
+});
+
+const productPresetInputSchema = z.object({
+  name: z.string().trim().min(1).max(40),
+  userProductIds: z.preprocess(parseJsonStringArray, z.array(z.string().uuid()).min(1))
+});
+
+const dailyRecordQuerySchema = z.object({
+  from: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  to: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional()
+});
+
+export const parseDailyRecordInput = (body: unknown) => dailyRecordInputSchema.parse(body);
+export const parseProductPresetInput = (body: unknown) => productPresetInputSchema.parse(body);
+export const parseDailyRecordQuery = (query: unknown) => dailyRecordQuerySchema.parse(query);
+
+const ensureOwnedUserProducts = async (
+  userId: string,
+  userProductIds: string[]
+): Promise<void> => {
+  const uniqueUserProductIds = uniqueStrings(userProductIds);
+  const userProducts = await listUserProductsByIds(userId, uniqueUserProductIds);
+
+  if (userProducts.length !== uniqueUserProductIds.length) {
+    throw new ApiError(400, "BAD_REQUEST", "내 제품 목록에 없는 제품이 포함되어 있습니다.");
+  }
+};
+
+const ensureOwnedPresets = async (userId: string, presetIds: string[]): Promise<ProductPresetRow[]> => {
+  const uniquePresetIds = uniqueStrings(presetIds);
+  const presets = await listProductPresetsByIds(userId, uniquePresetIds);
+
+  if (presets.length !== uniquePresetIds.length) {
+    throw new ApiError(400, "BAD_REQUEST", "내 프리셋이 아닌 항목이 포함되어 있습니다.");
+  }
+
+  return presets;
+};
+
+const mapUserProductsById = (userProducts: UserProductDto[]) =>
+  new Map(userProducts.map((userProduct) => [userProduct.id, userProduct]));
+
+const groupRoutineItems = (items: RoutineProductRow[]) => {
+  const itemsByRoutineId = new Map<string, RoutineProductRow[]>();
+
+  for (const item of items) {
+    const existingItems = itemsByRoutineId.get(item.routine_id) ?? [];
+    existingItems.push(item);
+    itemsByRoutineId.set(item.routine_id, existingItems);
+  }
+
+  return itemsByRoutineId;
+};
+
+const toProductPresetDto = (
+  preset: ProductPresetRow,
+  itemsByRoutineId: Map<string, RoutineProductRow[]>,
+  userProductById: Map<string, UserProductDto>
+): ProductPresetDto => ({
+  id: preset.id,
+  name: preset.name,
+  products: (itemsByRoutineId.get(preset.id) ?? [])
+    .map((item) => userProductById.get(item.user_product_id))
+    .filter((userProduct): userProduct is UserProductDto => userProduct !== undefined),
+  createdAt: preset.created_at,
+  updatedAt: preset.updated_at
+});
+
+export const saveProductPreset = async (
+  userId: string,
+  input: {
+    name: string;
+    userProductIds: string[];
+  }
+): Promise<ProductPresetDto> => {
+  const userProductIds = uniqueStrings(input.userProductIds);
+  await ensureOwnedUserProducts(userId, userProductIds);
+
+  const preset = await upsertProductPreset({ userId, name: input.name });
+  const items = await replaceProductPresetItems(preset.id, userProductIds);
+  const userProducts = await getUserProducts(userId);
+  const userProductById = mapUserProductsById(userProducts);
+
+  return toProductPresetDto(preset, groupRoutineItems(items), userProductById);
+};
+
+export const getProductPresets = async (userId: string): Promise<ProductPresetDto[]> => {
+  const presets = await listProductPresets(userId);
+  const items = await listProductPresetItems(presets.map((preset) => preset.id));
+  const userProducts = await getUserProducts(userId);
+  const userProductById = mapUserProductsById(userProducts);
+  const itemsByRoutineId = groupRoutineItems(items);
+
+  return presets.map((preset) => toProductPresetDto(preset, itemsByRoutineId, userProductById));
+};
+
+const groupDailyRecordProducts = (items: DailyRecordProductRow[]) => {
+  const itemsByDailyRecordId = new Map<string, DailyRecordProductRow[]>();
+
+  for (const item of items) {
+    const existingItems = itemsByDailyRecordId.get(item.daily_record_id) ?? [];
+    existingItems.push(item);
+    itemsByDailyRecordId.set(item.daily_record_id, existingItems);
+  }
+
+  return itemsByDailyRecordId;
+};
+
+const groupDailyRecordPresets = (items: DailyRecordPresetRow[]) => {
+  const itemsByDailyRecordId = new Map<string, DailyRecordPresetRow[]>();
+
+  for (const item of items) {
+    const existingItems = itemsByDailyRecordId.get(item.daily_record_id) ?? [];
+    existingItems.push(item);
+    itemsByDailyRecordId.set(item.daily_record_id, existingItems);
+  }
+
+  return itemsByDailyRecordId;
+};
+
+const groupSkinPhotos = (photos: SkinPhotoRow[]) => {
+  const photoByDailyRecordId = new Map<string, SkinPhotoRow>();
+
+  for (const photo of photos) {
+    if (!photoByDailyRecordId.has(photo.daily_record_id)) {
+      photoByDailyRecordId.set(photo.daily_record_id, photo);
+    }
+  }
+
+  return photoByDailyRecordId;
+};
+
+const toSkinPhotoDto = (photo: SkinPhotoRow | undefined): SkinPhotoDto | null => {
+  if (!photo) {
+    return null;
+  }
+
+  return {
+    id: photo.id,
+    storagePath: photo.storage_path,
+    contentType: photo.content_type,
+    fileSize: photo.file_size
+  };
+};
+
+const toDailyRecordDto = (
+  record: DailyRecordRow,
+  productsByDailyRecordId: Map<string, DailyRecordProductRow[]>,
+  presetsByDailyRecordId: Map<string, DailyRecordPresetRow[]>,
+  userProductById: Map<string, UserProductDto>,
+  presetById: Map<string, ProductPresetRow>,
+  photoByDailyRecordId: Map<string, SkinPhotoRow>
+): DailyRecordDto => ({
+  id: record.id,
+  recordDate: record.record_date,
+  loggedAt: record.logged_at,
+  dryness: record.dryness,
+  oiliness: record.oiliness,
+  redness: record.redness,
+  trouble: record.trouble,
+  sleepHours: record.sleep_hours,
+  memo: record.memo,
+  products: (productsByDailyRecordId.get(record.id) ?? [])
+    .map((item) => userProductById.get(item.user_product_id))
+    .filter((userProduct): userProduct is UserProductDto => userProduct !== undefined),
+  appliedPresets: (presetsByDailyRecordId.get(record.id) ?? [])
+    .map((item) => presetById.get(item.routine_id))
+    .filter((preset): preset is ProductPresetRow => preset !== undefined)
+    .map((preset) => ({ id: preset.id, name: preset.name })),
+  facePhoto: toSkinPhotoDto(photoByDailyRecordId.get(record.id)),
+  createdAt: record.created_at,
+  updatedAt: record.updated_at
+});
+
+const getPresetProductIds = async (presetIds: string[]) => {
+  const presetItems = await listProductPresetItems(presetIds);
+  return presetItems.map((item) => item.user_product_id);
+};
+
+const replaceDailyRecordPhoto = async (
+  userId: string,
+  recordId: string,
+  file: Express.Multer.File | undefined
+): Promise<void> => {
+  if (!file) {
+    return;
+  }
+
+  if (!ACCEPTED_PHOTO_TYPES.has(file.mimetype)) {
+    throw new ApiError(400, "BAD_REQUEST", "얼굴 사진은 JPEG 또는 PNG만 업로드할 수 있습니다.");
+  }
+
+  if (file.size > MAX_PHOTO_BYTES) {
+    throw new ApiError(400, "BAD_REQUEST", "얼굴 사진은 5MB 이하만 업로드할 수 있습니다.");
+  }
+
+  const supabase = createSupabaseAdminClient();
+  const existingPhotos = await removeSkinPhotosForDailyRecord(recordId);
+
+  if (existingPhotos.length > 0) {
+    const { error: removeError } = await supabase.storage
+      .from(SKIN_PHOTO_BUCKET)
+      .remove(existingPhotos.map((photo) => photo.storage_path));
+
+    if (removeError) {
+      throw removeError;
+    }
+  }
+
+  const extension = file.mimetype === "image/png" ? "png" : "jpg";
+  const storagePath = `${userId}/${recordId}/face-photo.${extension}`;
+  const { error: uploadError } = await supabase.storage
+    .from(SKIN_PHOTO_BUCKET)
+    .upload(storagePath, file.buffer, {
+      contentType: file.mimetype,
+      upsert: true
+    });
+
+  if (uploadError) {
+    throw uploadError;
+  }
+
+  await replaceSkinPhotoMetadata({
+    userId,
+    dailyRecordId: recordId,
+    storagePath,
+    originalFileName: file.originalname || null,
+    contentType: file.mimetype,
+    fileSize: file.size
+  });
+};
+
+export const saveDailyRecord = async (
+  userId: string,
+  input: {
+    recordDate: string;
+    dryness: number;
+    oiliness: number;
+    redness: number;
+    trouble: number;
+    sleepHours: number;
+    userProductIds: string[];
+    appliedPresetIds: string[];
+    memo?: string | null;
+  },
+  file?: Express.Multer.File
+): Promise<DailyRecordDto> => {
+  const presetIds = uniqueStrings(input.appliedPresetIds);
+  const userProductIdsFromInput = uniqueStrings(input.userProductIds);
+  const presets = await ensureOwnedPresets(userId, presetIds);
+  const presetProductIds = await getPresetProductIds(presetIds);
+  const userProductIds = uniqueStrings([...userProductIdsFromInput, ...presetProductIds]);
+
+  await ensureOwnedUserProducts(userId, userProductIds);
+
+  const record = await upsertDailyRecord({
+    userId,
+    recordDate: input.recordDate,
+    dryness: input.dryness,
+    oiliness: input.oiliness,
+    redness: input.redness,
+    trouble: input.trouble,
+    sleepHours: input.sleepHours,
+    memo: input.memo ?? null
+  });
+
+  await replaceDailyRecordProducts(record.id, userProductIds);
+  await replaceDailyRecordPresets(record.id, presetIds);
+  await replaceDailyRecordPhoto(userId, record.id, file);
+
+  const products = await listDailyRecordProducts([record.id]);
+  const recordPresets = await listDailyRecordPresets([record.id]);
+  const photos = await listSkinPhotos([record.id]);
+  const userProducts = await getUserProducts(userId);
+  const userProductById = mapUserProductsById(userProducts);
+  const presetById = new Map(presets.map((preset) => [preset.id, preset]));
+
+  return toDailyRecordDto(
+    record,
+    groupDailyRecordProducts(products),
+    groupDailyRecordPresets(recordPresets),
+    userProductById,
+    presetById,
+    groupSkinPhotos(photos)
+  );
+};
+
+export const getDailyRecords = async (
+  userId: string,
+  query: {
+    from?: string;
+    to?: string;
+  }
+): Promise<DailyRecordDto[]> => {
+  const today = todayInSeoul();
+  const from = query.from ?? query.to ?? today;
+  const to = query.to ?? query.from ?? today;
+
+  if (from > to) {
+    throw new ApiError(400, "BAD_REQUEST", "조회 시작일은 종료일보다 늦을 수 없습니다.");
+  }
+
+  const records = await listDailyRecords({ userId, from, to });
+  const recordIds = records.map((record) => record.id);
+  const products = await listDailyRecordProducts(recordIds);
+  const recordPresets = await listDailyRecordPresets(recordIds);
+  const photos = await listSkinPhotos(recordIds);
+  const userProducts = await getUserProducts(userId);
+  const userProductById = mapUserProductsById(userProducts);
+  const presetIds = uniqueStrings(recordPresets.map((preset) => preset.routine_id));
+  const presets = await listProductPresetsByIds(userId, presetIds);
+  const presetById = new Map(presets.map((preset) => [preset.id, preset]));
+
+  return records.map((record) =>
+    toDailyRecordDto(
+      record,
+      groupDailyRecordProducts(products),
+      groupDailyRecordPresets(recordPresets),
+      userProductById,
+      presetById,
+      groupSkinPhotos(photos)
+    )
+  );
+};

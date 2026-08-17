@@ -28,4 +28,25 @@ describe("app", () => {
     expect(response.status).toBe(401);
     expect(response.body.error.code).toBe("UNAUTHORIZED");
   });
+
+  it("rejects protected user product route without token", async () => {
+    const response = await request(createApp()).get("/api/user-products");
+
+    expect(response.status).toBe(401);
+    expect(response.body.error.code).toBe("UNAUTHORIZED");
+  });
+
+  it("rejects protected product preset route without token", async () => {
+    const response = await request(createApp()).get("/api/product-presets");
+
+    expect(response.status).toBe(401);
+    expect(response.body.error.code).toBe("UNAUTHORIZED");
+  });
+
+  it("rejects protected daily record route without token", async () => {
+    const response = await request(createApp()).get("/api/daily-records");
+
+    expect(response.status).toBe(401);
+    expect(response.body.error.code).toBe("UNAUTHORIZED");
+  });
 });

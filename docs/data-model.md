@@ -32,9 +32,9 @@ product_ingredients
 user_products
 routines
 routine_products
-usage_logs
-usage_log_items
-skin_logs
+daily_records
+daily_record_products
+daily_record_presets
 skin_photos
 analysis_runs
 analysis_findings
@@ -239,10 +239,13 @@ MFDS 성분 마스터와 매칭되지 않은 성분은 별도 보정 전까지 `
 - `updated_at`
 
 사용자는 공용 제품 DB의 제품을 자신의 제품 목록에 추가한다. 제품이 공용 DB에 없다면 먼저 `product_submissions` 흐름으로 제품을 등록한다.
+T3 범위에서는 제품 직접 등록을 열지 않고 seed 공용 제품 DB에서 검색한 제품만 추가한다.
+같은 사용자가 같은 제품을 다시 등록하면 새 행을 만들지 않고 기존 행을 갱신한다.
+이전 사용 제품 등록 화면에서는 `started_at`을 입력받지 않고 `null`로 저장한다.
 
 ### routines
 
-사용자 루틴을 저장한다.
+사용자가 반복적으로 함께 사용하는 제품 프리셋을 저장한다. API와 화면에서는 `product preset` 또는 `프리셋`으로 표현한다.
 
 - `id`
 - `user_id`
@@ -252,7 +255,7 @@ MFDS 성분 마스터와 매칭되지 않은 성분은 별도 보정 전까지 `
 
 ### routine_products
 
-루틴에 포함된 사용자 제품을 저장한다.
+프리셋에 포함된 사용자 제품을 저장한다.
 
 - `id`
 - `routine_id`
@@ -260,44 +263,50 @@ MFDS 성분 마스터와 매칭되지 않은 성분은 별도 보정 전까지 `
 - `display_order`
 - `created_at`
 
-### usage_logs
+### daily_records
 
-제품 또는 루틴 사용 기록을 저장한다.
-
-- `id`
-- `user_id`
-- `routine_id`
-- `used_at`
-- `memo`
-- `created_at`
-
-### usage_log_items
-
-하나의 사용 기록에 포함된 제품들을 저장한다.
-
-- `id`
-- `usage_log_id`
-- `user_product_id`
-- `created_at`
-
-### skin_logs
-
-일일 피부 상태와 생활 요인을 저장한다.
+하루 1개의 오늘 피부 기록을 저장한다. 피부 상태가 중심이며, 사용 제품, 적용 프리셋, 수면 시간, 선택 얼굴 사진은 이 기록에 연결된다.
 
 - `id`
 - `user_id`
+- `record_date`
 - `logged_at`
 - `dryness`
 - `oiliness`
 - `redness`
 - `trouble`
-- `sleep_level`
-- `stress_level`
+- `sleep_hours`
 - `memo`
 - `created_at`
 - `updated_at`
 
-척도는 MVP에서 0부터 5까지를 기본 후보로 한다.
+정책:
+
+- `user_id`, `record_date` 조합은 unique로 관리한다.
+- 같은 날짜 기록을 다시 저장하면 기존 기록을 갱신한다.
+- `dryness`, `oiliness`, `redness`, `trouble`은 0부터 5까지의 정수다.
+- `sleep_hours`는 0부터 24까지의 숫자이며 소수 1자리까지 허용한다.
+- 스트레스 점수는 T4 범위에서 제외한다.
+
+### daily_record_products
+
+오늘 기록에 포함된 사용 제품들을 저장한다.
+
+- `id`
+- `daily_record_id`
+- `user_product_id`
+- `created_at`
+
+하나의 오늘 기록에는 여러 제품이 포함될 수 있다. 제품 사용 기록만으로 `user_products.usage_status`를 자동 변경하지 않는다.
+
+### daily_record_presets
+
+오늘 기록에 적용한 프리셋을 저장한다. 분석에서는 실제 제품 목록인 `daily_record_products`를 우선 사용하고, 프리셋 정보는 사용자가 어떤 묶음을 적용했는지 보여주는 메타데이터로 활용한다.
+
+- `id`
+- `daily_record_id`
+- `routine_id`
+- `created_at`
 
 ### skin_photos
 
@@ -305,12 +314,12 @@ MFDS 성분 마스터와 매칭되지 않은 성분은 별도 보정 전까지 `
 
 - `id`
 - `user_id`
-- `skin_log_id`
+- `daily_record_id`
 - `storage_path`
 - `taken_at`
 - `created_at`
 
-성분표 사진은 이 테이블에 저장하지 않는다.
+얼굴 사진은 오늘 기록에 선택적으로 연결된다. 사진 없이도 오늘 기록을 저장할 수 있다. 성분표 사진은 이 테이블에 저장하지 않는다.
 
 ### analysis_runs
 
@@ -349,13 +358,13 @@ MFDS 성분 마스터와 매칭되지 않은 성분은 별도 보정 전까지 `
 ## 4. 관계 요약
 
 - 한 사용자는 하나 이상의 `skin_type_results`와 여러 `skin_type_responses`를 가질 수 있다.
-- 한 사용자는 여러 `product_submissions`, `user_products`, `routines`, `usage_logs`, `skin_logs`, `analysis_runs`를 가진다.
+- 한 사용자는 여러 `product_submissions`, `user_products`, `routines`, `daily_records`, `analysis_runs`를 가진다.
 - 한 제품은 사용자 제출(`product_submissions`)을 통해 생성될 수 있다.
 - 한 제품은 여러 성분을 가질 수 있다.
 - 한 사용자는 공용 제품을 자신의 제품 목록에 등록할 수 있다.
-- 한 루틴은 여러 사용자 제품을 포함할 수 있다.
-- 한 사용 기록은 여러 사용자 제품을 포함할 수 있다.
-- 한 피부 기록은 여러 피부 사진 메타데이터와 연결될 수 있다.
+- 한 프리셋은 여러 사용자 제품을 포함할 수 있다.
+- 한 오늘 기록은 여러 사용자 제품과 여러 적용 프리셋을 포함할 수 있다.
+- 한 오늘 기록은 선택 얼굴 사진 메타데이터와 연결될 수 있다.
 - 한 분석 실행은 여러 분석 후보 결과를 가진다.
 
 ---
@@ -372,8 +381,9 @@ RLS 적용 대상:
 - `product_submissions`
 - `user_products`
 - `routines`
-- `usage_logs`
-- `skin_logs`
+- `daily_records`
+- `daily_record_products`
+- `daily_record_presets`
 - `skin_photos`
 - `analysis_runs`
 

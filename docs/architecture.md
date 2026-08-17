@@ -10,7 +10,7 @@
 MVP의 성공 기준은 다음 세 가지다.
 
 - 사용자가 제품명 검색 또는 직접 입력을 통해 제품을 등록할 수 있다.
-- 사용자가 제품 사용 기록과 일일 피부 상태 기록을 입력하고 저장할 수 있다.
+- 사용자가 하루 1개의 오늘 기록 안에 피부 상태, 사용 제품, 수면 시간, 선택 얼굴 사진을 입력하고 저장할 수 있다.
 - 사용자가 저장된 데이터를 바탕으로 분석 탭에서 AI 분석을 요청하고 결과를 확인할 수 있다.
 
 ---
@@ -99,8 +99,8 @@ Android는 화면 상태와 사용자 입력을 관리하고, Backend는 인증 
 - 회원가입, 로그인, 로그아웃 화면
 - 초기 피부 설문 화면
 - 제품 검색 및 등록 화면
-- 루틴 등록 및 제품 사용 기록 화면
-- 일일 피부 상태 기록 화면
+- 제품 프리셋 등록 화면
+- 오늘의 피부 기록 화면
 - 피부 사진 선택 또는 촬영 및 업로드 요청
 - 분석 탭 화면
 - AI 분석 결과 표시
@@ -119,7 +119,7 @@ Android 내부 구조는 기능 단위 package와 MVVM 패턴을 기본으로 �
 - 제품 성분표 사진 기반 AI 텍스트 추출
 - 사용자가 확인한 제품 제출을 공용 제품 DB에 `community` 상태로 등록
 - MFDS 화장품 원료성분정보 API 기반 성분 마스터 정규화
-- 제품, 사용 기록, 피부 기록 저장 및 조회
+- 제품, 제품 프리셋, 오늘의 피부 기록 저장 및 조회
 - Supabase Storage 업로드 경로 또는 업로드 요청 처리
 - 분석 요청 시 사용자 기록 집계
 - AI 분석 프롬프트 구성 및 OpenAI API 호출
@@ -220,8 +220,8 @@ Backend/src/
 | 제품 검색 | MVVM + UseCase + Repository | Controller + Service + Repository | 자체 공용 제품 DB를 검색한다. |
 | 제품 제출 | MVVM + UseCase + Repository | Product Submission Service + OpenAI Gateway + Repository | 성분표 사진에서 AI가 텍스트를 추출하고 사용자가 확인한 뒤 community 제품으로 저장한다. |
 | 제품 등록 | MVVM + Repository | Service + Repository | 검색 결과에서 선택한 제품을 사용자 제품으로 저장한다. |
-| 사용 기록 | MVVM + Repository | Service + Repository | 사용 제품/루틴과 사용 시각을 저장한다. |
-| 피부 기록 | MVVM + Repository | Service + Repository | 피부 상태 점수, 생활 요인, 메모를 저장한다. |
+| 제품 프리셋 | MVVM + Repository | Service + Repository | 반복적으로 함께 쓰는 사용자 제품 묶음을 저장한다. |
+| 오늘 기록 | MVVM + Repository | Service + Repository | 하루 1개의 피부 상태 기록 안에 사용 제품, 적용 프리셋, 수면 시간, 선택 사진, 메모를 함께 저장한다. |
 | 사진 저장 | MVVM + Repository | Service + Storage Gateway | 사진은 Supabase Storage, DB는 메타데이터만 저장한다. |
 | AI 분석 | MVVM + Repository | Analysis Service + Repository + OpenAI Gateway | Backend가 기록을 집계하고 AI는 설명을 생성한다. |
 | 분석 결과 조회 | MVVM + Repository | Service + Repository | 저장된 분석 결과를 다시 조회한다. |
@@ -272,17 +272,18 @@ AI가 DB에 없는 사실을 만들지 않도록, prompt에는 원본 개인정�
 
 ### 6.3 기록 저장 흐름
 
-1. 사용자는 제품 또는 루틴을 선택해 사용 기록을 저장한다.
-2. 사용자는 건조함, 유분, 붉음, 트러블 등 피부 상태를 기록한다.
-3. 필요한 경우 수면 상태, 스트레스 수준, 특이사항을 함께 기록한다.
-4. 필요한 경우 피부 사진을 업로드하고, 사진 메타데이터를 피부 기록과 연결한다.
-5. Backend는 모든 기록을 사용자 ID와 함께 Supabase PostgreSQL에 저장한다.
+1. 사용자는 오늘의 피부 상태를 기록한다.
+2. 같은 화면에서 오늘 사용한 제품을 여러 개 선택하거나 제품 프리셋을 적용한다.
+3. 공용 제품 DB에 있는 제품은 기록 화면에서 검색해 내 제품 목록에 추가한 뒤 바로 선택할 수 있다.
+4. 사용자는 수면 시간과 메모를 함께 기록한다.
+5. 필요한 경우 얼굴 사진을 업로드하고, 사진 메타데이터를 오늘 기록과 연결한다. 사진 없이도 저장할 수 있다.
+6. Backend는 같은 사용자의 같은 날짜 기록을 새로 만들지 않고 갱신한다.
 
 ### 6.4 AI 분석 흐름
 
 1. 사용자가 분석 탭에서 분석을 요청한다.
-2. Backend는 해당 사용자의 제품, 성분, 사용 기록, 피부 기록, 생활 요인을 조회한다.
-3. Backend는 반복 반응, 무반응 사례, 시간 차이, 생활 요인 중첩을 요약한다.
+2. Backend는 해당 사용자의 제품, 성분, 오늘 기록, 수면 시간, 선택 사진 메타데이터를 조회한다.
+3. Backend는 반복 반응, 무반응 사례, 시간 차이, 수면 시간 중첩을 요약한다.
 4. Backend는 요약된 근거 데이터를 OpenAI API에 전달한다.
 5. AI는 긍정적 의심 성분 후보 최대 5가지와 부정적 의심 성분 후보 최대 5가지를 근거와 함께 설명한다.
 6. 기록이 부족하면 결과에 `데이터 부족` 또는 낮은 신뢰도를 명확히 표시한다.
@@ -304,8 +305,9 @@ AI는 원인 확정, 질환 진단, 치료 지시를 하지 않는다.
 - `user_products`
 - `routines`
 - `routine_products`
-- `usage_logs`
-- `skin_logs`
+- `daily_records`
+- `daily_record_products`
+- `daily_record_presets`
 - `skin_photos`
 - `analysis_runs`
 - `analysis_findings`
@@ -321,7 +323,7 @@ Ingredient Master DB
         ↓
 제품 전성분과 표준 성분 매칭
         ↓
-사용자 제품 사용 기록
+사용자 오늘 기록
         ↓
 AI 분석
 ```
@@ -370,9 +372,9 @@ MFDS 화장품 원료성분정보:
 
 - Auth token 검증 middleware
 - Product search/register API
-- Usage log API
-- Skin log API
-- Photo upload metadata API
+- Product preset API
+- Daily record API
+- Optional face photo upload metadata API
 - Analysis run/result API
 
 ---
@@ -382,8 +384,8 @@ MFDS 화장품 원료성분정보:
 1. Supabase Auth 연결
 2. Backend 기본 Express 서버와 인증 middleware
 3. 제품 검색 및 등록 API
-4. 제품 사용 기록 저장 API
-5. 피부 상태 기록 저장 API
+4. 제품 프리셋 API
+5. 오늘의 피부 기록 API
 6. 분석 요청 API
 7. Android 화면 연결
 8. AI 분석 결과 화면 표시

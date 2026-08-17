@@ -202,7 +202,8 @@ GET /api/products/search?q={query}
 
 1. 자체 공용 제품 DB에서 제품명, 브랜드, 카테고리를 기준으로 검색한다.
 2. 검색 결과가 있으면 `community`, `verified`, `seed` 제품을 반환한다.
-3. 검색 결과가 없거나 성분 정보가 부족하면 제품 제출 흐름으로 안내한다.
+3. 검색 결과는 검색어와 유사한 순으로 정렬한다.
+4. T3 범위에서는 검색 결과가 없더라도 제품 직접 등록을 제공하지 않는다.
 
 응답 예시:
 
@@ -228,10 +229,17 @@ GET /api/products/search?q={query}
         ]
       }
     ],
-    "canSubmitProduct": true
+    "canSubmitProduct": false
   }
 }
 ```
+
+정책:
+
+- `q`는 앞뒤 공백을 제거한 뒤 1자 이상이어야 한다.
+- 결과는 최대 20개를 반환한다.
+- `ingredients`는 `product_ingredients.raw_name`을 기준으로 반환한다.
+- MFDS 성분 마스터와 매칭되지 않은 성분은 `matchedIngredientId: null`, `matchStatus: "unmatched"`로 반환할 수 있다.
 
 ### 제품 제출용 성분표 추출
 
@@ -339,9 +347,90 @@ POST /api/user-products
 ```json
 {
   "productId": "product-id",
-  "usageStatus": "current",
-  "startedAt": "2026-08-13",
-  "memo": "기억나는 반응"
+  "usageStatus": "past",
+  "isPastExperience": true,
+  "pastReactionMemo": "예전에 사용했을 때 건조함이 줄었던 것 같음"
+}
+```
+
+정책:
+
+- 인증 필요.
+- Backend는 Supabase access token에서 확인한 사용자 ID만 사용한다.
+- `startedAt`은 T3 Android 화면에서 입력받지 않으며 `null`로 저장한다.
+- 같은 사용자가 같은 제품을 다시 등록하면 기존 row를 갱신한다.
+- 제품이 공용 제품 DB에 없으면 `404 NOT_FOUND`를 반환한다.
+
+응답 예시:
+
+```json
+{
+  "data": {
+    "id": "user-product-id",
+    "productId": "product-id",
+    "usageStatus": "past",
+    "startedAt": null,
+    "isPastExperience": true,
+    "pastReactionMemo": "예전에 사용했을 때 건조함이 줄었던 것 같음",
+    "memo": null,
+    "createdAt": "2026-08-17T08:20:00.000Z",
+    "updatedAt": "2026-08-17T08:20:00.000Z",
+    "product": {
+      "id": "product-id",
+      "source": "seed",
+      "verificationStatus": "verified",
+      "name": "제품명",
+      "brand": "브랜드명",
+      "category": "크림",
+      "ingredientsText": "정제수, 글리세린, 나이아신아마이드",
+      "ingredients": [
+        {
+          "name": "글리세린",
+          "normalizedName": "글리세린",
+          "matchedIngredientId": null,
+          "matchStatus": "unmatched"
+        }
+      ]
+    }
+  }
+}
+```
+
+### 사용자 제품 조회
+
+```text
+GET /api/user-products
+```
+
+응답 예시:
+
+```json
+{
+  "data": {
+    "items": [
+      {
+        "id": "user-product-id",
+        "productId": "product-id",
+        "usageStatus": "past",
+        "startedAt": null,
+        "isPastExperience": true,
+        "pastReactionMemo": "겨울에 사용했을 때 건조함이 줄었던 것 같음",
+        "memo": null,
+        "createdAt": "2026-08-17T08:20:00.000Z",
+        "updatedAt": "2026-08-17T08:20:00.000Z",
+        "product": {
+          "id": "product-id",
+          "source": "seed",
+          "verificationStatus": "verified",
+          "name": "제품명",
+          "brand": "브랜드명",
+          "category": "크림",
+          "ingredientsText": "정제수, 글리세린",
+          "ingredients": []
+        }
+      }
+    ]
+  }
 }
 ```
 
@@ -397,78 +486,183 @@ GET https://apis.data.go.kr/1471000/CsmtcsIngdCpntInfoService01/getCsmtcsIngdCpn
 
 ---
 
-## 8. Routines
+## 8. Product Presets
 
 ```text
-POST /api/routines
-GET  /api/routines
-POST /api/routines/:routineId/products
+POST /api/product-presets
+GET  /api/product-presets
 ```
 
-반복적으로 사용하는 제품 묶음을 등록한다.
-
----
-
-## 9. Usage Logs
-
-```text
-POST /api/usage-logs
-GET  /api/usage-logs?from={date}&to={date}
-```
+반복적으로 함께 사용하는 제품 묶음을 등록한다. 오늘 기록 화면에서 프리셋을 적용하면 프리셋에 포함된 제품들이 오늘 사용 제품으로 선택된다.
 
 요청 예시:
 
 ```json
 {
-  "usedAt": "2026-08-13T21:00:00+09:00",
-  "userProductIds": ["user-product-id"],
-  "routineId": "routine-id",
-  "memo": "저녁 루틴 사용"
+  "name": "저녁 루틴",
+  "userProductIds": ["user-product-id-1", "user-product-id-2"]
 }
 ```
 
----
-
-## 10. Skin Logs
-
-```text
-POST /api/skin-logs
-GET  /api/skin-logs?from={date}&to={date}
-```
-
-요청 예시:
+응답 예시:
 
 ```json
 {
-  "loggedAt": "2026-08-13T22:00:00+09:00",
+  "data": {
+    "id": "preset-id",
+    "name": "저녁 루틴",
+    "products": [
+      {
+        "userProductId": "user-product-id-1",
+        "product": {
+          "id": "product-id",
+          "name": "제품명",
+          "brand": "브랜드명",
+          "category": "크림"
+        }
+      }
+    ],
+    "createdAt": "2026-08-17T08:30:00.000Z",
+    "updatedAt": "2026-08-17T08:30:00.000Z"
+  }
+}
+```
+
+정책:
+
+- 인증 필요.
+- `userProductIds`는 모두 로그인 사용자의 `user_products`여야 한다.
+- 같은 프리셋 안에 같은 제품을 중복 저장하지 않는다.
+
+---
+
+## 9. Daily Records
+
+오늘의 피부 상태 기록은 하루 1개다. 제품 사용, 수면 시간, 얼굴 사진은 별도 기능이 아니라 오늘 기록에 포함되는 데이터다.
+
+### 오늘 기록 저장 또는 갱신
+
+```text
+POST /api/daily-records
+```
+
+요청 형식:
+
+```text
+multipart/form-data
+```
+
+필드:
+
+| field | 설명 |
+| --- | --- |
+| `recordDate` | `YYYY-MM-DD`. 없으면 Backend가 요청 시점 기준 날짜를 사용 |
+| `dryness` | 건조함 점수, 0-5 |
+| `oiliness` | 유분 점수, 0-5 |
+| `redness` | 붉음 점수, 0-5 |
+| `trouble` | 트러블 점수, 0-5 |
+| `sleepHours` | 수면 시간, 0-24. 소수 1자리까지 허용 |
+| `userProductIds` | JSON 문자열 배열. 오늘 사용한 사용자 제품 ID 목록 |
+| `appliedPresetIds` | JSON 문자열 배열. 적용한 프리셋 ID 목록 |
+| `memo` | 선택 메모 |
+| `facePhoto` | 선택 얼굴 사진 파일 |
+
+JSON 요청이 필요한 테스트나 사진 없는 저장에서는 `application/json`도 허용할 수 있다.
+
+```json
+{
+  "recordDate": "2026-08-17",
   "dryness": 2,
   "oiliness": 3,
   "redness": 1,
   "trouble": 2,
-  "sleepLevel": 3,
-  "stressLevel": 4,
-  "memo": "턱 주변 트러블"
+  "sleepHours": 6.5,
+  "userProductIds": ["user-product-id"],
+  "appliedPresetIds": ["preset-id"],
+  "memo": "저녁에 보습 제품을 추가로 사용"
 }
 ```
 
-척도 범위는 MVP에서 0부터 5까지를 기본 후보로 한다.
+정책:
+
+- 인증 필요.
+- 하루 기록은 `user_id + record_date` 기준 1개만 유지한다.
+- 같은 날짜로 다시 저장하면 기존 오늘 기록과 연결 제품 목록, 선택 사진 메타데이터를 갱신한다.
+- 오늘 사용 제품은 여러 개 선택할 수 있다.
+- 기록 화면에서 공용 제품 DB에 있는 제품을 검색해 `user_products`에 추가한 뒤 바로 `userProductIds`에 포함할 수 있다.
+- 공용 제품 DB에 없는 제품을 성분표 사진으로 새로 등록하는 흐름은 `product-submissions` 단계에서 제공한다.
+- 제품 사용 기록 저장만으로 `user_products.usage_status`를 자동 변경하지 않는다.
+- 얼굴 사진은 선택 입력이다. 사진 없이도 오늘 기록을 저장할 수 있다.
+- 스트레스 점수는 T4 범위에서 제외한다.
+
+응답 예시:
+
+```json
+{
+  "data": {
+    "id": "daily-record-id",
+    "recordDate": "2026-08-17",
+    "loggedAt": "2026-08-17T22:00:00+09:00",
+    "dryness": 2,
+    "oiliness": 3,
+    "redness": 1,
+    "trouble": 2,
+    "sleepHours": 6.5,
+    "memo": "저녁에 보습 제품을 추가로 사용",
+    "products": [
+      {
+        "userProductId": "user-product-id",
+        "product": {
+          "id": "product-id",
+          "name": "제품명",
+          "brand": "브랜드명",
+          "category": "크림"
+        }
+      }
+    ],
+    "appliedPresets": [
+      {
+        "id": "preset-id",
+        "name": "저녁 루틴"
+      }
+    ],
+    "facePhoto": {
+      "id": "skin-photo-id",
+      "storagePath": "user-id/daily-record-id/photo.jpg"
+    },
+    "createdAt": "2026-08-17T13:00:00.000Z",
+    "updatedAt": "2026-08-17T13:00:00.000Z"
+  }
+}
+```
+
+### 오늘 기록 조회
+
+```text
+GET /api/daily-records?from={date}&to={date}
+```
+
+정책:
+
+- `from`, `to`가 없으면 오늘 기록을 조회한다.
+- 날짜 범위는 `YYYY-MM-DD`로 검증한다.
 
 ---
 
-## 11. Skin Photos
+## 10. Skin Photos
 
 ```text
 POST /api/skin-photos/upload-url
 POST /api/skin-photos
 ```
 
-피부 기록용 사진은 선택 기능이다. Supabase Storage에 사진을 저장하고, DB에는 사진 경로와 연결된 피부 기록 ID만 저장한다.
+피부 기록용 사진은 선택 기능이다. Supabase Storage에 사진을 저장하고, DB에는 사진 경로와 연결된 오늘 기록 ID만 저장한다.
 
 성분표 사진과 피부 기록 사진은 다르게 취급한다. 성분표 사진은 제품 등록 OCR에만 사용하고 저장하지 않는다.
 
 ---
 
-## 12. Analysis
+## 11. Analysis
 
 ### 분석 요청
 
@@ -502,7 +696,7 @@ POST /api/analysis/run
     ],
     "limitations": [
       "기록 기간이 짧습니다.",
-      "수면과 스트레스 요인이 함께 기록되었습니다."
+      "수면 시간이 짧았던 날이 함께 기록되었습니다."
     ],
     "nextRecordsToAdd": [
       "같은 제품을 사용하지 않은 날의 피부 상태",
@@ -521,7 +715,7 @@ GET /api/analysis/runs/:analysisRunId
 
 ---
 
-## 13. 금지 응답
+## 12. 금지 응답
 
 분석 API와 제품 성분 추출 API는 다음 표현을 반환하지 않아야 한다.
 

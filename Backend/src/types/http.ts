@@ -3,6 +3,7 @@ export type ApiErrorCode =
   | "UNAUTHORIZED"
   | "FORBIDDEN"
   | "NOT_FOUND"
+  | "VALIDATION_ERROR"
   | "INTERNAL_ERROR"
   | "CONFIGURATION_ERROR";
 
@@ -16,4 +17,3 @@ export class ApiError extends Error {
     this.name = "ApiError";
   }
 }
-
