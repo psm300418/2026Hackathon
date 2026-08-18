@@ -43,8 +43,43 @@ describe("app", () => {
     expect(response.body.error.code).toBe("UNAUTHORIZED");
   });
 
+  it("rejects protected product submission route without token", async () => {
+    const response = await request(createApp()).post("/api/product-submissions");
+
+    expect(response.status).toBe(401);
+    expect(response.body.error.code).toBe("UNAUTHORIZED");
+  });
+
+  it("returns supported location options", async () => {
+    const response = await request(createApp()).get("/api/profile/location-options");
+
+    expect(response.status).toBe(200);
+    expect(response.body.data.items.length).toBeGreaterThan(0);
+  });
+
+  it("rejects protected location route without token", async () => {
+    const response = await request(createApp()).get("/api/profile/location");
+
+    expect(response.status).toBe(401);
+    expect(response.body.error.code).toBe("UNAUTHORIZED");
+  });
+
   it("rejects protected daily record route without token", async () => {
     const response = await request(createApp()).get("/api/daily-records");
+
+    expect(response.status).toBe(401);
+    expect(response.body.error.code).toBe("UNAUTHORIZED");
+  });
+
+  it("rejects protected daily record trends route without token", async () => {
+    const response = await request(createApp()).get("/api/daily-records/trends");
+
+    expect(response.status).toBe(401);
+    expect(response.body.error.code).toBe("UNAUTHORIZED");
+  });
+
+  it("rejects protected analysis route without token", async () => {
+    const response = await request(createApp()).post("/api/analysis/run");
 
     expect(response.status).toBe(401);
     expect(response.body.error.code).toBe("UNAUTHORIZED");

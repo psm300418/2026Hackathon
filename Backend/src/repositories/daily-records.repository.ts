@@ -17,6 +17,7 @@ const dailyRecordRowSchema = z.object({
   redness: z.coerce.number(),
   trouble: z.coerce.number(),
   sleep_hours: z.coerce.number(),
+  outdoor_minutes: z.coerce.number().nullable(),
   memo: z.string().nullable(),
   created_at: z.string(),
   updated_at: z.string()
@@ -56,6 +57,7 @@ export const upsertDailyRecord = async (params: {
   redness: number;
   trouble: number;
   sleepHours: number;
+  outdoorMinutes: number | null;
   memo: string | null;
 }): Promise<DailyRecordRow> => {
   const supabase = createSupabaseAdminClient();
@@ -71,6 +73,7 @@ export const upsertDailyRecord = async (params: {
         redness: params.redness,
         trouble: params.trouble,
         sleep_hours: params.sleepHours,
+        outdoor_minutes: params.outdoorMinutes,
         memo: params.memo
       },
       {
@@ -88,6 +91,7 @@ export const upsertDailyRecord = async (params: {
         "redness",
         "trouble",
         "sleep_hours",
+        "outdoor_minutes",
         "memo",
         "created_at",
         "updated_at"
@@ -121,6 +125,7 @@ export const listDailyRecords = async (params: {
         "redness",
         "trouble",
         "sleep_hours",
+        "outdoor_minutes",
         "memo",
         "created_at",
         "updated_at"

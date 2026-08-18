@@ -12,8 +12,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -21,19 +19,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.hackathon.skindata.core.designsystem.SkinSpacing
+import com.hackathon.skindata.feature.main.MainShellRoute
 import com.hackathon.skindata.feature.onboarding.SkinTypeSurveyRoute
-import com.hackathon.skindata.feature.products.ProductRegistrationRoute
-import com.hackathon.skindata.feature.records.DailyRecordRoute
-import com.hackathon.skindata.ui.theme.SkinDataTheme
 
 @Composable
 fun AuthRoute(
@@ -73,12 +66,18 @@ fun AuthScreen(
     }
 
     if (uiState.isAuthenticated) {
-        SignedInContent(
-            accessToken = uiState.accessToken,
-            backendProfileVerified = uiState.backendProfileVerified,
-            message = uiState.message,
-            onSignOut = onSignOut
-        )
+        val accessToken = uiState.accessToken
+
+        if (accessToken == null) {
+            MissingSessionContent(onSignOut = onSignOut)
+        } else {
+            MainShellRoute(
+                accessToken = accessToken,
+                backendProfileVerified = uiState.backendProfileVerified,
+                message = uiState.message,
+                onSignOut = onSignOut
+            )
+        }
         return
     }
 
@@ -112,7 +111,6 @@ fun AuthScreen(
         }
     }
 }
-
 @Composable
 private fun SignedOutContent(
     uiState: AuthUiState,
@@ -181,122 +179,17 @@ private fun SignedOutContent(
 }
 
 @Composable
-private fun SignedInContent(
-    accessToken: String?,
-    backendProfileVerified: Boolean,
-    message: String?,
+private fun MissingSessionContent(
     onSignOut: () -> Unit
 ) {
-    var selectedTab by remember { mutableStateOf(MainTab.Home) }
-
-    if (accessToken == null) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(SkinSpacing.Screen)
+    ) {
         Text(text = "로그인 세션을 확인할 수 없습니다.")
         Spacer(modifier = Modifier.height(20.dp))
         OutlinedButton(onClick = onSignOut, modifier = Modifier.fillMaxWidth()) {
-            Text("로그아웃")
-        }
-        return
-    }
-
-    Scaffold(
-        bottomBar = {
-            NavigationBar {
-                MainTab.entries.forEach { tab ->
-                    NavigationBarItem(
-                        selected = selectedTab == tab,
-                        onClick = { selectedTab = tab },
-                        icon = { Text(tab.icon) },
-                        label = { Text(tab.label) }
-                    )
-                }
-            }
-        }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-        ) {
-            when (selectedTab) {
-                MainTab.Home -> HomeTab(
-                    backendProfileVerified = backendProfileVerified,
-                    message = message
-                )
-                MainTab.Products -> PlaceholderTab(
-                    title = "제품",
-                    body = "설정 탭에서 이전 사용 제품을 먼저 등록할 수 있습니다."
-                )
-                MainTab.Record -> DailyRecordRoute(accessToken = accessToken)
-                MainTab.Analysis -> PlaceholderTab(
-                    title = "분석",
-                    body = "저장한 기록이 쌓이면 긍정적/부정적 의심 성분 후보를 확인합니다."
-                )
-                MainTab.Settings -> SettingsTab(
-                    accessToken = accessToken,
-                    onSignOut = onSignOut
-                )
-            }
-        }
-    }
-}
-
-private enum class MainTab(val label: String, val icon: String) {
-    Home("홈", "홈"),
-    Products("제품", "제품"),
-    Record("기록", "기록"),
-    Analysis("분석", "분석"),
-    Settings("설정", "설정")
-}
-
-@Composable
-private fun HomeTab(
-    backendProfileVerified: Boolean,
-    message: String?
-) {
-    Column(modifier = Modifier.padding(20.dp)) {
-        Text(text = "홈", style = MaterialTheme.typography.headlineSmall)
-        Spacer(modifier = Modifier.height(12.dp))
-        Text(
-            text = if (backendProfileVerified) {
-                "로그인과 초기 피부 타입 기준점 저장이 완료되었습니다."
-            } else {
-                "로그인 세션을 확인했습니다."
-            },
-            style = MaterialTheme.typography.titleMedium
-        )
-
-        message?.let {
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = it, style = MaterialTheme.typography.bodyMedium)
-        }
-    }
-}
-
-@Composable
-private fun PlaceholderTab(
-    title: String,
-    body: String
-) {
-    Column(modifier = Modifier.padding(20.dp)) {
-        Text(text = title, style = MaterialTheme.typography.headlineSmall)
-        Spacer(modifier = Modifier.height(12.dp))
-        Text(text = body, style = MaterialTheme.typography.bodyMedium)
-    }
-}
-
-@Composable
-private fun SettingsTab(
-    accessToken: String,
-    onSignOut: () -> Unit
-) {
-    Column {
-        ProductRegistrationRoute(accessToken = accessToken)
-        OutlinedButton(
-            onClick = onSignOut,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 8.dp)
-        ) {
             Text("로그아웃")
         }
     }
@@ -317,23 +210,6 @@ private fun StatusMessage(uiState: AuthUiState) {
         Text(
             text = it,
             style = MaterialTheme.typography.bodyMedium
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun AuthScreenPreview() {
-    SkinDataTheme {
-        AuthScreen(
-            uiState = AuthUiState(email = "demo@example.com", password = "demo1234"),
-            onEmailChanged = {},
-            onPasswordChanged = {},
-            onSignIn = {},
-            onSignUp = {},
-            onDemoLogin = {},
-            onSignOut = {},
-            onSkinTypeCompleted = {}
         )
     }
 }

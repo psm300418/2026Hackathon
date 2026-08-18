@@ -2,10 +2,12 @@ export type ProductSource = "seed" | "community" | "admin";
 export type ProductVerificationStatus = "community" | "verified" | "needs_review";
 export type IngredientMatchStatus = "matched" | "unmatched" | "manual";
 export type UsageStatus = "current" | "past" | "paused";
+export type ProductItemType = "cosmetic" | "shower_product" | "supplement";
 
 export type ProductRow = {
   id: string;
   source: ProductSource;
+  item_type: ProductItemType;
   name: string;
   normalized_name: string;
   brand: string;
@@ -50,6 +52,7 @@ export type ProductSearchItemDto = {
   id: string;
   source: ProductSource;
   verificationStatus: ProductVerificationStatus;
+  itemType: ProductItemType;
   name: string;
   brand: string;
   category: string | null;
@@ -59,7 +62,7 @@ export type ProductSearchItemDto = {
 
 export type ProductSearchDto = {
   items: ProductSearchItemDto[];
-  canSubmitProduct: false;
+  canSubmitProduct: boolean;
 };
 
 export type UserProductDto = {

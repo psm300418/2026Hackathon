@@ -11,7 +11,7 @@ import { ApiError } from "../types/http.js";
 export const searchProductsController: RequestHandler = async (req, res, next) => {
   try {
     const input = parseProductSearchQuery(req.query);
-    const data = await searchProductCatalog(input.q);
+    const data = await searchProductCatalog(input);
     res.json({ data });
   } catch (error) {
     next(error);

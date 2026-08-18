@@ -1,0 +1,13 @@
+package com.hackathon.skindata.feature.settings
+
+import com.hackathon.skindata.core.network.LocationOptionDto
+import com.hackathon.skindata.core.network.UserLocationDto
+
+data class LocationSettingsUiState(
+    val isLoading: Boolean = false,
+    val isSaving: Boolean = false,
+    val options: List<LocationOptionDto> = emptyList(),
+    val selectedLocationId: String? = null,
+    val savedLocation: UserLocationDto? = null,
+    val message: String? = null
+)

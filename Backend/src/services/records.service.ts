@@ -11,6 +11,7 @@ import {
   replaceSkinPhotoMetadata,
   upsertDailyRecord
 } from "../repositories/daily-records.repository.js";
+import { listDailyRecordEnvironments } from "../repositories/weather.repository.js";
 import {
   listProductPresetItems,
   listProductPresets,
@@ -20,9 +21,14 @@ import {
 } from "../repositories/product-presets.repository.js";
 import { listUserProductsByIds } from "../repositories/user-products.repository.js";
 import { getUserProducts } from "./products.service.js";
+import {
+  attachWeatherEnvironmentToDailyRecord,
+  toDailyRecordEnvironmentDto
+} from "./weather.service.js";
 import { ApiError } from "../types/http.js";
 import type {
   DailyRecordDto,
+  DailyRecordTrendsDto,
   DailyRecordPresetRow,
   DailyRecordProductRow,
   DailyRecordRow,
@@ -33,6 +39,7 @@ import type {
   SkinPhotoRow
 } from "../types/records.js";
 import type { UserProductDto } from "../types/products.js";
+import type { DailyRecordEnvironmentRow } from "../types/weather.js";
 
 const SKIN_PHOTO_BUCKET = "skin-photos";
 const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
@@ -78,6 +85,7 @@ const dailyRecordInputSchema = z.object({
   redness: scoreSchema,
   trouble: scoreSchema,
   sleepHours: z.coerce.number().min(0).max(24).multipleOf(0.1),
+  outdoorMinutes: z.coerce.number().int().min(0).optional().nullable(),
   userProductIds: z.preprocess(parseJsonStringArray, z.array(z.string().uuid())).default([]),
   appliedPresetIds: z.preprocess(parseJsonStringArray, z.array(z.string().uuid())).default([]),
   memo: z.string().trim().max(1000).optional().nullable()
@@ -213,6 +221,16 @@ const groupSkinPhotos = (photos: SkinPhotoRow[]) => {
   return photoByDailyRecordId;
 };
 
+const groupDailyRecordEnvironments = (environments: DailyRecordEnvironmentRow[]) => {
+  const environmentByDailyRecordId = new Map<string, DailyRecordEnvironmentRow>();
+
+  for (const environment of environments) {
+    environmentByDailyRecordId.set(environment.daily_record_id, environment);
+  }
+
+  return environmentByDailyRecordId;
+};
+
 const toSkinPhotoDto = (photo: SkinPhotoRow | undefined): SkinPhotoDto | null => {
   if (!photo) {
     return null;
@@ -232,7 +250,8 @@ const toDailyRecordDto = (
   presetsByDailyRecordId: Map<string, DailyRecordPresetRow[]>,
   userProductById: Map<string, UserProductDto>,
   presetById: Map<string, ProductPresetRow>,
-  photoByDailyRecordId: Map<string, SkinPhotoRow>
+  photoByDailyRecordId: Map<string, SkinPhotoRow>,
+  environmentByDailyRecordId: Map<string, DailyRecordEnvironmentRow>
 ): DailyRecordDto => ({
   id: record.id,
   recordDate: record.record_date,
@@ -242,6 +261,7 @@ const toDailyRecordDto = (
   redness: record.redness,
   trouble: record.trouble,
   sleepHours: record.sleep_hours,
+  outdoorMinutes: record.outdoor_minutes,
   memo: record.memo,
   products: (productsByDailyRecordId.get(record.id) ?? [])
     .map((item) => userProductById.get(item.user_product_id))
@@ -250,6 +270,7 @@ const toDailyRecordDto = (
     .map((item) => presetById.get(item.routine_id))
     .filter((preset): preset is ProductPresetRow => preset !== undefined)
     .map((preset) => ({ id: preset.id, name: preset.name })),
+  environment: toDailyRecordEnvironmentDto(environmentByDailyRecordId.get(record.id)),
   facePhoto: toSkinPhotoDto(photoByDailyRecordId.get(record.id)),
   createdAt: record.created_at,
   updatedAt: record.updated_at
@@ -322,6 +343,7 @@ export const saveDailyRecord = async (
     redness: number;
     trouble: number;
     sleepHours: number;
+    outdoorMinutes?: number | null;
     userProductIds: string[];
     appliedPresetIds: string[];
     memo?: string | null;
@@ -344,12 +366,28 @@ export const saveDailyRecord = async (
     redness: input.redness,
     trouble: input.trouble,
     sleepHours: input.sleepHours,
+    outdoorMinutes: input.outdoorMinutes ?? null,
     memo: input.memo ?? null
   });
 
   await replaceDailyRecordProducts(record.id, userProductIds);
   await replaceDailyRecordPresets(record.id, presetIds);
   await replaceDailyRecordPhoto(userId, record.id, file);
+  const environments: DailyRecordEnvironmentRow[] = [];
+
+  try {
+    const environment = await attachWeatherEnvironmentToDailyRecord({
+      userId,
+      dailyRecordId: record.id,
+      baseDate: new Date(record.logged_at)
+    });
+
+    if (environment) {
+      environments.push(environment);
+    }
+  } catch (error) {
+    console.warn("Failed to attach weather environment", error);
+  }
 
   const products = await listDailyRecordProducts([record.id]);
   const recordPresets = await listDailyRecordPresets([record.id]);
@@ -364,7 +402,8 @@ export const saveDailyRecord = async (
     groupDailyRecordPresets(recordPresets),
     userProductById,
     presetById,
-    groupSkinPhotos(photos)
+    groupSkinPhotos(photos),
+    groupDailyRecordEnvironments(environments)
   );
 };
 
@@ -388,6 +427,7 @@ export const getDailyRecords = async (
   const products = await listDailyRecordProducts(recordIds);
   const recordPresets = await listDailyRecordPresets(recordIds);
   const photos = await listSkinPhotos(recordIds);
+  const environments = await listDailyRecordEnvironments(recordIds);
   const userProducts = await getUserProducts(userId);
   const userProductById = mapUserProductsById(userProducts);
   const presetIds = uniqueStrings(recordPresets.map((preset) => preset.routine_id));
@@ -401,7 +441,75 @@ export const getDailyRecords = async (
       groupDailyRecordPresets(recordPresets),
       userProductById,
       presetById,
-      groupSkinPhotos(photos)
+      groupSkinPhotos(photos),
+      groupDailyRecordEnvironments(environments)
     )
   );
+};
+
+const addDays = (date: Date, days: number) => {
+  const nextDate = new Date(date);
+  nextDate.setUTCDate(nextDate.getUTCDate() + days);
+  return nextDate;
+};
+
+const toDateString = (date: Date) => date.toISOString().slice(0, 10);
+
+const datesBetween = (from: string, to: string): string[] => {
+  const fromDate = new Date(`${from}T00:00:00.000Z`);
+  const toDate = new Date(`${to}T00:00:00.000Z`);
+  const dates: string[] = [];
+
+  for (let cursor = fromDate; cursor <= toDate; cursor = addDays(cursor, 1)) {
+    dates.push(toDateString(cursor));
+  }
+
+  return dates;
+};
+
+export const getDailyRecordTrends = async (
+  userId: string,
+  query: {
+    from?: string;
+    to?: string;
+  }
+): Promise<DailyRecordTrendsDto> => {
+  const today = todayInSeoul();
+  const to = query.to ?? query.from ?? today;
+  const from = query.from ?? query.to ?? toDateString(addDays(new Date(`${to}T00:00:00.000Z`), -13));
+
+  if (from > to) {
+    throw new ApiError(400, "BAD_REQUEST", "조회 시작일은 종료일보다 늦을 수 없습니다.");
+  }
+
+  const records = await getDailyRecords(userId, { from, to });
+  const recordByDate = new Map(records.map((record) => [record.recordDate, record]));
+
+  return {
+    from,
+    to,
+    points: datesBetween(from, to).map((date) => {
+      const record = recordByDate.get(date);
+      const productNames = record?.products.map((product) => product.product.name) ?? [];
+      const names = productNames.slice(0, 3);
+
+      return {
+        date,
+        scores: {
+          dryness: record?.dryness ?? null,
+          oiliness: record?.oiliness ?? null,
+          redness: record?.redness ?? null,
+          trouble: record?.trouble ?? null
+        },
+        sleepHours: record?.sleepHours ?? null,
+        outdoorMinutes: record?.outdoorMinutes ?? null,
+        productSummary: {
+          count: productNames.length,
+          names,
+          remainingCount: Math.max(productNames.length - names.length, 0)
+        },
+        environment: record?.environment ?? null
+      };
+    })
+  };
 };

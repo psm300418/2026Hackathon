@@ -1,4 +1,5 @@
 import type { UserProductDto } from "./products.js";
+import type { DailyRecordEnvironmentDto } from "./weather.js";
 
 export type ProductPresetRow = {
   id: string;
@@ -26,6 +27,7 @@ export type DailyRecordRow = {
   redness: number;
   trouble: number;
   sleep_hours: number;
+  outdoor_minutes: number | null;
   memo: string | null;
   created_at: string;
   updated_at: string;
@@ -81,10 +83,36 @@ export type DailyRecordDto = {
   redness: number;
   trouble: number;
   sleepHours: number;
+  outdoorMinutes: number | null;
   memo: string | null;
   products: UserProductDto[];
   appliedPresets: Pick<ProductPresetDto, "id" | "name">[];
+  environment: DailyRecordEnvironmentDto | null;
   facePhoto: SkinPhotoDto | null;
   createdAt: string;
   updatedAt: string;
+};
+
+export type DailyRecordTrendPointDto = {
+  date: string;
+  scores: {
+    dryness: number | null;
+    oiliness: number | null;
+    redness: number | null;
+    trouble: number | null;
+  };
+  sleepHours: number | null;
+  outdoorMinutes: number | null;
+  productSummary: {
+    count: number;
+    names: string[];
+    remainingCount: number;
+  };
+  environment: DailyRecordEnvironmentDto | null;
+};
+
+export type DailyRecordTrendsDto = {
+  from: string;
+  to: string;
+  points: DailyRecordTrendPointDto[];
 };

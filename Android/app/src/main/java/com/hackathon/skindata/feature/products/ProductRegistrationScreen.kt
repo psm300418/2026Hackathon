@@ -1,5 +1,10 @@
 package com.hackathon.skindata.feature.products
 
+import android.content.Context
+import android.net.Uri
+import android.provider.OpenableColumns
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,10 +28,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.hackathon.skindata.core.network.FacePhotoUpload
 import com.hackathon.skindata.core.network.ProductDto
 import com.hackathon.skindata.core.network.ProductIngredientDto
 import com.hackathon.skindata.core.network.UserProductDto
@@ -37,6 +44,7 @@ private const val WATER_KO = "정제수"
 @Composable
 fun ProductRegistrationRoute(
     accessToken: String,
+    modifier: Modifier = Modifier,
     viewModel: ProductRegistrationViewModel = viewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -47,25 +55,48 @@ fun ProductRegistrationRoute(
 
     ProductRegistrationScreen(
         uiState = uiState,
+        modifier = modifier,
         onQueryChanged = viewModel::onQueryChanged,
         onReactionMemoChanged = viewModel::onReactionMemoChanged,
         onSearch = viewModel::search,
         onSelectProduct = viewModel::selectProduct,
-        onSaveSelectedProduct = { viewModel.saveSelectedProduct(accessToken) }
+        onSaveSelectedProduct = { viewModel.saveSelectedProduct(accessToken) },
+        onSubmissionItemTypeSelected = viewModel::selectSubmissionItemType,
+        onSubmissionNameChanged = viewModel::onSubmissionNameChanged,
+        onSubmissionBrandChanged = viewModel::onSubmissionBrandChanged,
+        onSubmissionCategoryChanged = viewModel::onSubmissionCategoryChanged,
+        onSubmissionIngredientsChanged = viewModel::onSubmissionIngredientsChanged,
+        onSubmissionPhotoSelected = viewModel::setSubmissionPhoto,
+        onExtractSubmission = { viewModel.extractSubmission(accessToken) },
+        onConfirmSubmission = { viewModel.confirmSubmission(accessToken) }
     )
 }
 
 @Composable
 fun ProductRegistrationScreen(
     uiState: ProductRegistrationUiState,
+    modifier: Modifier = Modifier,
     onQueryChanged: (String) -> Unit,
     onReactionMemoChanged: (String) -> Unit,
     onSearch: () -> Unit,
     onSelectProduct: (ProductDto) -> Unit,
-    onSaveSelectedProduct: () -> Unit
+    onSaveSelectedProduct: () -> Unit,
+    onSubmissionItemTypeSelected: (ProductItemType) -> Unit,
+    onSubmissionNameChanged: (String) -> Unit,
+    onSubmissionBrandChanged: (String) -> Unit,
+    onSubmissionCategoryChanged: (String) -> Unit,
+    onSubmissionIngredientsChanged: (String) -> Unit,
+    onSubmissionPhotoSelected: (FacePhotoUpload?) -> Unit,
+    onExtractSubmission: () -> Unit,
+    onConfirmSubmission: () -> Unit
 ) {
+    val context = LocalContext.current
+    val labelPhotoPicker = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        onSubmissionPhotoSelected(uri?.toLabelPhotoUpload(context))
+    }
+
     LazyColumn(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp)
@@ -164,6 +195,20 @@ fun ProductRegistrationScreen(
         }
 
         item {
+            DirectProductSubmissionCard(
+                uiState = uiState,
+                onItemTypeSelected = onSubmissionItemTypeSelected,
+                onNameChanged = onSubmissionNameChanged,
+                onBrandChanged = onSubmissionBrandChanged,
+                onCategoryChanged = onSubmissionCategoryChanged,
+                onIngredientsChanged = onSubmissionIngredientsChanged,
+                onPickPhoto = { labelPhotoPicker.launch("image/*") },
+                onExtract = onExtractSubmission,
+                onConfirm = onConfirmSubmission
+            )
+        }
+
+        item {
             Text(text = "내 제품 목록", style = MaterialTheme.typography.titleMedium)
         }
 
@@ -177,6 +222,93 @@ fun ProductRegistrationScreen(
         } else {
             items(uiState.userProducts, key = { it.id }) { userProduct ->
                 UserProductCard(userProduct = userProduct)
+            }
+        }
+    }
+}
+
+@Composable
+private fun DirectProductSubmissionCard(
+    uiState: ProductRegistrationUiState,
+    onItemTypeSelected: (ProductItemType) -> Unit,
+    onNameChanged: (String) -> Unit,
+    onBrandChanged: (String) -> Unit,
+    onCategoryChanged: (String) -> Unit,
+    onIngredientsChanged: (String) -> Unit,
+    onPickPhoto: () -> Unit,
+    onExtract: () -> Unit,
+    onConfirm: () -> Unit
+) {
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = "제품 직접 등록", style = MaterialTheme.typography.titleMedium)
+            Text(
+                text = "성분표나 라벨 사진에서 후보 텍스트를 추출한 뒤 확인하고 저장합니다.",
+                style = MaterialTheme.typography.bodySmall
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                ProductItemType.entries.forEach { itemType ->
+                    AssistChip(
+                        onClick = { onItemTypeSelected(itemType) },
+                        label = {
+                            Text(if (uiState.submissionItemType == itemType) "${itemType.label} 선택됨" else itemType.label)
+                        }
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            OutlinedTextField(
+                value = uiState.submissionName,
+                onValueChange = onNameChanged,
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text("제품명") },
+                singleLine = true
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            OutlinedTextField(
+                value = uiState.submissionBrand,
+                onValueChange = onBrandChanged,
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text("브랜드") },
+                singleLine = true
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            OutlinedTextField(
+                value = uiState.submissionCategory,
+                onValueChange = onCategoryChanged,
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text("카테고리") },
+                singleLine = true
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                OutlinedButton(onClick = onPickPhoto, enabled = !uiState.isLoading) {
+                    Text(if (uiState.submissionPhoto == null) "사진 선택" else "사진 다시 선택")
+                }
+                Button(onClick = onExtract, enabled = !uiState.isLoading && uiState.submissionPhoto != null) {
+                    Text(if (uiState.isLoading) "추출 중" else "AI 추출")
+                }
+            }
+            uiState.submissionPhoto?.let {
+                Text(text = "${it.fileName} 선택됨", style = MaterialTheme.typography.bodySmall)
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            OutlinedTextField(
+                value = uiState.submissionIngredientsText,
+                onValueChange = onIngredientsChanged,
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text("확정 성분/원료 텍스트") },
+                minLines = 4,
+                maxLines = 8
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Button(
+                onClick = onConfirm,
+                modifier = Modifier.fillMaxWidth(),
+                enabled = !uiState.isSaving
+            ) {
+                Text(if (uiState.isSaving) "등록 중" else "공용 DB와 내 제품에 등록")
             }
         }
     }
@@ -252,6 +384,26 @@ private fun representativeIngredients(product: ProductDto): String {
     }
 }
 
+private fun Uri.toLabelPhotoUpload(context: Context): FacePhotoUpload? {
+    val contentResolver = context.contentResolver
+    val contentType = contentResolver.getType(this) ?: return null
+    if (contentType != "image/jpeg" && contentType != "image/png") {
+        return null
+    }
+
+    val bytes = contentResolver.openInputStream(this)?.use { it.readBytes() } ?: return null
+    val fileName = contentResolver.query(this, null, null, null, null)?.use { cursor ->
+        val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+        if (cursor.moveToFirst() && nameIndex >= 0) cursor.getString(nameIndex) else null
+    } ?: if (contentType == "image/png") "ingredient-label.png" else "ingredient-label.jpg"
+
+    return FacePhotoUpload(
+        fileName = fileName,
+        contentType = contentType,
+        bytes = bytes
+    )
+}
+
 @Preview(showBackground = true)
 @Composable
 private fun ProductRegistrationScreenPreview() {
@@ -278,7 +430,15 @@ private fun ProductRegistrationScreenPreview() {
             onReactionMemoChanged = {},
             onSearch = {},
             onSelectProduct = {},
-            onSaveSelectedProduct = {}
+            onSaveSelectedProduct = {},
+            onSubmissionItemTypeSelected = {},
+            onSubmissionNameChanged = {},
+            onSubmissionBrandChanged = {},
+            onSubmissionCategoryChanged = {},
+            onSubmissionIngredientsChanged = {},
+            onSubmissionPhotoSelected = {},
+            onExtractSubmission = {},
+            onConfirmSubmission = {}
         )
     }
 }

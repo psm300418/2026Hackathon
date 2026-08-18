@@ -9,9 +9,11 @@
 
 MVP의 성공 기준은 다음 세 가지다.
 
-- 사용자가 제품명 검색 또는 직접 입력을 통해 제품을 등록할 수 있다.
+- 사용자가 제품명 검색 또는 직접 입력을 통해 화장품을 등록할 수 있다.
 - 사용자가 하루 1개의 오늘 기록 안에 피부 상태, 사용 제품, 수면 시간, 선택 얼굴 사진을 입력하고 저장할 수 있다.
 - 사용자가 저장된 데이터를 바탕으로 분석 탭에서 AI 분석을 요청하고 결과를 확인할 수 있다.
+
+T4 이후 확장 흐름에서는 같은 제품 등록 체계를 샤워용품과 영양제로 넓히고, 사용자의 지역 설정을 바탕으로 기상청 날씨 API에서 온도, 습도, 강수 등 환경 정보를 가져와 오늘 기록과 분석 근거에 포함한다. 기록 알림은 서버 저장 없이 Android 로컬 알림으로 제공한다.
 
 ---
 
@@ -31,6 +33,7 @@ Backend API
         +---- Supabase Storage
         +---- OpenAI API
         +---- MFDS cosmetic ingredient API
+        +---- KMA weather API
 ```
 
 프로젝트는 해커톤 기간 동안 단일 GitHub monorepo로 관리한다.
@@ -86,6 +89,7 @@ Android는 화면 상태와 사용자 입력을 관리하고, Backend는 인증 
 - 인증: Supabase Auth, 백엔드에서 사용자 JWT 검증
 - AI 연동: OpenAI API, 백엔드 서버에서 호출
 - 성분 데이터 연동: MFDS 화장품 원료성분정보 API
+- 환경 데이터 연동: 기상청 날씨 API
 - 제품 데이터: 앱 자체 공용 제품 DB
 - 백엔드 배포: Render
 - Android 배포: APK 빌드 후 GitHub Release 업로드
@@ -99,9 +103,11 @@ Android는 화면 상태와 사용자 입력을 관리하고, Backend는 인증 
 - 회원가입, 로그인, 로그아웃 화면
 - 초기 피부 설문 화면
 - 제품 검색 및 등록 화면
+- 샤워용품 및 영양제 등록 화면
 - 제품 프리셋 등록 화면
 - 오늘의 피부 기록 화면
 - 피부 사진 선택 또는 촬영 및 업로드 요청
+- 지역 설정과 날씨·환경 정보 확인
 - 분석 탭 화면
 - AI 분석 결과 표시
 - 제품 성분표 사진 제출 및 AI 추출 결과 확인 화면
@@ -117,8 +123,10 @@ Android 내부 구조는 기능 단위 package와 MVVM 패턴을 기본으로 �
 - 제품 검색 요청 처리
 - 자체 공용 제품 DB 검색
 - 제품 성분표 사진 기반 AI 텍스트 추출
+- 샤워용품 라벨, 영양제 원료명 또는 영양정보 사진 기반 AI 텍스트 추출
 - 사용자가 확인한 제품 제출을 공용 제품 DB에 `community` 상태로 등록
 - MFDS 화장품 원료성분정보 API 기반 성분 마스터 정규화
+- 기상청 날씨 API 연동 및 오늘 기록용 환경 스냅샷 저장
 - 제품, 제품 프리셋, 오늘의 피부 기록 저장 및 조회
 - Supabase Storage 업로드 경로 또는 업로드 요청 처리
 - 분석 요청 시 사용자 기록 집계
@@ -155,7 +163,7 @@ Backend 내부 구조는 Layered Architecture를 기본으로 한다. HTTP 처�
 | 데이터 접근 | Repository Pattern | 화면은 API client를 직접 호출하지 않고 repository/use case를 통해 데이터를 가져온다. |
 | 기능 분리 | Feature-based Package | `auth`, `products`, `records`, `analysis`처럼 기능 단위로 나눈다. |
 | 비동기 처리 | Coroutine + Flow | 네트워크 요청과 상태 변경은 coroutine, Flow/StateFlow 기반으로 처리한다. |
-| 화면 이동 | Navigation Pattern | Jetpack Navigation Compose를 사용해 화면 route를 관리한다. |
+| 화면 이동 | Main Shell Pattern | MVP에서는 로그인 상태에 따라 `Auth`/`Onboarding`/`MainShell`을 분기하고, 메인 탭은 shell 내부 상태로 관리한다. |
 
 권장 구조:
 
@@ -164,12 +172,15 @@ Android/app/src/main/java/{package}/
   core/
     network/
     designsystem/
+    notification/
     storage/
   feature/
     auth/
+    main/
     products/
     records/
     analysis/
+    settings/
   domain/
     model/
     usecase/
@@ -217,11 +228,12 @@ Backend/src/
 | 기능 | Android 패턴 | Backend 패턴 | 비고 |
 | --- | --- | --- | --- |
 | 인증 | MVVM + Repository | Auth middleware | Android는 Supabase Auth로 로그인하고 Backend는 JWT를 검증한다. |
-| 제품 검색 | MVVM + UseCase + Repository | Controller + Service + Repository | 자체 공용 제품 DB를 검색한다. |
-| 제품 제출 | MVVM + UseCase + Repository | Product Submission Service + OpenAI Gateway + Repository | 성분표 사진에서 AI가 텍스트를 추출하고 사용자가 확인한 뒤 community 제품으로 저장한다. |
+| 제품 검색 | MVVM + UseCase + Repository | Controller + Service + Repository | 자체 공용 제품 DB를 검색한다. 항목 유형은 화장품, 샤워용품, 영양제로 확장 가능하게 둔다. |
+| 제품 제출 | MVVM + UseCase + Repository | Product Submission Service + OpenAI Gateway + Repository | 성분표, 라벨, 원료명 사진에서 AI가 텍스트를 추출하고 사용자가 확인한 뒤 community 제품으로 저장한다. |
 | 제품 등록 | MVVM + Repository | Service + Repository | 검색 결과에서 선택한 제품을 사용자 제품으로 저장한다. |
 | 제품 프리셋 | MVVM + Repository | Service + Repository | 반복적으로 함께 쓰는 사용자 제품 묶음을 저장한다. |
 | 오늘 기록 | MVVM + Repository | Service + Repository | 하루 1개의 피부 상태 기록 안에 사용 제품, 적용 프리셋, 수면 시간, 선택 사진, 메모를 함께 저장한다. |
+| 날씨/환경 기록 | MVVM + Repository | Weather Service + KMA Gateway + Repository | 사용자 지역 기반 기상청 데이터를 오늘 기록의 환경 스냅샷으로 저장한다. |
 | 사진 저장 | MVVM + Repository | Service + Storage Gateway | 사진은 Supabase Storage, DB는 메타데이터만 저장한다. |
 | AI 분석 | MVVM + Repository | Analysis Service + Repository + OpenAI Gateway | Backend가 기록을 집계하고 AI는 설명을 생성한다. |
 | 분석 결과 조회 | MVVM + Repository | Service + Repository | 저장된 분석 결과를 다시 조회한다. |
@@ -259,10 +271,10 @@ AI가 DB에 없는 사실을 만들지 않도록, prompt에는 원본 개인정�
 
 1. 사용자가 제품명을 검색한다.
 2. Android 앱이 Backend의 제품 검색 API를 호출한다.
-3. Backend는 먼저 자체 DB에서 제품을 검색한다.
+3. Backend는 먼저 자체 DB에서 제품을 검색한다. 항목 유형이 지정되면 화장품, 샤워용품, 영양제 범위로 필터링한다.
 4. 자체 DB 검색 결과가 있으면 사용자는 해당 제품을 선택해 등록한다.
-5. 자체 DB에 없거나 성분 정보가 부족하면 사용자는 제품명, 브랜드, 제품 종류, 성분표 사진을 제출한다.
-6. Backend는 성분표 사진을 OpenAI API에 전달해 텍스트와 성분 후보를 추출한다.
+5. 자체 DB에 없거나 성분 정보가 부족하면 사용자는 제품명, 브랜드, 제품 종류, 성분표 사진 또는 라벨 사진을 제출한다.
+6. Backend는 사진을 OpenAI API에 전달해 텍스트와 성분·원료 후보를 추출한다.
 7. Backend는 추출된 성분 후보를 MFDS 성분 마스터와 매칭한다.
 8. Android 앱은 추출 결과를 사용자에게 보여주고, 사용자는 결과를 확인하거나 수정한다.
 9. 사용자가 최종 확인하면 Backend는 제품을 `community` 상태로 공용 제품 DB에 저장한다.
@@ -275,15 +287,16 @@ AI가 DB에 없는 사실을 만들지 않도록, prompt에는 원본 개인정�
 1. 사용자는 오늘의 피부 상태를 기록한다.
 2. 같은 화면에서 오늘 사용한 제품을 여러 개 선택하거나 제품 프리셋을 적용한다.
 3. 공용 제품 DB에 있는 제품은 기록 화면에서 검색해 내 제품 목록에 추가한 뒤 바로 선택할 수 있다.
-4. 사용자는 수면 시간과 메모를 함께 기록한다.
-5. 필요한 경우 얼굴 사진을 업로드하고, 사진 메타데이터를 오늘 기록과 연결한다. 사진 없이도 저장할 수 있다.
-6. Backend는 같은 사용자의 같은 날짜 기록을 새로 만들지 않고 갱신한다.
+4. 사용자는 수면 시간, 외출 시간, 메모를 함께 기록한다.
+5. 사용자의 지역 정보가 설정되어 있으면 Backend는 기상청 API허브 ASOS 관측 API에서 기록 저장 시점과 가장 가까운 시각의 온도, 습도, 강수량, 풍속 등 환경 정보를 가져와 스냅샷으로 저장한다.
+6. 필요한 경우 얼굴 사진을 업로드하고, 사진 메타데이터를 오늘 기록과 연결한다. 사진 없이도 저장할 수 있다.
+7. Backend는 같은 사용자의 같은 날짜 기록을 새로 만들지 않고 갱신한다.
 
 ### 6.4 AI 분석 흐름
 
 1. 사용자가 분석 탭에서 분석을 요청한다.
-2. Backend는 해당 사용자의 제품, 성분, 오늘 기록, 수면 시간, 선택 사진 메타데이터를 조회한다.
-3. Backend는 반복 반응, 무반응 사례, 시간 차이, 수면 시간 중첩을 요약한다.
+2. Backend는 해당 사용자의 제품, 성분, 오늘 기록, 수면 시간, 외출/환경 정보, 선택 사진 메타데이터를 조회한다.
+3. Backend는 반복 반응, 무반응 사례, 시간 차이, 수면 시간과 날씨·습도·온도 중첩을 요약한다.
 4. Backend는 요약된 근거 데이터를 OpenAI API에 전달한다.
 5. AI는 긍정적 의심 성분 후보 최대 5가지와 부정적 의심 성분 후보 최대 5가지를 근거와 함께 설명한다.
 6. 기록이 부족하면 결과에 `데이터 부족` 또는 낮은 신뢰도를 명확히 표시한다.
@@ -308,6 +321,7 @@ AI는 원인 확정, 질환 진단, 치료 지시를 하지 않는다.
 - `daily_records`
 - `daily_record_products`
 - `daily_record_presets`
+- `daily_record_environment`
 - `skin_photos`
 - `analysis_runs`
 - `analysis_findings`
@@ -329,6 +343,8 @@ AI 분석
 ```
 
 MFDS API는 성분 사전 역할을 담당한다. 특정 제품의 전성분을 보장해서 가져오는 제품 DB API로 사용하지 않는다.
+
+기상청 날씨 API는 사용자의 지역 설정을 기반으로 오늘 기록의 환경 스냅샷을 생성하는 데 사용한다. Android는 기상청 API key를 갖지 않으며, Backend가 필요한 값만 호출하고 저장한다.
 
 ```text
 제품 검색
@@ -357,7 +373,13 @@ MFDS 화장품 원료성분정보:
 제품 성분표 사진:
 
 - 외부 바코드 기반 제품 조회는 한국 화장품 커버리지가 부족해 MVP 범위에서 제외한다.
-- 성분표 사진은 OpenAI API를 통한 텍스트 추출에만 사용한다.
+- 성분표 또는 라벨 사진은 OpenAI API를 통한 텍스트 추출에만 사용한다.
+
+기상청 날씨 API:
+
+- 사용자의 상세 위치를 그대로 분석에 전달하지 않고, 지역명과 대표 ASOS 관측소 ID처럼 필요한 최소 위치 정보만 사용한다.
+- 오늘 기록 저장 시점과 가장 가까운 관측 시각의 기온, 습도, 강수량, 풍속 등 피부 변화 해석에 도움이 되는 값을 스냅샷으로 보존한다.
+- API 실패 시 오늘 기록 저장 자체는 가능해야 하며, 환경 정보는 비어 있을 수 있다.
 - 성분표 사진 원본은 Supabase Storage나 DB에 저장하지 않는다.
 - AI 추출 결과는 사용자의 최종 확인/수정 후 저장한다.
 - 추출된 성분 중 MFDS 성분 마스터와 매칭되지 않는 항목은 `unmatched`로 저장한다.

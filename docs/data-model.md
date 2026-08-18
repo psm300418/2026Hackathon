@@ -30,11 +30,13 @@ product_submissions
 ingredients
 product_ingredients
 user_products
+user_locations
 routines
 routine_products
 daily_records
 daily_record_products
 daily_record_presets
+daily_record_environment
 skin_photos
 analysis_runs
 analysis_findings
@@ -141,11 +143,12 @@ analysis_findings
 
 ### products
 
-공용 제품 DB를 저장한다. seed 제품, 사용자가 확인한 community 제품, 향후 검증된 제품을 모두 포함한다.
+공용 제품 DB를 저장한다. seed 제품, 사용자가 확인한 community 제품, 향후 검증된 제품을 모두 포함한다. 초기 구현은 화장품 중심이지만, 같은 구조를 샤워용품과 영양제로 확장한다.
 
 - `id`
 - `source`
 - `external_id`
+- `item_type`
 - `name`
 - `normalized_name`
 - `brand`
@@ -163,15 +166,17 @@ analysis_findings
 
 `source`는 `seed`, `community`, `admin` 같은 값을 고려한다.
 `verification_status`는 `community`, `verified`, `needs_review` 같은 값을 고려한다.
+`item_type`은 `cosmetic`, `shower_product`, `supplement`를 고려한다. 화장품과 샤워용품은 전성분을, 영양제는 원료명 또는 영양정보 라벨에서 추출한 항목을 우선 저장한다.
 초기 seed 제품은 공식 출처 추적을 위해 `source_url`, `source_checked_at`, `region`, `formula_version`, `seed_batch`를 함께 저장한다.
 
 ### product_submissions
 
-사용자가 공용 제품 DB에 제품을 추가하기 위해 제출한 정보를 저장한다.
+사용자가 공용 제품 DB에 제품을 추가하기 위해 제출한 정보를 저장한다. 화장품 성분표, 샤워용품 라벨, 영양제 원료명 또는 영양정보 사진 제출을 같은 흐름으로 처리한다.
 
 - `id`
 - `submitted_by`
 - `product_id`
+- `item_type`
 - `name`
 - `normalized_name`
 - `brand`
@@ -182,13 +187,13 @@ analysis_findings
 - `created_at`
 - `updated_at`
 
-성분표 사진 원본은 저장하지 않는다. `ai_extracted_text`는 AI가 사진에서 추출한 원문이고, `confirmed_ingredients_text`는 사용자가 검토/수정 후 확정한 성분표 텍스트다.
+성분표 또는 라벨 사진 원본은 저장하지 않는다. `ai_extracted_text`는 AI가 사진에서 추출한 원문이고, `confirmed_ingredients_text`는 사용자가 검토/수정 후 확정한 성분표, 원료명, 영양정보 텍스트다.
 
 `status`는 `draft`, `community`, `verified`, `rejected` 같은 값을 고려한다.
 
 ### ingredients
 
-성분 정보를 저장한다.
+성분 정보를 저장한다. 화장품과 샤워용품은 MFDS 원료성분정보 매칭을 우선하고, 영양제 원료는 매칭 사전이 준비되기 전까지 원문과 정규화 이름 중심으로 저장한다.
 
 - `id`
 - `source`
@@ -225,7 +230,7 @@ MFDS 성분 마스터와 매칭되지 않은 성분은 별도 보정 전까지 `
 
 ### user_products
 
-사용자가 자신의 목록에 등록한 제품을 저장한다.
+사용자가 자신의 목록에 등록한 제품을 저장한다. 제품은 화장품, 샤워용품, 영양제를 모두 포함할 수 있다.
 
 - `id`
 - `user_id`
@@ -242,6 +247,24 @@ MFDS 성분 마스터와 매칭되지 않은 성분은 별도 보정 전까지 `
 T3 범위에서는 제품 직접 등록을 열지 않고 seed 공용 제품 DB에서 검색한 제품만 추가한다.
 같은 사용자가 같은 제품을 다시 등록하면 새 행을 만들지 않고 기존 행을 갱신한다.
 이전 사용 제품 등록 화면에서는 `started_at`을 입력받지 않고 `null`로 저장한다.
+
+### user_locations
+
+기상청 날씨 API 연동에 사용할 사용자 지역 설정을 저장한다.
+
+- `id`
+- `user_id`
+- `region_label`
+- `weather_station_id`
+- `weather_station_name`
+- `created_at`
+- `updated_at`
+
+정책:
+
+- 사용자는 지역을 직접 설정하거나 변경한다.
+- MVP에서는 정밀 GPS 좌표를 저장하지 않고, 사용자가 시/군/구 버튼으로 고른 지역명과 대표 ASOS 관측소 ID를 저장한다.
+- 같은 사용자는 활성 지역 설정 1개를 기본으로 한다.
 
 ### routines
 
@@ -276,6 +299,7 @@ T3 범위에서는 제품 직접 등록을 열지 않고 seed 공용 제품 DB�
 - `redness`
 - `trouble`
 - `sleep_hours`
+- `outdoor_minutes`
 - `memo`
 - `created_at`
 - `updated_at`
@@ -286,6 +310,7 @@ T3 범위에서는 제품 직접 등록을 열지 않고 seed 공용 제품 DB�
 - 같은 날짜 기록을 다시 저장하면 기존 기록을 갱신한다.
 - `dryness`, `oiliness`, `redness`, `trouble`은 0부터 5까지의 정수다.
 - `sleep_hours`는 0부터 24까지의 숫자이며 소수 1자리까지 허용한다.
+- `outdoor_minutes`는 선택값이며 분 단위로 저장한다.
 - 스트레스 점수는 T4 범위에서 제외한다.
 
 ### daily_record_products
@@ -307,6 +332,31 @@ T3 범위에서는 제품 직접 등록을 열지 않고 seed 공용 제품 DB�
 - `daily_record_id`
 - `routine_id`
 - `created_at`
+
+### daily_record_environment
+
+오늘 기록 저장 시점에 사용자의 지역 설정과 기상청 날씨 API 결과를 스냅샷으로 저장한다.
+
+- `id`
+- `daily_record_id`
+- `source`
+- `region_label`
+- `weather_station_id`
+- `weather_station_name`
+- `observed_at`
+- `temperature_celsius`
+- `humidity_percent`
+- `precipitation_amount_mm`
+- `wind_speed_mps`
+- `raw_payload`
+- `created_at`
+
+정책:
+
+- `source`는 우선 `kma`를 사용한다.
+- 관측값은 사용자가 오늘 기록을 저장한 시점과 가장 가까운 시각의 ASOS 관측값을 우선 사용한다.
+- 날씨 API 호출이 실패해도 오늘 기록 저장은 가능해야 하며, 이 테이블의 row가 없을 수 있다.
+- 분석에는 상세 위치보다 기록일의 환경 조건 요약을 우선 사용한다.
 
 ### skin_photos
 
@@ -335,6 +385,8 @@ T3 범위에서는 제품 직접 등록을 열지 않고 seed 공용 제품 DB�
 - `created_at`
 
 `confidence_level`은 `strong`, `medium`, `weak`, `data_insufficient`를 고려한다.
+분석 실행은 최근 30일 상세 기록, 전체 기간 압축 통계, 이전 최신 분석 요약을 바탕으로 생성한다.
+전체 기간의 원본 기록을 매번 AI에 모두 전달하지 않고 Backend에서 성분별 노출/개선/악화 통계로 압축한다.
 
 ### analysis_findings
 
@@ -352,6 +404,7 @@ T3 범위에서는 제품 직접 등록을 열지 않고 seed 공용 제품 DB�
 
 `finding_type`은 `positive_suspect` 또는 `negative_suspect`를 사용한다. 각 타입은 최대 5개를 기본 정책으로 한다.
 분석 결과는 추천이나 금지처럼 단정하지 않고, 저장된 기록에서 긍정적 변화 또는 부정적 변화와 함께 나타난 의심 성분 후보로 표현한다.
+`supporting_logs`에는 전체 노출 횟수, 최근 노출 횟수, 관련 제품 요약처럼 사용자가 이해할 수 있는 짧은 근거 문자열을 저장한다.
 
 ---
 
@@ -359,11 +412,13 @@ T3 범위에서는 제품 직접 등록을 열지 않고 seed 공용 제품 DB�
 
 - 한 사용자는 하나 이상의 `skin_type_results`와 여러 `skin_type_responses`를 가질 수 있다.
 - 한 사용자는 여러 `product_submissions`, `user_products`, `routines`, `daily_records`, `analysis_runs`를 가진다.
+- 한 사용자는 하나의 활성 지역 설정(`user_locations`)을 가질 수 있다.
 - 한 제품은 사용자 제출(`product_submissions`)을 통해 생성될 수 있다.
 - 한 제품은 여러 성분을 가질 수 있다.
 - 한 사용자는 공용 제품을 자신의 제품 목록에 등록할 수 있다.
 - 한 프리셋은 여러 사용자 제품을 포함할 수 있다.
 - 한 오늘 기록은 여러 사용자 제품과 여러 적용 프리셋을 포함할 수 있다.
+- 한 오늘 기록은 하나의 날씨·환경 스냅샷을 가질 수 있다.
 - 한 오늘 기록은 선택 얼굴 사진 메타데이터와 연결될 수 있다.
 - 한 분석 실행은 여러 분석 후보 결과를 가진다.
 
@@ -380,11 +435,14 @@ RLS 적용 대상:
 - `skin_type_responses`
 - `product_submissions`
 - `user_products`
+- `user_locations`
 - `routines`
 - `daily_records`
 - `daily_record_products`
 - `daily_record_presets`
+- `daily_record_environment`
 - `skin_photos`
 - `analysis_runs`
+- `analysis_findings`
 
 공용 제품/성분 테이블은 읽기 범위를 넓게 둘 수 있으나, 쓰기는 Backend service role을 통해서만 수행하는 방향을 고려한다.
