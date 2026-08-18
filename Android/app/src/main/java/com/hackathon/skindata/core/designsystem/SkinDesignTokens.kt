@@ -4,16 +4,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 object SkinColors {
-    val BackgroundWarm = Color(0xFFF2F3EE)
+    val Ink = Color(0xFF121212)
+    val Muted = Color(0xFFB3B3B3)
+    val BackgroundWarm = Color(0xFFFFFFFF)
     val Surface = Color(0xFFFFFFFF)
-    val SurfaceSoft = Color(0xFFF8F8F8)
-    val PrimaryOlive = Color(0xFFA9B184)
-    val PrimaryOliveSoft = Color(0xFFEEF1E4)
-    val AccentCoral = Color(0xFFD8A08E)
-    val AccentCoralSoft = Color(0xFFF7EEE8)
-    val TextPrimary = Color(0xFF181818)
-    val TextSecondary = Color(0xFF707070)
-    val Border = Color(0xFFEDEDEB)
+    val SurfaceSoft = Color(0xFFEFEFEF)
+    val PrimaryOlive = Color(0xFFEBFBFC)
+    val PrimaryOliveSoft = Color(0xFFEBFBFC)
+    val AccentCoral = Color(0xFF121212)
+    val AccentCoralSoft = Color(0xFFEFEFEF)
+    val TextPrimary = Color(0xFF121212)
+    val TextSecondary = Color(0xFF6F6F6F)
+    val Border = Color(0xFFEFEFEF)
 }
 
 object SkinSpacing {
@@ -25,5 +27,5 @@ object SkinSpacing {
 
 object SkinRadius {
     val Card = 8.dp
-    val Button = 28.dp
+    val Button = 6.dp
 }

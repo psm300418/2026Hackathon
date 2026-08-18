@@ -12,6 +12,7 @@ const QUESTIONNAIRE_VERSION = "baumann_ko_rewrite_v1";
 const QUESTIONNAIRE_TITLE = "초기 피부 타입 설문";
 const QUESTIONNAIRE_DESCRIPTION =
   "공개 자료를 바탕으로 사용자 응답용 한국어 문안으로 재구성한 비공식 설문입니다.";
+const excludedQuestionNumbers = new Set([45, 46, 47, 48]);
 
 const dimensionByQuestionNumber = (questionNumber: number) => {
   if (questionNumber >= 1 && questionNumber <= 11) {
@@ -96,6 +97,12 @@ const parseSurveyMarkdown = (content: string): ParsedQuestion[] => {
       }
 
       const questionNumber = Number(questionMatch[1]);
+
+      if (excludedQuestionNumbers.has(questionNumber)) {
+        currentQuestion = null;
+        continue;
+      }
+
       const dimension = dimensionByQuestionNumber(questionNumber);
 
       currentQuestion = {
@@ -139,8 +146,8 @@ const parseSurveyMarkdown = (content: string): ParsedQuestion[] => {
     questions.push(currentQuestion);
   }
 
-  if (questions.length !== 64) {
-    throw new Error(`Expected 64 questions, found ${questions.length}`);
+  if (questions.length !== 60) {
+    throw new Error(`Expected 60 questions, found ${questions.length}`);
   }
 
   for (const question of questions) {

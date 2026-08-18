@@ -131,9 +131,13 @@ POST /api/onboarding/skin-type/responses
 ```json
 {
   "questionnaireVersion": "baumann_ko_rewrite_v1",
+  "knownDimensions": {
+    "oilDry": "O",
+    "sensitiveResistant": "S"
+  },
   "responses": [
     {
-      "questionId": "OD_01",
+      "questionId": "PN_30",
       "optionId": "B"
     }
   ]
@@ -178,6 +182,9 @@ POST /api/onboarding/skin-type/responses
 
 - 점수 계산은 Backend에서 수행한다.
 - Android에는 점수표와 판정 로직을 두지 않는다.
+- `knownDimensions`에는 사용자가 이미 알고 있어 직접 선택한 축만 넣는다.
+- 직접 선택하지 않은 축의 문항만 `responses`로 제출한다.
+- 모든 축을 직접 선택했다면 `responses`는 빈 배열일 수 있다.
 - 결과는 `profiles`와 설문 응답 테이블에 저장한다.
 - 설문 결과는 진단이 아니라 이후 기록 분석의 기준점으로 사용한다.
 - 사용자 화면에서는 `OSNT` 같은 내부 코드보다 `지성 경향 · 민감성 경향 · 비색소성 경향 · 탄력 유지 경향`처럼 한국어 분류 조합을 중심으로 표시한다.

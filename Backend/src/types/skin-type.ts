@@ -61,6 +61,13 @@ export type SkinTypeResponseInput = {
   optionId: string;
 };
 
+export type SkinTypeKnownDimensionsInput = {
+  oilDry?: "O" | "D";
+  sensitiveResistant?: "S" | "R";
+  pigmentedNonPigmented?: "P" | "N";
+  wrinkledTight?: "W" | "T";
+};
+
 export type SkinTypeQuestionDto = {
   id: string;
   text: string;

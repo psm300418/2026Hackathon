@@ -77,7 +77,8 @@ class BackendApiClient(
     suspend fun submitSkinTypeResponses(
         accessToken: String,
         questionnaireVersion: String,
-        responses: List<SkinTypeResponseInput>
+        responses: List<SkinTypeResponseInput>,
+        knownDimensions: KnownSkinTypeDimensionsInput
     ): SkinTypeResultDto = withContext(Dispatchers.IO) {
         val body = request(
             path = "/api/onboarding/skin-type/responses",
@@ -86,7 +87,8 @@ class BackendApiClient(
             requestBody = json.encodeToString(
                 SubmitSkinTypeResponsesRequest(
                     questionnaireVersion = questionnaireVersion,
-                    responses = responses
+                    responses = responses,
+                    knownDimensions = knownDimensions
                 )
             )
         )
@@ -479,7 +481,16 @@ data class SkinTypeResponseInput(
 @Serializable
 data class SubmitSkinTypeResponsesRequest(
     val questionnaireVersion: String,
-    val responses: List<SkinTypeResponseInput>
+    val responses: List<SkinTypeResponseInput>,
+    val knownDimensions: KnownSkinTypeDimensionsInput
+)
+
+@Serializable
+data class KnownSkinTypeDimensionsInput(
+    val oilDry: String? = null,
+    val sensitiveResistant: String? = null,
+    val pigmentedNonPigmented: String? = null,
+    val wrinkledTight: String? = null
 )
 
 @Serializable

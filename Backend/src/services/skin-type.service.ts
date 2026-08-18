@@ -13,6 +13,7 @@ import { ApiError } from "../types/http.js";
 import type {
   SkinTypeDimension,
   SkinTypeDimensionDtoKey,
+  SkinTypeKnownDimensionsInput,
   SkinTypeOptionRow,
   SkinTypeQuestionRow,
   SkinTypeQuestionsDto,
@@ -64,7 +65,15 @@ const responseInputSchema = z.object({
         optionId: z.string().min(1)
       })
     )
-    .min(1)
+    .default([]),
+  knownDimensions: z
+    .object({
+      oilDry: z.enum(["O", "D"]).optional(),
+      sensitiveResistant: z.enum(["S", "R"]).optional(),
+      pigmentedNonPigmented: z.enum(["P", "N"]).optional(),
+      wrinkledTight: z.enum(["W", "T"]).optional()
+    })
+    .optional()
 });
 
 export const parseSkinTypeResponseInput = (body: unknown) => responseInputSchema.parse(body);
@@ -117,7 +126,7 @@ const getOilDryCode = (score: number): "O" | "D" => (score >= 27 ? "O" : "D");
 const getSensitiveResistantCode = (score: number): "S" | "R" => (score >= 30 ? "S" : "R");
 const getPigmentedNonPigmentedCode = (score: number): "P" | "N" =>
   score >= 29 ? "P" : "N";
-const getWrinkledTightCode = (score: number): "W" | "T" => (score >= 41 ? "W" : "T");
+const getWrinkledTightCode = (score: number): "W" | "T" => (score >= 33 ? "W" : "T");
 
 const sumScoresByDimension = (
   questions: SkinTypeQuestionRow[],
@@ -138,6 +147,28 @@ const sumScoresByDimension = (
   }
 
   return scores;
+};
+
+const buildKnownCodeByDimension = (knownDimensions?: SkinTypeKnownDimensionsInput) => {
+  const knownCodeByDimension = new Map<SkinTypeDimension, string>();
+
+  if (knownDimensions?.oilDry) {
+    knownCodeByDimension.set("oil_dry", knownDimensions.oilDry);
+  }
+  if (knownDimensions?.sensitiveResistant) {
+    knownCodeByDimension.set("sensitive_resistant", knownDimensions.sensitiveResistant);
+  }
+  if (knownDimensions?.pigmentedNonPigmented) {
+    knownCodeByDimension.set(
+      "pigmented_non_pigmented",
+      knownDimensions.pigmentedNonPigmented
+    );
+  }
+  if (knownDimensions?.wrinkledTight) {
+    knownCodeByDimension.set("wrinkled_tight", knownDimensions.wrinkledTight);
+  }
+
+  return knownCodeByDimension;
 };
 
 const toResultDto = (result: SkinTypeResultRow): SkinTypeResultDto => {
@@ -186,6 +217,7 @@ export const submitSkinTypeResponses = async (
   input: {
     questionnaireVersion: string;
     responses: SkinTypeResponseInput[];
+    knownDimensions?: SkinTypeKnownDimensionsInput;
   }
 ): Promise<SkinTypeResultDto> => {
   const questionnaire = await findActiveQuestionnaire();
@@ -207,9 +239,13 @@ export const submitSkinTypeResponses = async (
     options.map((option) => [`${option.question_id}:${option.option_key}`, option])
   );
   const selectedOptionByQuestionId = new Map<string, SkinTypeOptionRow>();
+  const knownCodeByDimension = buildKnownCodeByDimension(input.knownDimensions);
+  const requiredQuestions = questions.filter(
+    (question) => !knownCodeByDimension.has(question.dimension)
+  );
 
-  if (input.responses.length !== questions.length) {
-    throw new ApiError(400, "BAD_REQUEST", "모든 설문 문항에 응답해주세요.");
+  if (input.responses.length !== requiredQuestions.length) {
+    throw new ApiError(400, "BAD_REQUEST", "직접 선택하지 않은 설문 문항에 모두 응답해주세요.");
   }
 
   for (const response of input.responses) {
@@ -217,6 +253,14 @@ export const submitSkinTypeResponses = async (
 
     if (!question) {
       throw new ApiError(400, "BAD_REQUEST", "알 수 없는 설문 문항이 포함되어 있습니다.");
+    }
+
+    if (knownCodeByDimension.has(question.dimension)) {
+      throw new ApiError(
+        400,
+        "BAD_REQUEST",
+        "직접 선택한 피부 분류의 설문 응답이 포함되어 있습니다."
+      );
     }
 
     const option = optionByQuestionAndKey.get(`${question.id}:${response.optionId}`);
@@ -232,15 +276,23 @@ export const submitSkinTypeResponses = async (
     selectedOptionByQuestionId.set(question.id, option);
   }
 
-  const scores = sumScoresByDimension(questions, selectedOptionByQuestionId);
+  const scores = sumScoresByDimension(requiredQuestions, selectedOptionByQuestionId);
   const oilDryScore = scores.get("oil_dry") ?? 0;
   const sensitiveResistantScore = scores.get("sensitive_resistant") ?? 0;
   const pigmentedNonPigmentedScore = scores.get("pigmented_non_pigmented") ?? 0;
   const wrinkledTightScore = scores.get("wrinkled_tight") ?? 0;
-  const oilDryCode = getOilDryCode(oilDryScore);
-  const sensitiveResistantCode = getSensitiveResistantCode(sensitiveResistantScore);
-  const pigmentedNonPigmentedCode = getPigmentedNonPigmentedCode(pigmentedNonPigmentedScore);
-  const wrinkledTightCode = getWrinkledTightCode(wrinkledTightScore);
+  const oilDryCode =
+    (knownCodeByDimension.get("oil_dry") as "O" | "D" | undefined) ??
+    getOilDryCode(oilDryScore);
+  const sensitiveResistantCode =
+    (knownCodeByDimension.get("sensitive_resistant") as "S" | "R" | undefined) ??
+    getSensitiveResistantCode(sensitiveResistantScore);
+  const pigmentedNonPigmentedCode =
+    (knownCodeByDimension.get("pigmented_non_pigmented") as "P" | "N" | undefined) ??
+    getPigmentedNonPigmentedCode(pigmentedNonPigmentedScore);
+  const wrinkledTightCode =
+    (knownCodeByDimension.get("wrinkled_tight") as "W" | "T" | undefined) ??
+    getWrinkledTightCode(wrinkledTightScore);
   const skinTypeCode = `${oilDryCode}${sensitiveResistantCode}${pigmentedNonPigmentedCode}${wrinkledTightCode}`;
 
   const result = await createSkinTypeResult({
@@ -259,7 +311,7 @@ export const submitSkinTypeResponses = async (
   });
 
   await createSkinTypeResponses(
-    questions.map((question) => {
+    requiredQuestions.map((question) => {
       const option = selectedOptionByQuestionId.get(question.id);
 
       if (!option) {

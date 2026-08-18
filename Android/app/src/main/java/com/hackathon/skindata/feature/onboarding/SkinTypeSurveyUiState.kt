@@ -7,16 +7,23 @@ data class SkinTypeSurveyUiState(
     val isLoading: Boolean = false,
     val questions: SkinTypeQuestionsDto? = null,
     val selectedOptionByQuestionId: Map<String, String> = emptyMap(),
+    val knownCodeByDimension: Map<String, String> = emptyMap(),
     val currentSectionIndex: Int = 0,
     val result: SkinTypeResultDto? = null,
     val message: String? = null
 ) {
+    val activeSections
+        get() = questions?.sections?.filterNot { knownCodeByDimension.containsKey(it.dimension) }
+            ?: emptyList()
+
     val totalQuestions: Int
-        get() = questions?.sections?.sumOf { it.questions.size } ?: 0
+        get() = activeSections.sumOf { it.questions.size }
 
     val answeredQuestions: Int
-        get() = selectedOptionByQuestionId.size
+        get() = activeSections.sumOf { section ->
+            section.questions.count { selectedOptionByQuestionId.containsKey(it.id) }
+        }
 
     val canSubmit: Boolean
-        get() = totalQuestions > 0 && answeredQuestions == totalQuestions && !isLoading
+        get() = questions != null && answeredQuestions == totalQuestions && !isLoading
 }
