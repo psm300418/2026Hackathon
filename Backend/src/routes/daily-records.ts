@@ -2,6 +2,7 @@ import { Router } from "express";
 import multer from "multer";
 import {
   createDailyRecordController,
+  getDailyRecordTrendsController,
   listDailyRecordsController
 } from "../controllers/records.controller.js";
 import { requireAuth } from "../middlewares/auth.js";
@@ -15,5 +16,6 @@ const upload = multer({
 
 export const dailyRecordsRouter = Router();
 
+dailyRecordsRouter.get("/trends", requireAuth, getDailyRecordTrendsController);
 dailyRecordsRouter.get("/", requireAuth, listDailyRecordsController);
 dailyRecordsRouter.post("/", requireAuth, upload.single("facePhoto"), createDailyRecordController);

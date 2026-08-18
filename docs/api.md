@@ -195,7 +195,7 @@ GET /api/onboarding/skin-type/result
 ### 제품 검색
 
 ```text
-GET /api/products/search?q={query}
+GET /api/products/search?q={query}&itemType={itemType}
 ```
 
 흐름:
@@ -203,7 +203,8 @@ GET /api/products/search?q={query}
 1. 자체 공용 제품 DB에서 제품명, 브랜드, 카테고리를 기준으로 검색한다.
 2. 검색 결과가 있으면 `community`, `verified`, `seed` 제품을 반환한다.
 3. 검색 결과는 검색어와 유사한 순으로 정렬한다.
-4. T3 범위에서는 검색 결과가 없더라도 제품 직접 등록을 제공하지 않는다.
+4. `itemType`이 있으면 화장품, 샤워용품, 영양제 중 해당 항목만 반환한다.
+5. 검색 결과가 없거나 성분 정보가 부족하면 `product-submissions` 흐름으로 직접 등록할 수 있다.
 
 응답 예시:
 
@@ -215,6 +216,7 @@ GET /api/products/search?q={query}
         "id": "product-id",
         "source": "community",
         "verificationStatus": "community",
+        "itemType": "cosmetic",
         "name": "제품명",
         "brand": "브랜드명",
         "category": "크림",
@@ -229,7 +231,7 @@ GET /api/products/search?q={query}
         ]
       }
     ],
-    "canSubmitProduct": false
+    "canSubmitProduct": true
   }
 }
 ```
@@ -237,6 +239,7 @@ GET /api/products/search?q={query}
 정책:
 
 - `q`는 앞뒤 공백을 제거한 뒤 1자 이상이어야 한다.
+- `itemType`은 선택값이며 `cosmetic`, `shower_product`, `supplement` 중 하나다.
 - 결과는 최대 20개를 반환한다.
 - `ingredients`는 `product_ingredients.raw_name`을 기준으로 반환한다.
 - MFDS 성분 마스터와 매칭되지 않은 성분은 `matchedIngredientId: null`, `matchStatus: "unmatched"`로 반환할 수 있다.
@@ -247,14 +250,14 @@ GET /api/products/search?q={query}
 POST /api/product-submissions/extract
 ```
 
-사용자가 제품명, 브랜드, 제품 종류, 성분표 사진을 제출하면 Backend가 OpenAI API로 텍스트와 성분 후보를 추출한다.
+사용자가 성분표 또는 라벨 사진을 제출하면 Backend가 OpenAI API로 텍스트와 성분·원료 후보를 추출한다. 화장품, 샤워용품, 영양제는 같은 제출 API를 사용하고 `itemType`으로 구분한다.
 
 흐름:
 
-1. Android 앱이 제품 정보와 성분표 사진을 Backend로 전송한다.
+1. Android 앱이 항목 유형과 성분표 또는 라벨 사진을 Backend로 전송한다.
 2. Backend는 사진 원본을 저장하지 않고 AI 추출 요청에만 사용한다.
-3. AI는 성분표 텍스트와 성분 후보 목록을 추출한다.
-4. Backend는 추출된 성분 후보를 MFDS 성분 마스터와 매칭한다.
+3. AI는 성분표, 원료명, 영양정보 텍스트와 후보 목록을 추출한다.
+4. T7에서는 추출 후보를 원문과 정규화 이름 중심으로 반환하고 `matchStatus=unmatched`로 둔다. MFDS 성분 마스터 매칭은 후속 보강으로 확장한다.
 5. Android 앱은 추출 결과를 사용자에게 보여준다.
 6. 사용자는 결과를 확인하거나 수정한다.
 
@@ -268,10 +271,8 @@ multipart/form-data
 
 | field | 설명 |
 | --- | --- |
-| `name` | 제품명 |
-| `brand` | 브랜드명 |
-| `category` | 제품 종류 |
-| `ingredientLabelImage` | 성분표 사진 파일 |
+| `itemType` | `cosmetic`, `shower_product`, `supplement` |
+| `ingredientLabelImage` | 성분표, 라벨, 원료명 또는 영양정보 사진 파일 |
 
 응답 예시:
 
@@ -283,8 +284,8 @@ multipart/form-data
       {
         "rawName": "글리세린",
         "normalizedName": "글리세린",
-        "matchedIngredientId": "ingredient-id",
-        "matchStatus": "matched"
+          "matchedIngredientId": null,
+          "matchStatus": "unmatched"
       },
       {
         "rawName": "미확인성분",
@@ -293,9 +294,7 @@ multipart/form-data
         "matchStatus": "unmatched"
       }
     ],
-    "warnings": [
-      "AI 추출 결과는 사용자의 확인 후 저장됩니다."
-    ]
+    "warnings": ["AI 추출 결과는 사용자의 확인 후 저장됩니다."]
   }
 }
 ```
@@ -312,18 +311,45 @@ POST /api/product-submissions
 
 ```json
 {
+  "itemType": "cosmetic",
   "name": "제품명",
   "brand": "브랜드명",
   "category": "크림",
+  "aiExtractedText": "정제수, 글리세린, 나이아신아마이드",
   "confirmedIngredientsText": "정제수, 글리세린, 나이아신아마이드",
-  "ingredients": [
-    {
-      "rawName": "글리세린",
-      "normalizedName": "글리세린",
-      "matchedIngredientId": "ingredient-id",
-      "matchStatus": "matched"
+}
+```
+
+응답 예시:
+
+```json
+{
+  "data": {
+    "submissionId": "submission-id",
+    "productId": "product-id",
+    "userProduct": {
+      "id": "user-product-id",
+      "productId": "product-id",
+      "usageStatus": "past",
+      "startedAt": null,
+      "isPastExperience": true,
+      "pastReactionMemo": null,
+      "memo": null,
+      "createdAt": "2026-08-18T08:00:00.000Z",
+      "updatedAt": "2026-08-18T08:00:00.000Z",
+      "product": {
+        "id": "product-id",
+        "source": "community",
+        "verificationStatus": "community",
+        "itemType": "cosmetic",
+        "name": "제품명",
+        "brand": "브랜드명",
+        "category": "크림",
+        "ingredientsText": "정제수, 글리세린, 나이아신아마이드",
+        "ingredients": []
+      }
     }
-  ]
+  }
 }
 ```
 
@@ -331,7 +357,8 @@ POST /api/product-submissions
 
 - 제품은 `products`에 `source=community`, `verificationStatus=community`로 저장된다.
 - 제출 이력은 `product_submissions`에 저장된다.
-- 성분표 사진 원본은 저장하지 않는다.
+- 성분표 또는 라벨 사진 원본은 저장하지 않는다.
+- 등록된 제품은 같은 요청에서 로그인 사용자의 `user_products`에도 추가된다.
 - 이후 다른 사용자가 제품명으로 검색하면 해당 제품을 볼 수 있다.
 
 ### 사용자 제품 등록
@@ -375,11 +402,12 @@ POST /api/user-products
     "memo": null,
     "createdAt": "2026-08-17T08:20:00.000Z",
     "updatedAt": "2026-08-17T08:20:00.000Z",
-    "product": {
-      "id": "product-id",
-      "source": "seed",
-      "verificationStatus": "verified",
-      "name": "제품명",
+      "product": {
+        "id": "product-id",
+        "source": "seed",
+        "verificationStatus": "verified",
+        "itemType": "cosmetic",
+        "name": "제품명",
       "brand": "브랜드명",
       "category": "크림",
       "ingredientsText": "정제수, 글리세린, 나이아신아마이드",
@@ -419,10 +447,11 @@ GET /api/user-products
         "createdAt": "2026-08-17T08:20:00.000Z",
         "updatedAt": "2026-08-17T08:20:00.000Z",
         "product": {
-          "id": "product-id",
-          "source": "seed",
-          "verificationStatus": "verified",
-          "name": "제품명",
+        "id": "product-id",
+        "source": "seed",
+        "verificationStatus": "verified",
+        "itemType": "cosmetic",
+        "name": "제품명",
           "brand": "브랜드명",
           "category": "크림",
           "ingredientsText": "정제수, 글리세린",
@@ -540,6 +569,48 @@ GET  /api/product-presets
 
 오늘의 피부 상태 기록은 하루 1개다. 제품 사용, 수면 시간, 얼굴 사진은 별도 기능이 아니라 오늘 기록에 포함되는 데이터다.
 
+### 사용자 지역 설정
+
+```text
+GET /api/profile/location-options
+PUT /api/profile/location
+GET /api/profile/location
+```
+
+기상청 날씨 API 연동을 위해 사용자의 지역 정보를 저장한다. MVP에서는 정밀 GPS 좌표나 격자 좌표를 저장하지 않고, 사용자가 시/군/구 버튼으로 고른 지역명과 대표 ASOS 관측소 ID를 저장한다.
+
+지역 옵션 응답 예시:
+
+```json
+{
+  "data": {
+    "items": [
+      {
+        "id": "seoul-gangnam",
+        "regionLabel": "서울특별시 강남구",
+        "weatherStationId": 108,
+        "weatherStationName": "서울"
+      }
+    ]
+  }
+}
+```
+
+요청 예시:
+
+```json
+{
+  "locationId": "seoul-gangnam"
+}
+```
+
+정책:
+
+- 인증 필요.
+- Android에는 기상청 API key를 저장하지 않는다.
+- 사용자는 시/군/구 버튼으로 지역을 선택하고 설정 탭에서 변경할 수 있다.
+- 위치 정보가 없으면 오늘 기록은 저장하되 날씨 스냅샷은 비워 둔다.
+
 ### 오늘 기록 저장 또는 갱신
 
 ```text
@@ -562,6 +633,7 @@ multipart/form-data
 | `redness` | 붉음 점수, 0-5 |
 | `trouble` | 트러블 점수, 0-5 |
 | `sleepHours` | 수면 시간, 0-24. 소수 1자리까지 허용 |
+| `outdoorMinutes` | 선택 외출 시간, 분 단위 |
 | `userProductIds` | JSON 문자열 배열. 오늘 사용한 사용자 제품 ID 목록 |
 | `appliedPresetIds` | JSON 문자열 배열. 적용한 프리셋 ID 목록 |
 | `memo` | 선택 메모 |
@@ -577,6 +649,7 @@ JSON 요청이 필요한 테스트나 사진 없는 저장에서는 `application
   "redness": 1,
   "trouble": 2,
   "sleepHours": 6.5,
+  "outdoorMinutes": 40,
   "userProductIds": ["user-product-id"],
   "appliedPresetIds": ["preset-id"],
   "memo": "저녁에 보습 제품을 추가로 사용"
@@ -593,6 +666,8 @@ JSON 요청이 필요한 테스트나 사진 없는 저장에서는 `application
 - 공용 제품 DB에 없는 제품을 성분표 사진으로 새로 등록하는 흐름은 `product-submissions` 단계에서 제공한다.
 - 제품 사용 기록 저장만으로 `user_products.usage_status`를 자동 변경하지 않는다.
 - 얼굴 사진은 선택 입력이다. 사진 없이도 오늘 기록을 저장할 수 있다.
+- 사용자의 지역이 설정되어 있으면 Backend가 기상청 API허브 ASOS 관측 API에서 기록 저장 시점과 가장 가까운 시각의 기온, 습도, 강수량, 풍속 등을 조회해 기록에 스냅샷으로 저장한다.
+- 날씨 API 호출이 실패해도 오늘 기록 저장은 실패시키지 않고, 환경 정보만 비워 둘 수 있다.
 - 스트레스 점수는 T4 범위에서 제외한다.
 
 응답 예시:
@@ -608,7 +683,19 @@ JSON 요청이 필요한 테스트나 사진 없는 저장에서는 `application
     "redness": 1,
     "trouble": 2,
     "sleepHours": 6.5,
+    "outdoorMinutes": 40,
     "memo": "저녁에 보습 제품을 추가로 사용",
+    "environment": {
+      "source": "kma",
+      "regionLabel": "서울특별시 강남구",
+      "weatherStationId": 108,
+      "weatherStationName": "서울",
+      "observedAt": "2026-08-17T21:00:00+09:00",
+      "temperatureCelsius": 27.4,
+      "humidityPercent": 78,
+      "precipitationAmountMm": 0,
+      "windSpeedMps": 1.8
+    },
     "products": [
       {
         "userProductId": "user-product-id",
@@ -644,8 +731,89 @@ GET /api/daily-records?from={date}&to={date}
 
 정책:
 
+- `from`, `to`가 모두 없으면 오늘 날짜 기록만 조회한다.
+- 최근 기록 화면은 Android가 최근 14일 범위를 계산해 `from`, `to`를 함께 전달한다.
+- Backend는 저장된 기록만 반환한다.
+- 기록이 없는 날짜의 empty state는 Android가 날짜 범위를 기준으로 채운다.
+- 최신 기록 1개가 필요하면 별도 `latest` API를 만들지 않고, `GET /api/daily-records?from&to` 결과를 최신순으로 받아 클라이언트 또는 service에서 첫 번째 항목을 사용한다.
+
+정책:
+
 - `from`, `to`가 없으면 오늘 기록을 조회한다.
 - 날짜 범위는 `YYYY-MM-DD`로 검증한다.
+
+### 피부 상태 추이 조회
+
+```text
+GET /api/daily-records/trends?from={date}&to={date}
+```
+
+기록 탭의 추이 화면에서 사용할 그래프 친화 응답을 반환한다.
+
+정책:
+
+- 인증 필요.
+- `from`, `to`가 모두 없으면 오늘 기준 최근 14일을 반환한다.
+- 기간 내 모든 날짜를 `points`에 포함한다.
+- 기록이 없는 날짜는 피부 점수와 생활 데이터가 `null`로 내려간다.
+- 사용 제품은 대표 제품명 최대 3개와 나머지 개수를 함께 반환한다.
+
+응답 예시:
+
+```json
+{
+  "data": {
+    "from": "2026-08-05",
+    "to": "2026-08-18",
+    "points": [
+      {
+        "date": "2026-08-18",
+        "scores": {
+          "dryness": 2,
+          "oiliness": 3,
+          "redness": 1,
+          "trouble": 2
+        },
+        "sleepHours": 6.5,
+        "outdoorMinutes": 40,
+        "productSummary": {
+          "count": 4,
+          "names": ["제품 A", "제품 B", "제품 C"],
+          "remainingCount": 1
+        },
+        "environment": {
+          "source": "kma",
+          "regionLabel": "서울특별시 강남구",
+          "weatherStationId": 108,
+          "weatherStationName": "서울",
+          "observedAt": "2026-08-18T21:00:00+09:00",
+          "temperatureCelsius": 27.4,
+          "humidityPercent": 78,
+          "precipitationAmountMm": 0,
+          "windSpeedMps": 1.8
+        }
+      },
+      {
+        "date": "2026-08-17",
+        "scores": {
+          "dryness": null,
+          "oiliness": null,
+          "redness": null,
+          "trouble": null
+        },
+        "sleepHours": null,
+        "outdoorMinutes": null,
+        "productSummary": {
+          "count": 0,
+          "names": [],
+          "remainingCount": 0
+        },
+        "environment": null
+      }
+    ]
+  }
+}
+```
 
 ---
 
@@ -672,26 +840,39 @@ POST /api/analysis/run
 
 사용자가 분석 탭에서 요청하면 현재까지 저장된 기록을 바탕으로 AI 분석을 수행한다.
 
+분석 입력 범위:
+
+- 최근 30일의 피부 기록은 상세 evidence로 사용한다.
+- 전체 기간의 피부 기록은 Backend가 성분별 노출 횟수, 개선일 동반 횟수, 악화일 동반 횟수, 마지막 노출일 같은 압축 통계로 집계한다.
+- 이전 최신 분석 결과의 요약과 후보 성분 이름을 함께 사용해 분석 맥락을 이어간다.
+- AI에는 전체 기간의 원본 기록 전체를 그대로 전달하지 않고, 최근 상세 기록과 장기 압축 통계, 이전 분석 요약만 전달한다.
+- OpenAI 호출 실패 시 Backend 집계 기반 fallback 분석을 저장하고 반환할 수 있다.
+
 응답 예시:
 
 ```json
 {
   "data": {
     "analysisRunId": "analysis-run-id",
+    "requestedAt": "2026-08-18T09:00:00.000Z",
     "confidenceLevel": "data_insufficient",
     "summary": "현재 기록 수가 적어 신뢰도는 낮지만 반복 후보를 요약했습니다.",
     "positiveSuspectedIngredients": [
       {
+        "id": "finding-id",
         "name": "글리세린",
         "evidenceLevel": "weak",
-        "reason": "건조함 점수가 낮았던 기록과 함께 여러 번 나타난 긍정적 의심 성분 후보입니다."
+        "reason": "건조함 점수가 낮았던 기록과 함께 여러 번 나타난 긍정적 의심 성분 후보입니다.",
+        "supportingLogs": ["전체 노출 4회", "최근 30일 노출 2회"]
       }
     ],
     "negativeSuspectedIngredients": [
       {
+        "id": "finding-id",
         "name": "향료",
         "evidenceLevel": "data_insufficient",
-        "reason": "붉음 기록과 같은 날 나타났지만 기록 수가 적어 부정적 의심 성분 후보로만 표시합니다."
+        "reason": "붉음 기록과 같은 날 나타났지만 기록 수가 적어 부정적 의심 성분 후보로만 표시합니다.",
+        "supportingLogs": ["전체 노출 1회"]
       }
     ],
     "limitations": [
@@ -712,6 +893,14 @@ POST /api/analysis/run
 GET /api/analysis/latest
 GET /api/analysis/runs/:analysisRunId
 ```
+
+정책:
+
+- 인증 필요.
+- 분석 탭 진입 시 `GET /api/analysis/latest`로 마지막 분석을 조회한다.
+- 사용자가 `분석하기`를 누르면 `POST /api/analysis/run`으로 새 분석을 생성한다.
+- 긍정적 의심 성분 후보와 부정적 의심 성분 후보는 각각 최대 5개다.
+- 결과는 원인 확정, 진단, 치료 표현 없이 관련 가능성으로 표시한다.
 
 ---
 

@@ -1,5 +1,6 @@
 import type { RequestHandler } from "express";
 import {
+  getDailyRecordTrends,
   getDailyRecords,
   getProductPresets,
   parseDailyRecordInput,
@@ -60,6 +61,20 @@ export const listDailyRecordsController: RequestHandler = async (req, res, next)
     const input = parseDailyRecordQuery(req.query);
     const items = await getDailyRecords(req.userId, input);
     res.json({ data: { items } });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getDailyRecordTrendsController: RequestHandler = async (req, res, next) => {
+  try {
+    if (!req.userId) {
+      throw new ApiError(401, "UNAUTHORIZED", "로그인이 필요합니다.");
+    }
+
+    const input = parseDailyRecordQuery(req.query);
+    const data = await getDailyRecordTrends(req.userId, input);
+    res.json({ data });
   } catch (error) {
     next(error);
   }

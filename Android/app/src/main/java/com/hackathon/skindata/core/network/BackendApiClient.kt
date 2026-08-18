@@ -30,6 +30,40 @@ class BackendApiClient(
         json.decodeFromString<ApiResponse<ProfileDto>>(body).data
     }
 
+    suspend fun getLocationOptions(): LocationOptionsDto = withContext(Dispatchers.IO) {
+        val body = request(
+            path = "/api/profile/location-options",
+            method = "GET",
+            accessToken = null
+        )
+
+        json.decodeFromString<ApiResponse<LocationOptionsDto>>(body).data
+    }
+
+    suspend fun getMyLocation(accessToken: String): UserLocationDto? = withContext(Dispatchers.IO) {
+        val body = request(
+            path = "/api/profile/location",
+            method = "GET",
+            accessToken = accessToken
+        )
+
+        json.decodeFromString<ApiResponse<UserLocationDto?>>(body).data
+    }
+
+    suspend fun saveMyLocation(
+        accessToken: String,
+        locationId: String
+    ): UserLocationDto = withContext(Dispatchers.IO) {
+        val body = request(
+            path = "/api/profile/location",
+            method = "PUT",
+            accessToken = accessToken,
+            requestBody = json.encodeToString(SaveLocationRequest(locationId = locationId))
+        )
+
+        json.decodeFromString<ApiResponse<UserLocationDto>>(body).data
+    }
+
     suspend fun getSkinTypeQuestions(): SkinTypeQuestionsDto = withContext(Dispatchers.IO) {
         val body = request(
             path = "/api/onboarding/skin-type/questions",
@@ -79,6 +113,37 @@ class BackendApiClient(
         )
 
         json.decodeFromString<ApiResponse<ProductSearchDto>>(body).data
+    }
+
+    suspend fun extractProductSubmission(
+        accessToken: String,
+        itemType: String,
+        labelPhoto: FacePhotoUpload
+    ): ProductSubmissionExtractionDto = withContext(Dispatchers.IO) {
+        val body = multipartRequest(
+            path = "/api/product-submissions/extract",
+            method = "POST",
+            accessToken = accessToken,
+            fields = mapOf("itemType" to itemType),
+            file = labelPhoto,
+            fileFieldName = "ingredientLabelImage"
+        )
+
+        json.decodeFromString<ApiResponse<ProductSubmissionExtractionDto>>(body).data
+    }
+
+    suspend fun confirmProductSubmission(
+        accessToken: String,
+        request: ConfirmProductSubmissionRequest
+    ): ConfirmProductSubmissionDto = withContext(Dispatchers.IO) {
+        val body = request(
+            path = "/api/product-submissions",
+            method = "POST",
+            accessToken = accessToken,
+            requestBody = json.encodeToString(request)
+        )
+
+        json.decodeFromString<ApiResponse<ConfirmProductSubmissionDto>>(body).data
     }
 
     suspend fun getUserProducts(accessToken: String): UserProductsDto = withContext(Dispatchers.IO) {
@@ -144,14 +209,37 @@ class BackendApiClient(
         json.decodeFromString<ApiResponse<ProductPresetDto>>(body).data
     }
 
-    suspend fun getDailyRecords(accessToken: String): DailyRecordsDto = withContext(Dispatchers.IO) {
+    suspend fun getDailyRecords(
+        accessToken: String,
+        from: String? = null,
+        to: String? = null
+    ): DailyRecordsDto = withContext(Dispatchers.IO) {
+        val query = listOfNotNull(
+            from?.let { "from=$it" },
+            to?.let { "to=$it" }
+        ).joinToString("&")
+        val path = if (query.isBlank()) "/api/daily-records" else "/api/daily-records?$query"
         val body = request(
-            path = "/api/daily-records",
+            path = path,
             method = "GET",
             accessToken = accessToken
         )
 
         json.decodeFromString<ApiResponse<DailyRecordsDto>>(body).data
+    }
+
+    suspend fun getDailyRecordTrends(
+        accessToken: String,
+        from: String,
+        to: String
+    ): DailyRecordTrendsDto = withContext(Dispatchers.IO) {
+        val body = request(
+            path = "/api/daily-records/trends?from=$from&to=$to",
+            method = "GET",
+            accessToken = accessToken
+        )
+
+        json.decodeFromString<ApiResponse<DailyRecordTrendsDto>>(body).data
     }
 
     suspend fun saveDailyRecord(
@@ -166,6 +254,7 @@ class BackendApiClient(
             "redness" to request.redness.toString(),
             "trouble" to request.trouble.toString(),
             "sleepHours" to request.sleepHours.toString(),
+            "outdoorMinutes" to request.outdoorMinutes.toString(),
             "userProductIds" to json.encodeToString(request.userProductIds),
             "appliedPresetIds" to json.encodeToString(request.appliedPresetIds),
             "memo" to request.memo.orEmpty()
@@ -179,6 +268,27 @@ class BackendApiClient(
         )
 
         json.decodeFromString<ApiResponse<DailyRecordDto>>(body).data
+    }
+
+    suspend fun getLatestAnalysis(accessToken: String): AnalysisResultDto? = withContext(Dispatchers.IO) {
+        val body = request(
+            path = "/api/analysis/latest",
+            method = "GET",
+            accessToken = accessToken
+        )
+
+        json.decodeFromString<ApiResponse<AnalysisResultDto?>>(body).data
+    }
+
+    suspend fun runAnalysis(accessToken: String): AnalysisResultDto = withContext(Dispatchers.IO) {
+        val body = request(
+            path = "/api/analysis/run",
+            method = "POST",
+            accessToken = accessToken,
+            requestBody = "{}"
+        )
+
+        json.decodeFromString<ApiResponse<AnalysisResultDto>>(body).data
     }
 
     private fun request(
@@ -230,7 +340,8 @@ class BackendApiClient(
         method: String,
         accessToken: String,
         fields: Map<String, String>,
-        file: FacePhotoUpload?
+        file: FacePhotoUpload?,
+        fileFieldName: String = "facePhoto"
     ): String {
         val boundary = "SkinData-${UUID.randomUUID()}"
         val endpoint = URL("${baseUrl.trimEnd('/')}${path}")
@@ -259,7 +370,7 @@ class BackendApiClient(
 
             if (file != null) {
                 write("--$boundary\r\n")
-                write("Content-Disposition: form-data; name=\"facePhoto\"; filename=\"${file.fileName}\"\r\n")
+                write("Content-Disposition: form-data; name=\"$fileFieldName\"; filename=\"${file.fileName}\"\r\n")
                 write("Content-Type: ${file.contentType}\r\n\r\n")
                 body.write(file.bytes)
                 write("\r\n")
@@ -301,6 +412,34 @@ data class ProfileDto(
     val displayName: String? = null,
     val skinTypeCode: String? = null,
     val skinTypeCompletedAt: String? = null
+)
+
+@Serializable
+data class LocationOptionsDto(
+    val items: List<LocationOptionDto>
+)
+
+@Serializable
+data class LocationOptionDto(
+    val id: String,
+    val regionLabel: String,
+    val weatherStationId: Int,
+    val weatherStationName: String
+)
+
+@Serializable
+data class UserLocationDto(
+    val id: String,
+    val regionLabel: String,
+    val weatherStationId: Int,
+    val weatherStationName: String,
+    val createdAt: String,
+    val updatedAt: String
+)
+
+@Serializable
+data class SaveLocationRequest(
+    val locationId: String
 )
 
 @Serializable
@@ -378,11 +517,44 @@ data class ProductDto(
     val id: String,
     val source: String,
     val verificationStatus: String,
+    val itemType: String = "cosmetic",
     val name: String,
     val brand: String,
     val category: String? = null,
     val ingredientsText: String? = null,
     val ingredients: List<ProductIngredientDto> = emptyList()
+)
+
+@Serializable
+data class ProductSubmissionExtractionDto(
+    val extractedText: String,
+    val ingredients: List<ProductSubmissionIngredientDto>,
+    val warnings: List<String> = emptyList()
+)
+
+@Serializable
+data class ProductSubmissionIngredientDto(
+    val rawName: String,
+    val normalizedName: String,
+    val matchedIngredientId: String? = null,
+    val matchStatus: String
+)
+
+@Serializable
+data class ConfirmProductSubmissionRequest(
+    val itemType: String,
+    val name: String,
+    val brand: String,
+    val category: String? = null,
+    val aiExtractedText: String? = null,
+    val confirmedIngredientsText: String
+)
+
+@Serializable
+data class ConfirmProductSubmissionDto(
+    val submissionId: String,
+    val productId: String,
+    val userProduct: UserProductDto
 )
 
 @Serializable
@@ -456,12 +628,60 @@ data class DailyRecordDto(
     val redness: Int,
     val trouble: Int,
     val sleepHours: Double,
+    val outdoorMinutes: Int? = null,
     val memo: String? = null,
     val products: List<UserProductDto>,
     val appliedPresets: List<AppliedPresetDto>,
+    val environment: DailyRecordEnvironmentDto? = null,
     val facePhoto: SkinPhotoDto? = null,
     val createdAt: String,
     val updatedAt: String
+)
+
+@Serializable
+data class DailyRecordTrendsDto(
+    val from: String,
+    val to: String,
+    val points: List<DailyRecordTrendPointDto>
+)
+
+@Serializable
+data class DailyRecordTrendPointDto(
+    val date: String,
+    val scores: DailyRecordTrendScoresDto,
+    val sleepHours: Double? = null,
+    val outdoorMinutes: Int? = null,
+    val productSummary: DailyRecordTrendProductSummaryDto,
+    val environment: DailyRecordEnvironmentDto? = null
+)
+
+@Serializable
+data class DailyRecordTrendScoresDto(
+    val dryness: Int? = null,
+    val oiliness: Int? = null,
+    val redness: Int? = null,
+    val trouble: Int? = null
+)
+
+@Serializable
+data class DailyRecordTrendProductSummaryDto(
+    val count: Int,
+    val names: List<String>,
+    val remainingCount: Int
+)
+
+@Serializable
+data class DailyRecordEnvironmentDto(
+    val id: String,
+    val source: String,
+    val regionLabel: String? = null,
+    val weatherStationId: Int? = null,
+    val weatherStationName: String? = null,
+    val observedAt: String? = null,
+    val temperatureCelsius: Double? = null,
+    val humidityPercent: Double? = null,
+    val precipitationAmountMm: Double? = null,
+    val windSpeedMps: Double? = null
 )
 
 @Serializable
@@ -486,6 +706,7 @@ data class SaveDailyRecordRequest(
     val redness: Int,
     val trouble: Int,
     val sleepHours: Double,
+    val outdoorMinutes: Int,
     val userProductIds: List<String>,
     val appliedPresetIds: List<String>,
     val memo: String? = null
@@ -495,4 +716,25 @@ data class FacePhotoUpload(
     val fileName: String,
     val contentType: String,
     val bytes: ByteArray
+)
+
+@Serializable
+data class AnalysisResultDto(
+    val analysisRunId: String,
+    val requestedAt: String,
+    val confidenceLevel: String,
+    val summary: String,
+    val positiveSuspectedIngredients: List<AnalysisFindingDto>,
+    val negativeSuspectedIngredients: List<AnalysisFindingDto>,
+    val limitations: List<String>,
+    val nextRecordsToAdd: List<String>
+)
+
+@Serializable
+data class AnalysisFindingDto(
+    val id: String,
+    val name: String,
+    val evidenceLevel: String,
+    val reason: String,
+    val supportingLogs: List<String> = emptyList()
 )

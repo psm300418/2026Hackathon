@@ -17,6 +17,7 @@ const userProductRowSchema = z.object({
     .object({
       id: z.string().uuid(),
       source: z.enum(["seed", "community", "admin"]),
+      item_type: z.enum(["cosmetic", "shower_product", "supplement"]),
       name: z.string(),
       normalized_name: z.string(),
       brand: z.string(),
@@ -40,7 +41,7 @@ const userProductSelect = [
   "memo",
   "created_at",
   "updated_at",
-  "products(id, source, name, normalized_name, brand, category, ingredients_text, verification_status, created_at, updated_at)"
+  "products(id, source, item_type, name, normalized_name, brand, category, ingredients_text, verification_status, created_at, updated_at)"
 ].join(", ");
 
 export const upsertUserProduct = async (params: {

@@ -428,13 +428,12 @@ GET  /api/daily-records?from=YYYY-MM-DD&to=YYYY-MM-DD
 - API:
 
 ```text
-GET /api/records/daily?from=YYYY-MM-DD&to=YYYY-MM-DD
-GET /api/records/latest
+GET /api/daily-records?from=YYYY-MM-DD&to=YYYY-MM-DD
 ```
 
 - 완료 조건:
   - 오늘 기록, 사용 제품, 수면 시간, 선택 사진을 합쳐 반환
-  - 기록 없는 날짜도 empty state 처리 가능
+  - Backend는 저장된 기록만 반환하고, 기록 없는 날짜는 Android에서 empty state로 표시
 
 ### T5-3. Android 기록 확인 화면
 
@@ -444,12 +443,171 @@ GET /api/records/latest
   - 날짜별 상세
   - 오늘 사용 제품과 적용 프리셋
   - 피부 상태 점수
+  - `Record` 탭 안에서 `오늘 / 기록` 전환
 - 완료 조건:
   - 저장한 기록을 사용자가 앱에서 다시 확인 가능
 
-## 11. Phase 6: 저장 기록 기반 긍정/부정 의심 성분 분석
+## 11. Phase 6: 외출·날씨·환경 기록 연동
 
-### T6-1. 분석 migration 작성
+오늘 기록은 피부 상태와 사용 제품이 중심이며, T4 이후에는 외출 시간과 사용자 지역 기반 날씨 정보를 같은 기록에 연결한다.
+
+### T6-1. user_locations migration
+
+- 우선순위: P0
+- 테이블:
+  - `user_locations`
+- 완료 조건:
+  - 사용자별 지역명과 대표 ASOS 관측소 ID 저장
+  - 사용자별 RLS
+  - 정밀 GPS 좌표 저장 없이도 기상청 API 호출 가능
+
+### T6-2. 기상청 날씨 gateway
+
+- 우선순위: P0
+- 작업:
+  - 기상청 API허브 ASOS 관측 API 연동
+  - 기록 저장 시점과 가장 가까운 시각의 관측값 조회
+  - 기온, 습도, 강수량, 풍속 등 피부 기록에 참고할 환경 값 추출
+  - Backend 환경 변수로 API key 관리
+  - API 실패 시 기록 저장 흐름을 막지 않는 fallback 처리
+- 완료 조건:
+  - Android에 기상청 API key가 포함되지 않음
+  - Backend service가 대표 관측소 ID 기준으로 날씨 스냅샷을 가져올 수 있음
+
+### T6-3. daily_record_environment migration
+
+- 우선순위: P0
+- 테이블:
+  - `daily_record_environment`
+- 완료 조건:
+  - 오늘 기록과 1:1 환경 스냅샷 저장
+  - `source=kma`
+  - 기온, 습도, 강수량, 풍속, 관측 시각 저장
+  - 사용자별 RLS는 `daily_records` 소유권 기준으로 보호
+
+### T6-4. 지역 설정 및 환경 API
+
+- 우선순위: P0
+- API:
+
+```text
+GET /api/profile/location-options
+PUT /api/profile/location
+GET /api/profile/location
+```
+
+- 완료 조건:
+  - 사용자가 시/군/구 버튼으로 지역을 설정하거나 변경 가능
+  - 오늘 기록 저장 시 지역이 있으면 환경 스냅샷 자동 연결
+  - 지역이 없어도 오늘 기록 저장 가능
+
+### T6-5. Android 기록 화면 환경 영역
+
+- 우선순위: P0
+- 작업:
+  - 외출 시간 입력
+  - 설정된 지역과 날씨 요약 표시
+  - 지역 미설정 empty state
+  - 날씨 조회 실패 시 재시도 또는 안내 표시
+- 완료 조건:
+  - 사용자가 오늘 기록 안에서 외출 시간을 함께 저장 가능
+  - 날씨 정보는 사용자가 직접 입력하지 않고 Backend에서 불러온 값으로 표시
+
+## 12. Phase 7: 샤워용품·영양제 등록 확장
+
+화장품 등록과 같은 흐름을 재사용한다. 사용자가 성분표, 라벨, 원료명 또는 영양정보 사진을 제출하면 AI가 텍스트를 추출하고 사용자가 확인한 뒤 공용 DB에 저장한다.
+
+### T7-1. products item_type 확장 migration
+
+- 우선순위: P1
+- 작업:
+  - `products.item_type`
+  - `product_submissions.item_type`
+- 완료 조건:
+  - `cosmetic`, `shower_product`, `supplement` 구분 가능
+  - 기존 화장품 seed 데이터는 `cosmetic`으로 유지
+
+### T7-2. 성분표·라벨 사진 추출 API 확장
+
+- 우선순위: P1
+- API:
+
+```text
+POST /api/product-submissions/extract
+```
+
+- 완료 조건:
+  - `itemType`에 따라 화장품, 샤워용품, 영양제 추출 프롬프트 분기
+  - 사진 원본 저장 안 함
+  - AI 추출 텍스트와 사용자 확정 텍스트만 저장
+
+### T7-3. community 항목 확정 API 확장
+
+- 우선순위: P1
+- API:
+
+```text
+POST /api/product-submissions
+```
+
+- 완료 조건:
+  - 사용자가 검토한 항목이 `community`로 저장
+  - 이후 검색 결과에 항목 유형과 함께 노출
+  - 영양제는 의료·복용 지시 표현 없이 원료 기록용 데이터로 저장
+
+### T7-4. Android 제품 관리 화면 타입 탭
+
+- 우선순위: P1
+- 작업:
+  - 화장품
+  - 샤워용품
+  - 영양제
+- 완료 조건:
+  - 설정 탭에서 항목 유형을 선택해 성분표 또는 라벨 사진 기반 등록 가능
+  - 확정 등록 후 바로 내 제품 목록에 추가
+  - 오늘 기록에서는 내 제품 목록에 추가된 항목을 바로 선택 가능
+
+## 13. Phase 8: 피부 상태 추이 화면
+
+### T8-1. 추이 조회 service
+
+- 우선순위: P1
+- 작업:
+  - 날짜 범위별 피부 상태 점수 집계
+  - 사용 제품, 수면, 외출, 날씨 스냅샷을 함께 조회
+  - 데이터가 없는 날짜 empty 처리
+- 완료 조건:
+  - 분석 이전에도 사용자가 직접 변화 흐름을 확인 가능
+
+### T8-2. 추이 API
+
+- 우선순위: P1
+- API:
+
+```text
+GET /api/daily-records/trends?from=YYYY-MM-DD&to=YYYY-MM-DD
+```
+
+- 완료 조건:
+  - 기간 내 모든 날짜를 그래프용 point로 반환
+  - 기록이 없는 날짜는 피부 점수를 `null`로 반환
+  - 건조함, 유분, 붉음, 트러블 점수와 수면, 외출, 날씨 요약을 함께 반환
+  - 사용 제품은 대표 제품명 최대 3개와 나머지 개수를 반환
+
+### T8-3. Android 추이 화면
+
+- 우선순위: P1
+- 작업:
+  - `Record` 탭 안에서 `오늘 / 기록 / 추이` 전환
+  - 7일, 14일, 30일 기간 선택
+  - 피부 상태 변화 요약
+  - 사용 제품과 환경 요인 요약
+- 완료 조건:
+  - 사용자가 특정 기간의 피부 상태 변화를 한눈에 확인 가능
+
+## 14. Phase 9: 저장 기록 기반 긍정/부정 의심 성분 분석
+
+### T9-1. 분석 migration 작성
 
 - 우선순위: P0
 - 테이블:
@@ -460,26 +618,31 @@ GET /api/records/latest
   - `evidence_level`: `strong`, `medium`, `weak`, `data_insufficient`
   - 사용자별 RLS
 
-### T6-2. 사용자 기록 집계 service
+### T9-2. 사용자 기록 집계 service
 
 - 우선순위: P0
 - 대상:
   - `Backend/src/services/analysis-evidence.service.ts`
 - 작업:
   - 과거 사용 제품과 일일 사용 기록 분리
+  - 최근 30일 기록은 상세 evidence로 집계
+  - 전체 기간 기록은 장기 성분 통계로 압축
+  - 이전 최신 분석 요약과 후보 성분을 evidence에 포함
   - 성분 노출 횟수 계산
   - 피부 상태 변화와 함께 등장한 성분 집계
   - 긍정적 변화 후보와 부정적 변화 후보 분리
   - 수면 시간 중첩 여부 계산
+  - 외출 시간, 온도, 습도, 강수 등 환경 요인 중첩 여부 계산
 - 완료 조건:
   - AI 호출 전 evidence JSON 생성
+  - 전체 기간 원본 기록을 AI에 그대로 전달하지 않음
   - 데이터 부족 시 limitations 포함
 
-### T6-3. OpenAI 분석 gateway
+### T9-3. OpenAI 분석 gateway
 
 - 우선순위: P0
 - 작업:
-  - evidence JSON만 AI에 전달
+  - 최근 30일 상세 evidence, 이전 분석 요약, 전체 기간 압축 통계만 AI에 전달
   - 긍정적 의심 성분 최대 5개
   - 부정적 의심 성분 최대 5개
   - 근거 수준과 이유 포함
@@ -488,7 +651,7 @@ GET /api/records/latest
   - 응답 schema validation
   - 데이터 부족 시 신뢰도 낮음 안내
 
-### T6-4. 분석 API
+### T9-4. 분석 API
 
 - 우선순위: P0
 - API:
@@ -504,10 +667,11 @@ GET  /api/analysis/runs/:analysisRunId
   - 최근 분석 조회 가능
   - AI 실패 시 fallback 분석 제공
 
-### T6-5. Android 분석 화면
+### T9-5. Android 분석 화면
 
 - 우선순위: P0
 - 작업:
+  - 분석 탭 진입 시 최근 분석 조회
   - 분석 요청 버튼
   - 긍정적 의심 성분 카드
   - 부정적 의심 성분 카드
@@ -518,74 +682,64 @@ GET  /api/analysis/runs/:analysisRunId
   - 저장한 기록 기반 분석 결과 확인 가능
   - “원인”이 아니라 “의심 성분 후보”로 표현
 
-## 12. Phase 7: 성분표 사진 기반 제품 직접 등록
+## 15. Phase 10: 알림
 
-이 Phase는 시간이 허용될 때 추가한다. 제품 seed 검색과 과거 제품 등록이 먼저다.
+알림은 서버 저장 없이 Android 로컬 알림으로 우선 제공한다. 사용자는 설정 탭에서 하루 한 번 오늘 기록을 남기도록 알림 시간을 설정할 수 있다.
 
-### T7-1. product_submissions migration
+### T10-1. 기록 알림 설정
 
-- 우선순위: P1
+- 우선순위: P2
+- 상태: 완료
 - 완료 조건:
-  - 성분표 사진 원본 저장 안 함
-  - AI 추출 텍스트와 사용자 확정 텍스트만 저장
+  - 사용자가 기록 알림 시간을 설정 가능
+  - 알림 미사용 상태에서도 핵심 기록 흐름이 동작
 
-### T7-2. 성분표 사진 추출 API
+### T10-2. Android 로컬 알림
 
-- 우선순위: P1
-- API:
-
-```text
-POST /api/product-submissions/extract
-```
-
+- 우선순위: P2
+- 상태: 완료
 - 완료 조건:
-  - 사진에서 텍스트 추출
-  - 저장 없이 응답으로만 반환
+  - 권한 요청과 거부 상태 처리
+  - 기록 작성 화면으로 이동
+  - 기기 재부팅 후에도 켜진 알림은 다시 예약
 
-### T7-3. community 제품 확정 API
-
-- 우선순위: P1
-- API:
-
-```text
-POST /api/product-submissions
-```
-
-- 완료 조건:
-  - 사용자가 검토한 제품이 `community`로 저장
-  - 이후 검색 결과에 노출
-
-## 13. Phase 8: Android 앱 구조와 디자인 시스템
+## 16. Phase 11: Android 앱 구조와 디자인 시스템
 
 Android 작업은 Backend API와 병렬로 일부 진행 가능하지만, 기능 연결은 API 완성 후 진행한다.
 
-### T8-1. Android package 구조 정리
+### T11-1. Android package 구조 정리
 
 - 우선순위: P0
+- 상태: 완료
 - 구조:
 
 ```text
 core/designsystem
+core/notification
 core/network
 core/session
 feature/auth
+feature/main
 feature/onboarding
 feature/products
 feature/records
 feature/analysis
+feature/settings
 ```
 
-### T8-2. 디자인 토큰 적용
+### T11-2. 디자인 토큰 적용
 
 - 우선순위: P0
+- 상태: 완료
 - 기준: `docs/design.md`
 - 완료 조건:
   - 색상, typography, spacing, radius token 사용
   - 공통 버튼, 입력창, 칩, 카드 컴포넌트 준비
 
-### T8-3. Navigation shell 작성
+### T11-3. Navigation shell 작성
 
 - 우선순위: P0
+- 상태: 완료
 - 흐름:
 
 ```text
@@ -602,35 +756,36 @@ feature/analysis
   - Products
   - Record
   - Analysis
-  - Profile
+  - Settings
 
-## 14. Phase 9: 배포와 시연 안정화
+## 17. Phase 12: 배포와 시연 안정화
 
-### T9-1. Backend Render 배포
+### T12-1. Backend Render 배포
 
 - 우선순위: P0
 - 완료 조건:
   - Render URL에서 `/api/health` 성공
   - 환경 변수는 Render dashboard에서 관리
 
-### T9-2. APK 빌드
+### T12-2. APK 빌드
 
 - 우선순위: P0
 - 완료 조건:
   - 실제 기기 또는 에뮬레이터에서 로그인부터 분석까지 동작
 
-### T9-3. 시연 데이터 준비
+### T12-3. 시연 데이터 준비
 
 - 우선순위: P0
 - 작업:
   - demo 계정 설문 완료
   - 과거 제품 2-3개 등록
   - 일일 기록 3일치 이상 생성
+  - 날씨/환경 스냅샷이 포함된 기록 1개 이상 생성
   - 분석 결과가 표시되는 데이터 구성
 
-## 15. 권장 작업 순서
+## 18. 권장 작업 순서
 
-T-03 이후에는 아래 순서로 이어간다.
+현재 완료된 T4 이후에는 아래 순서로 이어간다.
 
 1. T1-1 Auth middleware 최종 점검
 2. T1-2 Profile migration 작성
@@ -651,19 +806,33 @@ T-03 이후에는 아래 순서로 이어간다.
 17. T5-1 기록 조회 service 정리
 18. T5-2 기록 히스토리 API
 19. T5-3 Android 기록 확인 화면
-20. T6-1 분석 migration 작성
-21. T6-2 사용자 기록 집계 service
-22. T6-3 OpenAI 분석 gateway
-23. T6-4 분석 API
-24. T6-5 Android 분석 화면
-25. T8-1 Android package 구조 정리
-26. T8-2 디자인 토큰 적용
-27. T8-3 Navigation shell 작성
-28. T9-1 Backend Render 배포
-29. T9-2 APK 빌드
-30. T9-3 시연 데이터 준비
+20. T6-1 user_locations migration
+21. T6-2 기상청 날씨 gateway
+22. T6-3 daily_record_environment migration
+23. T6-4 지역 설정 및 환경 API
+24. T6-5 Android 기록 화면 환경 영역
+25. T7-1 products item_type 확장 migration
+26. T7-2 성분표·라벨 사진 추출 API 확장
+27. T7-3 community 항목 확정 API 확장
+28. T7-4 Android 제품 관리 화면 타입 탭
+29. T8-1 추이 조회 service
+30. T8-2 추이 API
+31. T8-3 Android 추이 화면
+32. T9-1 분석 migration 작성
+33. T9-2 사용자 기록 집계 service
+34. T9-3 OpenAI 분석 gateway
+35. T9-4 분석 API
+36. T9-5 Android 분석 화면
+37. T10-1 기록 알림 설정
+38. T10-2 Android 로컬 알림
+39. T11-1 Android package 구조 정리
+40. T11-2 디자인 토큰 적용
+41. T11-3 Navigation shell 작성
+42. T12-1 Backend Render 배포
+43. T12-2 APK 빌드
+44. T12-3 시연 데이터 준비
 
-## 16. 수동 검증 체크리스트
+## 19. 수동 검증 체크리스트
 
 - 회원가입 또는 demo login이 된다.
 - 로그인 후 설문 미완료 사용자는 초기 피부 타입 설문으로 이동한다.
@@ -673,12 +842,16 @@ T-03 이후에는 아래 순서로 이어간다.
 - 오늘의 피부 기록 안에 사용 제품, 피부 상태, 수면 시간, 선택 사진을 저장할 수 있다.
 - 제품 프리셋을 만들어 오늘 기록에 적용할 수 있다.
 - 저장한 기록을 날짜별로 확인할 수 있다.
+- 사용자 지역을 설정하면 오늘 기록에 날씨, 습도, 온도 등 환경 정보가 연결된다.
+- 샤워용품과 영양제를 성분표 또는 라벨 사진 기반으로 등록할 수 있다.
+- 피부 상태 추이 화면에서 기간별 변화를 확인할 수 있다.
 - 분석 탭에서 긍정적 의심 성분과 부정적 의심 성분을 확인할 수 있다.
 - 분석 결과는 원인 확정, 진단, 치료 표현을 사용하지 않는다.
 - 데이터가 부족하면 신뢰도 낮음이 표시된다.
-- Android 앱에 OpenAI key, Supabase service role key, MFDS key가 포함되지 않는다.
+- 설정 탭에서 기록 알림을 켜고 끌 수 있다.
+- Android 앱에 OpenAI key, Supabase service role key, MFDS key, 기상청 API key가 포함되지 않는다.
 
-## 17. 컷라인
+## 20. 컷라인
 
 시간이 부족하면 반드시 살릴 것:
 
@@ -687,13 +860,15 @@ T-03 이후에는 아래 순서로 이어간다.
 - 과거 제품 등록
 - 오늘의 피부 기록
 - 저장 기록 확인
+- 날씨/환경 스냅샷 연동
 - 긍정적 의심 성분 / 부정적 의심 성분 분석
 
 시간이 부족하면 미룰 것:
 
-- 성분표 사진 기반 제품 직접 등록
+- 샤워용품과 영양제 등록 확장
 - 피부 사진 저장
 - 복잡한 루틴 관리
 - MFDS 전체 자동 sync
 - admin 검수
+- 기록 알림
 - 계정 탈퇴와 내보내기

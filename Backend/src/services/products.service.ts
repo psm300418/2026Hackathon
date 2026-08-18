@@ -1,7 +1,9 @@
 import { z } from "zod";
 import {
+  createCommunityProduct,
   findProductById,
   listProductIngredients,
+  replaceProductIngredients,
   searchProducts
 } from "../repositories/products.repository.js";
 import { listUserProducts, upsertUserProduct } from "../repositories/user-products.repository.js";
@@ -20,7 +22,8 @@ import type {
 const MAX_SEARCH_RESULTS = 20;
 
 const productSearchQuerySchema = z.object({
-  q: z.string().trim().min(1, "검색어를 입력해주세요.").max(80)
+  q: z.string().trim().min(1, "검색어를 입력해주세요.").max(80),
+  itemType: z.enum(["cosmetic", "shower_product", "supplement"]).optional()
 });
 
 const userProductInputSchema = z.object({
@@ -100,6 +103,7 @@ const toProductSearchItemDto = (
   id: product.id,
   source: product.source,
   verificationStatus: product.verification_status,
+  itemType: product.item_type,
   name: product.name,
   brand: product.brand,
   category: product.category,
@@ -107,11 +111,14 @@ const toProductSearchItemDto = (
   ingredients: (ingredientsByProductId.get(product.id) ?? []).map(toIngredientDto)
 });
 
-export const searchProductCatalog = async (query: string): Promise<ProductSearchDto> => {
-  const products = await searchProducts(query);
+export const searchProductCatalog = async (input: {
+  q: string;
+  itemType?: ProductRow["item_type"];
+}): Promise<ProductSearchDto> => {
+  const products = await searchProducts(input.q, input.itemType);
   const sortedProducts = [...products]
     .sort((left, right) => {
-      const scoreDiff = scoreProduct(right, query) - scoreProduct(left, query);
+      const scoreDiff = scoreProduct(right, input.q) - scoreProduct(left, input.q);
 
       if (scoreDiff !== 0) {
         return scoreDiff;
@@ -125,8 +132,23 @@ export const searchProductCatalog = async (query: string): Promise<ProductSearch
 
   return {
     items: sortedProducts.map((product) => toProductSearchItemDto(product, ingredientsByProductId)),
-    canSubmitProduct: false
+    canSubmitProduct: true
   };
+};
+
+export const createCommunityProductWithIngredients = async (params: {
+  itemType: ProductRow["item_type"];
+  name: string;
+  normalizedName: string;
+  brand: string;
+  category: string | null;
+  ingredientsText: string;
+  ingredientNames: string[];
+  createdFromSubmissionId?: string | null;
+}): Promise<ProductRow> => {
+  const product = await createCommunityProduct(params);
+  await replaceProductIngredients(product.id, params.ingredientNames);
+  return product;
 };
 
 const toUserProductDto = (

@@ -18,7 +18,12 @@ const envSchema = z.object({
     .string()
     .url()
     .default("https://apis.data.go.kr/1471000/CsmtcsIngdCpntInfoService01"),
-  MFDS_API_KEY: z.string().optional()
+  MFDS_API_KEY: z.string().optional(),
+  KMA_ASOS_ENDPOINT: z
+    .string()
+    .url()
+    .default("https://apihub.kma.go.kr/api/typ01/url/kma_sfctm2.php"),
+  KMA_API_KEY: z.string().optional()
 });
 
 export const env = envSchema.parse(process.env);
