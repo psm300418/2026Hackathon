@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AssistChip
-import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -23,6 +22,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.hackathon.skindata.core.designsystem.AppCard
+import com.hackathon.skindata.core.designsystem.SectionHeader
+import com.hackathon.skindata.core.designsystem.SkinColors
 import com.hackathon.skindata.core.designsystem.SkinPrimaryButton as Button
 import com.hackathon.skindata.core.network.AnalysisFindingDto
 import com.hackathon.skindata.core.network.AnalysisResultDto
@@ -53,8 +55,8 @@ fun AnalysisScreen(
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(20.dp),
-        verticalArrangement = Arrangement.spacedBy(14.dp)
+            .padding(horizontal = 22.dp, vertical = 24.dp),
+        verticalArrangement = Arrangement.spacedBy(18.dp)
     ) {
         item {
             Row(
@@ -62,10 +64,9 @@ fun AnalysisScreen(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(text = "분석", style = MaterialTheme.typography.headlineSmall)
-                    Text(
-                        text = "최근 30일 기록과 누적 통계를 바탕으로 의심 성분 후보를 좁힙니다.",
-                        style = MaterialTheme.typography.bodyMedium
+                    SectionHeader(
+                        title = "분석",
+                        description = "최근 30일 기록과 누적 통계를 바탕으로 의심 성분 후보를 좁힙니다."
                     )
                 }
                 Button(
@@ -132,65 +133,55 @@ fun AnalysisScreen(
 
 @Composable
 private fun EmptyAnalysisCard() {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = "분석 결과 없음", style = MaterialTheme.typography.titleMedium)
-            Spacer(modifier = Modifier.height(6.dp))
-            Text(
-                text = "오늘 기록이 쌓이면 분석하기 버튼으로 새 분석을 만들 수 있습니다.",
-                style = MaterialTheme.typography.bodyMedium
-            )
-        }
+    AppCard {
+        Text(text = "분석 결과 없음", style = MaterialTheme.typography.titleMedium)
+        Text(
+            text = "오늘 기록이 쌓이면 분석하기 버튼으로 새 분석을 만들 수 있습니다.",
+            style = MaterialTheme.typography.bodyMedium
+        )
     }
 }
 
 @Composable
 private fun AnalysisSummaryCard(analysis: AnalysisResultDto) {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                AssistChip(
-                    onClick = {},
-                    label = { Text(confidenceLabel(analysis.confidenceLevel)) }
-                )
-                AssistChip(
-                    onClick = {},
-                    label = { Text(dateLabel(analysis.requestedAt)) }
-                )
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = analysis.summary, style = MaterialTheme.typography.bodyLarge)
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = "분석 결과는 진단이나 원인 확정이 아니라 기록 기반 관련 가능성입니다.",
-                style = MaterialTheme.typography.bodySmall
+    AppCard {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            AssistChip(
+                onClick = {},
+                label = { Text(confidenceLabel(analysis.confidenceLevel)) }
+            )
+            AssistChip(
+                onClick = {},
+                label = { Text(dateLabel(analysis.requestedAt)) }
             )
         }
+        Text(text = "AI 분석 요약", style = MaterialTheme.typography.titleMedium)
+        Text(text = analysis.summary, style = MaterialTheme.typography.bodyLarge)
+        Text(
+            text = "분석 결과는 진단이나 원인 확정이 아니라 기록 기반 관련 가능성입니다.",
+            style = MaterialTheme.typography.bodySmall
+        )
     }
 }
 
 @Composable
 private fun FindingCard(finding: AnalysisFindingDto) {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(14.dp)) {
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    text = finding.name,
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
-                )
-                AssistChip(
-                    onClick = {},
-                    label = { Text(confidenceLabel(finding.evidenceLevel)) }
-                )
-            }
-            Spacer(modifier = Modifier.height(6.dp))
-            Text(text = finding.reason, style = MaterialTheme.typography.bodyMedium)
-            finding.supportingLogs.takeIf { it.isNotEmpty() }?.let { logs ->
-                Spacer(modifier = Modifier.height(8.dp))
-                logs.forEach { log ->
-                    Text(text = "- $log", style = MaterialTheme.typography.bodySmall)
-                }
+    AppCard(containerColor = SkinColors.Surface) {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text(
+                text = finding.name,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold
+            )
+            AssistChip(
+                onClick = {},
+                label = { Text(confidenceLabel(finding.evidenceLevel)) }
+            )
+        }
+        Text(text = finding.reason, style = MaterialTheme.typography.bodyMedium)
+        finding.supportingLogs.takeIf { it.isNotEmpty() }?.let { logs ->
+            logs.forEach { log ->
+                Text(text = "- $log", style = MaterialTheme.typography.bodySmall)
             }
         }
     }
@@ -201,16 +192,13 @@ private fun TextListCard(
     title: String,
     values: List<String>
 ) {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(14.dp)) {
-            Text(text = title, style = MaterialTheme.typography.titleMedium)
-            Spacer(modifier = Modifier.height(6.dp))
-            if (values.isEmpty()) {
-                Text(text = "표시할 내용이 없습니다.", style = MaterialTheme.typography.bodyMedium)
-            } else {
-                values.forEach { value ->
-                    Text(text = "- $value", style = MaterialTheme.typography.bodySmall)
-                }
+    AppCard {
+        Text(text = title, style = MaterialTheme.typography.titleMedium)
+        if (values.isEmpty()) {
+            Text(text = "표시할 내용이 없습니다.", style = MaterialTheme.typography.bodyMedium)
+        } else {
+            values.forEach { value ->
+                Text(text = "- $value", style = MaterialTheme.typography.bodySmall)
             }
         }
     }

@@ -1,26 +1,31 @@
 package com.hackathon.skindata.feature.settings
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AssistChip
-import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.hackathon.skindata.core.designsystem.AppCard
+import com.hackathon.skindata.core.designsystem.SkinColors
 import com.hackathon.skindata.core.designsystem.SkinOutlinedButton as OutlinedButton
 import com.hackathon.skindata.core.designsystem.SkinPrimaryButton as Button
 import com.hackathon.skindata.core.network.LocationOptionDto
@@ -55,114 +60,98 @@ fun LocationSettingsScreen(
     val groupedOptions = uiState.options.groupBy { it.provinceLabel() }
     val selectedProvinceLabel = uiState.selectedProvinceLabel ?: groupedOptions.keys.firstOrNull()
     val cityOptions = selectedProvinceLabel?.let { groupedOptions[it] }.orEmpty()
+    val selectedCityLabel = cityOptions.firstOrNull { it.id == uiState.selectedLocationId }?.cityLabel()
 
-    Card(
+    AppCard(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp, vertical = 12.dp)
+            .padding(horizontal = 22.dp, vertical = 12.dp)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = "지역 설정", style = MaterialTheme.typography.titleMedium)
-            Text(
-                text = "오늘 기록 저장 시 가장 가까운 시각의 기상청 관측값을 함께 저장합니다.",
-                style = MaterialTheme.typography.bodySmall
+        Text(text = "지역 설정", style = MaterialTheme.typography.titleMedium)
+        Text(
+            text = "오늘 기록 저장 시 가까운 기상청 관측값을 함께 저장합니다.",
+            style = MaterialTheme.typography.bodySmall
+        )
+
+        uiState.savedLocation?.let {
+            AssistChip(
+                onClick = {},
+                label = {
+                    Text("${it.regionLabel} · ${it.weatherStationName} 관측소")
+                }
             )
+        } ?: Text(text = "아직 지역을 설정하지 않았습니다.", style = MaterialTheme.typography.bodySmall)
 
-            Spacer(modifier = Modifier.height(10.dp))
-
-            uiState.savedLocation?.let {
-                AssistChip(
-                    onClick = {},
-                    label = {
-                        Text("${it.regionLabel} · ${it.weatherStationName} 관측소")
-                    }
-                )
-            } ?: Text(text = "아직 지역을 설정하지 않았습니다.", style = MaterialTheme.typography.bodySmall)
-
-            Spacer(modifier = Modifier.height(10.dp))
-
-            if (uiState.isLoading) {
-                CircularProgressIndicator()
-            } else {
-                Text(text = "도/광역시", style = MaterialTheme.typography.labelMedium)
-                Spacer(modifier = Modifier.height(6.dp))
-                groupedOptions.keys.chunked(2).forEach { rowOptions ->
-                    LocationOptionRow {
-                        rowOptions.forEach { provinceLabel ->
-                            LocationTextButton(
-                                label = provinceLabel,
-                                selected = provinceLabel == selectedProvinceLabel,
-                                onClick = { onSelectProvince(provinceLabel) },
-                                modifier = Modifier.weight(1f)
-                            )
-                        }
-                        repeat(2 - rowOptions.size) {
-                            Spacer(modifier = Modifier.weight(1f))
-                        }
-                    }
+        if (uiState.isLoading) {
+            CircularProgressIndicator()
+        } else {
+            LocationDropdown(
+                label = "시/도",
+                selectedText = selectedProvinceLabel ?: "시/도 선택",
+                options = groupedOptions.keys.toList(),
+                onSelected = onSelectProvince
+            )
+            LocationDropdown(
+                label = "시/군/구",
+                selectedText = selectedCityLabel ?: "시/군/구 선택",
+                options = cityOptions.map { it.cityLabel() },
+                onSelected = { cityLabel ->
+                    cityOptions.firstOrNull { it.cityLabel() == cityLabel }?.let { onSelectLocation(it.id) }
                 }
+            )
+        }
 
-                Spacer(modifier = Modifier.height(10.dp))
-                Text(text = "시/군/구", style = MaterialTheme.typography.labelMedium)
-                Spacer(modifier = Modifier.height(6.dp))
-                cityOptions.chunked(2).forEach { rowOptions ->
-                    LocationOptionRow {
-                        rowOptions.forEach { option ->
-                            LocationTextButton(
-                                label = option.cityLabel(),
-                                selected = option.id == uiState.selectedLocationId,
-                                onClick = { onSelectLocation(option.id) },
-                                modifier = Modifier.weight(1f)
-                            )
-                        }
-                        repeat(2 - rowOptions.size) {
-                            Spacer(modifier = Modifier.weight(1f))
-                        }
-                    }
-                }
-            }
+        uiState.message?.let {
+            Text(text = it, style = MaterialTheme.typography.bodySmall)
+            Spacer(modifier = Modifier.height(2.dp))
+        }
 
-            uiState.message?.let {
-                Text(text = it, style = MaterialTheme.typography.bodySmall)
-                Spacer(modifier = Modifier.height(8.dp))
-            }
-
-            Button(
-                onClick = onSave,
-                modifier = Modifier.fillMaxWidth(),
-                enabled = !uiState.isSaving && !uiState.isLoading && uiState.selectedLocationId != null
-            ) {
-                Text(if (uiState.isSaving) "저장 중" else "지역 저장")
-            }
+        Button(
+            onClick = onSave,
+            modifier = Modifier.fillMaxWidth(),
+            enabled = !uiState.isSaving && !uiState.isLoading && uiState.selectedLocationId != null
+        ) {
+            Text(if (uiState.isSaving) "저장 중" else "지역 저장")
         }
     }
 }
 
 @Composable
-private fun LocationOptionRow(content: @Composable RowScope.() -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        content = content
-    )
-}
-
-@Composable
-private fun LocationTextButton(
+private fun LocationDropdown(
     label: String,
-    selected: Boolean,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    selectedText: String,
+    options: List<String>,
+    onSelected: (String) -> Unit
 ) {
-    if (selected) {
-        Button(onClick = onClick, modifier = modifier) {
-            Text(label)
-        }
-    } else {
-        OutlinedButton(onClick = onClick, modifier = modifier) {
-            Text(label)
+    var expanded by remember { mutableStateOf(false) }
+
+    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Text(text = label, style = MaterialTheme.typography.labelMedium)
+        Box(modifier = Modifier.fillMaxWidth()) {
+            OutlinedButton(
+                onClick = { expanded = true },
+                modifier = Modifier.fillMaxWidth(),
+                enabled = options.isNotEmpty()
+            ) {
+                Text(selectedText)
+            }
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 22.dp)
+            ) {
+                options.forEach { option ->
+                    DropdownMenuItem(
+                        text = { Text(option, color = SkinColors.Ink) },
+                        onClick = {
+                            expanded = false
+                            onSelected(option)
+                        }
+                    )
+                }
+            }
         }
     }
 }

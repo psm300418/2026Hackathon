@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -27,6 +26,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import com.hackathon.skindata.core.designsystem.AppCard
 import com.hackathon.skindata.core.designsystem.SkinOutlinedButton as OutlinedButton
 import com.hackathon.skindata.core.designsystem.SkinPrimaryButton as Button
 import com.hackathon.skindata.core.notification.RecordReminderScheduler
@@ -110,49 +110,45 @@ fun RecordReminderSettingsScreen(
     onHourChanged: (Int) -> Unit,
     onMinuteChanged: (Int) -> Unit
 ) {
-    Card(
+    AppCard(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp, vertical = 12.dp)
+            .padding(horizontal = 22.dp, vertical = 12.dp)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(text = "기록 알림", style = MaterialTheme.typography.titleMedium)
-                    Text(
-                        text = "하루 한 번 피부 기록을 남기도록 기기 알림을 보냅니다.",
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                }
-                Switch(checked = enabled, onCheckedChange = onToggle)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(text = "기록 알림", style = MaterialTheme.typography.titleMedium)
+                Text(
+                    text = "하루 한 번 피부 기록을 남기도록 기기 알림을 보냅니다.",
+                    style = MaterialTheme.typography.bodySmall
+                )
             }
+            Switch(checked = enabled, onCheckedChange = onToggle)
+        }
 
-            Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
-            Text(text = "알림 시간 ${formatTime(hour, minute)}", style = MaterialTheme.typography.bodyMedium)
-            Spacer(modifier = Modifier.height(8.dp))
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                OutlinedButton(onClick = { onHourChanged(if (hour == 0) 23 else hour - 1) }) {
-                    Text("시 -")
-                }
-                Button(onClick = { onHourChanged((hour + 1) % 24) }) {
-                    Text("시 +")
-                }
-                OutlinedButton(onClick = { onMinuteChanged(if (minute == 0) 50 else minute - 10) }) {
-                    Text("분 -")
-                }
-                Button(onClick = { onMinuteChanged((minute + 10) % 60) }) {
-                    Text("분 +")
-                }
+        Text(text = "알림 시간 ${formatTime(hour, minute)}", style = MaterialTheme.typography.bodyMedium)
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            OutlinedButton(onClick = { onHourChanged(if (hour == 0) 23 else hour - 1) }) {
+                Text("시 -")
             }
-
-            message?.let {
-                Spacer(modifier = Modifier.height(10.dp))
-                Text(text = it, style = MaterialTheme.typography.bodySmall)
+            Button(onClick = { onHourChanged((hour + 1) % 24) }) {
+                Text("시 +")
             }
+            OutlinedButton(onClick = { onMinuteChanged(if (minute == 0) 50 else minute - 10) }) {
+                Text("분 -")
+            }
+            Button(onClick = { onMinuteChanged((minute + 10) % 60) }) {
+                Text("분 +")
+            }
+        }
+
+        message?.let {
+            Text(text = it, style = MaterialTheme.typography.bodySmall)
         }
     }
 }

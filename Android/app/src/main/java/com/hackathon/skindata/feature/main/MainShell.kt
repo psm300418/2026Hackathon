@@ -26,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import com.hackathon.skindata.core.designsystem.SectionHeader
 import com.hackathon.skindata.core.designsystem.SkinColors
 import com.hackathon.skindata.core.designsystem.SkinOutlinedButton as OutlinedButton
 import com.hackathon.skindata.core.designsystem.SkinSpacing
@@ -127,7 +128,14 @@ private fun SettingsTab(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
+            .padding(vertical = 24.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
+        SectionHeader(
+            title = "설정",
+            description = "지역, 기록 알림, 앱 사용 환경을 관리합니다.",
+            modifier = Modifier.padding(horizontal = SkinSpacing.Screen)
+        )
         LocationSettingsRoute(accessToken = accessToken)
         RecordReminderSettingsRoute()
         OutlinedButton(

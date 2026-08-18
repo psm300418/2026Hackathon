@@ -16,10 +16,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AssistChip
-import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,6 +31,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.hackathon.skindata.core.designsystem.AppCard
+import com.hackathon.skindata.core.designsystem.AppTextField
+import com.hackathon.skindata.core.designsystem.SectionHeader
+import com.hackathon.skindata.core.designsystem.SkinColors
 import com.hackathon.skindata.core.designsystem.SkinOutlinedButton as OutlinedButton
 import com.hackathon.skindata.core.designsystem.SkinPrimaryButton as Button
 import com.hackathon.skindata.core.network.FacePhotoUpload
@@ -98,17 +102,13 @@ fun ProductRegistrationScreen(
     LazyColumn(
         modifier = modifier
             .fillMaxWidth()
-            .padding(20.dp),
-        verticalArrangement = Arrangement.spacedBy(14.dp)
+            .padding(horizontal = 22.dp, vertical = 24.dp),
+        verticalArrangement = Arrangement.spacedBy(18.dp)
     ) {
         item {
-            Text(
-                text = "이전 사용 제품",
-                style = MaterialTheme.typography.headlineSmall
-            )
-            Text(
-                text = "써본 제품을 검색해서 저장해두면 이후 기록 분석의 참고 데이터가 됩니다.",
-                style = MaterialTheme.typography.bodyMedium
+            SectionHeader(
+                title = "이전 사용 제품",
+                description = "써본 제품을 검색해서 저장하면 이후 기록 분석의 참고 데이터가 됩니다."
             )
         }
 
@@ -117,17 +117,17 @@ fun ProductRegistrationScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                OutlinedTextField(
+                AppTextField(
                     value = uiState.query,
                     onValueChange = onQueryChanged,
                     modifier = Modifier.weight(1f),
-                    label = { Text("제품명, 브랜드, 카테고리") },
+                    label = "제품명, 브랜드, 카테고리",
                     singleLine = true,
                     enabled = !uiState.isLoading
                 )
                 Button(
                     onClick = onSearch,
-                    modifier = Modifier.padding(top = 8.dp),
+                    modifier = Modifier.padding(top = 2.dp),
                     enabled = !uiState.isLoading
                 ) {
                     Text("검색")
@@ -162,33 +162,27 @@ fun ProductRegistrationScreen(
 
         uiState.selectedProduct?.let { product ->
             item {
-                Card(modifier = Modifier.fillMaxWidth()) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = "선택한 제품",
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                        Text(
-                            text = "${product.brand} · ${product.name}",
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                        Spacer(modifier = Modifier.height(12.dp))
-                        OutlinedTextField(
-                            value = uiState.reactionMemo,
-                            onValueChange = onReactionMemoChanged,
-                            modifier = Modifier.fillMaxWidth(),
-                            label = { Text("기억나는 반응 메모") },
-                            minLines = 2,
-                            maxLines = 4
-                        )
-                        Spacer(modifier = Modifier.height(12.dp))
-                        Button(
-                            onClick = onSaveSelectedProduct,
-                            modifier = Modifier.fillMaxWidth(),
-                            enabled = !uiState.isSaving
-                        ) {
-                            Text(if (uiState.isSaving) "저장 중" else "이전 사용 제품으로 저장")
-                        }
+                AppCard(containerColor = SkinColors.Surface) {
+                    Text(text = "선택한 제품", style = MaterialTheme.typography.titleMedium)
+                    Text(
+                        text = "${product.brand} · ${product.name}",
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    AppTextField(
+                        value = uiState.reactionMemo,
+                        onValueChange = onReactionMemoChanged,
+                        label = "기억나는 반응 메모",
+                        minLines = 2,
+                        maxLines = 4
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Button(
+                        onClick = onSaveSelectedProduct,
+                        modifier = Modifier.fillMaxWidth(),
+                        enabled = !uiState.isSaving
+                    ) {
+                        Text(if (uiState.isSaving) "저장 중" else "이전 사용 제품으로 저장")
                     }
                 }
             }
@@ -239,77 +233,77 @@ private fun DirectProductSubmissionCard(
     onExtract: () -> Unit,
     onConfirm: () -> Unit
 ) {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = "제품 직접 등록", style = MaterialTheme.typography.titleMedium)
-            Text(
-                text = "검색해서 나오지 않는 제품은 성분표나 라벨 사진에서 후보 텍스트를 추출한 뒤 확인하고 저장합니다.",
-                style = MaterialTheme.typography.bodySmall
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                ProductItemType.entries.forEach { itemType ->
-                    AssistChip(
-                        onClick = { onItemTypeSelected(itemType) },
-                        label = {
-                            Text(if (uiState.submissionItemType == itemType) "${itemType.label} 선택됨" else itemType.label)
-                        }
+    AppCard {
+        Text(text = "제품 직접 등록", style = MaterialTheme.typography.titleMedium)
+        Text(
+            text = "검색해서 나오지 않는 제품은 성분표나 라벨 사진에서 후보 텍스트를 추출한 뒤 확인하고 저장합니다.",
+            style = MaterialTheme.typography.bodySmall
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            ProductItemType.entries.forEach { itemType ->
+                FilterChip(
+                    selected = uiState.submissionItemType == itemType,
+                    onClick = { onItemTypeSelected(itemType) },
+                    label = { Text(itemType.label) },
+                    colors = FilterChipDefaults.filterChipColors(
+                        selectedContainerColor = SkinColors.PrimaryOliveSoft,
+                        selectedLabelColor = SkinColors.Ink,
+                        containerColor = SkinColors.Surface,
+                        labelColor = SkinColors.TextSecondary
+                    ),
+                    border = FilterChipDefaults.filterChipBorder(
+                        enabled = true,
+                        selected = uiState.submissionItemType == itemType,
+                        borderColor = SkinColors.Border,
+                        selectedBorderColor = SkinColors.PrimaryOlive
                     )
-                }
+                )
             }
-            Spacer(modifier = Modifier.height(8.dp))
-            OutlinedTextField(
-                value = uiState.submissionName,
-                onValueChange = onNameChanged,
-                modifier = Modifier.fillMaxWidth(),
-                label = { Text("제품명") },
-                singleLine = true
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            OutlinedTextField(
-                value = uiState.submissionBrand,
-                onValueChange = onBrandChanged,
-                modifier = Modifier.fillMaxWidth(),
-                label = { Text("브랜드") },
-                singleLine = true
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            OutlinedTextField(
-                value = uiState.submissionCategory,
-                onValueChange = onCategoryChanged,
-                modifier = Modifier.fillMaxWidth(),
-                label = { Text("카테고리") },
-                singleLine = true
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                OutlinedButton(onClick = onPickPhoto, enabled = !uiState.isLoading) {
-                    Text(if (uiState.submissionPhoto == null) "사진 선택" else "사진 다시 선택")
-                }
-                Button(onClick = onExtract, enabled = !uiState.isLoading && uiState.submissionPhoto != null) {
-                    Text(if (uiState.isLoading) "추출 중" else "AI 추출")
-                }
+        }
+        AppTextField(
+            value = uiState.submissionName,
+            onValueChange = onNameChanged,
+            label = "제품명",
+            singleLine = true
+        )
+        AppTextField(
+            value = uiState.submissionBrand,
+            onValueChange = onBrandChanged,
+            label = "브랜드",
+            singleLine = true
+        )
+        AppTextField(
+            value = uiState.submissionCategory,
+            onValueChange = onCategoryChanged,
+            label = "카테고리",
+            singleLine = true
+        )
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            OutlinedButton(onClick = onPickPhoto, enabled = !uiState.isLoading) {
+                Text(if (uiState.submissionPhoto == null) "사진 선택" else "사진 다시 선택")
             }
-            uiState.submissionPhoto?.let {
-                Text(text = "${it.fileName} 선택됨", style = MaterialTheme.typography.bodySmall)
+            Button(onClick = onExtract, enabled = !uiState.isLoading && uiState.submissionPhoto != null) {
+                Text(if (uiState.isLoading) "추출 중" else "AI 추출")
             }
-            Spacer(modifier = Modifier.height(8.dp))
-            OutlinedTextField(
-                value = uiState.submissionIngredientsText,
-                onValueChange = onIngredientsChanged,
-                modifier = Modifier.fillMaxWidth(),
-                label = { Text("확정 성분/원료 텍스트") },
-                minLines = 4,
-                maxLines = 8
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            Button(
-                onClick = onConfirm,
-                modifier = Modifier.fillMaxWidth(),
-                enabled = !uiState.isSaving
-            ) {
-                Text(if (uiState.isSaving) "등록 중" else "내 제품에 등록")
-            }
+        }
+        uiState.submissionPhoto?.let {
+            Text(text = "${it.fileName} 선택됨", style = MaterialTheme.typography.bodySmall)
+        }
+        AppTextField(
+            value = uiState.submissionIngredientsText,
+            onValueChange = onIngredientsChanged,
+            label = "확정 성분/원료 텍스트",
+            minLines = 4,
+            maxLines = 8
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Button(
+            onClick = onConfirm,
+            modifier = Modifier.fillMaxWidth(),
+            enabled = !uiState.isSaving
+        ) {
+            Text(if (uiState.isSaving) "등록 중" else "내 제품에 등록")
         }
     }
 }
@@ -320,44 +314,37 @@ private fun ProductCard(
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
-    Card(
+    AppCard(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
+            .clickable(onClick = onClick),
+        containerColor = if (isSelected) SkinColors.PrimaryOliveSoft else SkinColors.Surface
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            ProductMeta(product = product)
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = product.name,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
-            Text(text = representativeIngredients(product), style = MaterialTheme.typography.bodySmall)
-            if (isSelected) {
-                Spacer(modifier = Modifier.height(8.dp))
-                AssistChip(onClick = onClick, label = { Text("선택됨") })
-            }
+        ProductMeta(product = product)
+        Text(
+            text = product.name,
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
+        )
+        Text(text = representativeIngredients(product), style = MaterialTheme.typography.bodySmall)
+        if (isSelected) {
+            AssistChip(onClick = onClick, label = { Text("선택됨") })
         }
     }
 }
 
 @Composable
 private fun UserProductCard(userProduct: UserProductDto) {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            ProductMeta(product = userProduct.product)
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = userProduct.product.name,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
-            Text(text = representativeIngredients(userProduct.product), style = MaterialTheme.typography.bodySmall)
-            userProduct.pastReactionMemo?.takeIf { it.isNotBlank() }?.let {
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "메모: $it", style = MaterialTheme.typography.bodyMedium)
-            }
+    AppCard(containerColor = SkinColors.Surface) {
+        ProductMeta(product = userProduct.product)
+        Text(
+            text = userProduct.product.name,
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
+        )
+        Text(text = representativeIngredients(userProduct.product), style = MaterialTheme.typography.bodySmall)
+        userProduct.pastReactionMemo?.takeIf { it.isNotBlank() }?.let {
+            Text(text = "메모: $it", style = MaterialTheme.typography.bodyMedium)
         }
     }
 }

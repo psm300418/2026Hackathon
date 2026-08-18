@@ -34,7 +34,6 @@ data class DailyRecordUiState(
     val facePhoto: FacePhotoUpload? = null,
     val todayRecord: DailyRecordDto? = null,
     val historyRecords: List<DailyRecordDto> = emptyList(),
-    val trendDays: Int = 14,
     val trends: DailyRecordTrendsDto? = null,
     val message: String? = null
 )

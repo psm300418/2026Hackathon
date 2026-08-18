@@ -5,6 +5,7 @@ import android.net.Uri
 import android.provider.OpenableColumns
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,27 +17,35 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AssistChip
-import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.hackathon.skindata.core.designsystem.AppCard
+import com.hackathon.skindata.core.designsystem.AppTextField
+import com.hackathon.skindata.core.designsystem.SectionHeader
+import com.hackathon.skindata.core.designsystem.SkinColors
 import com.hackathon.skindata.core.designsystem.SkinOutlinedButton as OutlinedButton
 import com.hackathon.skindata.core.designsystem.SkinPrimaryButton as Button
 import com.hackathon.skindata.core.network.DailyRecordDto
 import com.hackathon.skindata.core.network.DailyRecordEnvironmentDto
-import com.hackathon.skindata.core.network.DailyRecordTrendPointDto
 import com.hackathon.skindata.core.network.DailyRecordTrendsDto
 import com.hackathon.skindata.core.network.FacePhotoUpload
 import com.hackathon.skindata.core.network.ProductDto
@@ -58,7 +67,6 @@ fun DailyRecordRoute(
     DailyRecordScreen(
         uiState = uiState,
         onModeSelected = viewModel::selectMode,
-        onTrendDaysSelected = { days -> viewModel.selectTrendDays(accessToken, days) },
         onScoreChanged = viewModel::updateScore,
         onSleepHoursChanged = viewModel::onSleepHoursChanged,
         onOutdoorMinutesChanged = viewModel::onOutdoorMinutesChanged,
@@ -79,7 +87,6 @@ fun DailyRecordRoute(
 fun DailyRecordScreen(
     uiState: DailyRecordUiState,
     onModeSelected: (DailyRecordMode) -> Unit,
-    onTrendDaysSelected: (Int) -> Unit,
     onScoreChanged: (ScoreKind, Int) -> Unit,
     onSleepHoursChanged: (String) -> Unit,
     onOutdoorMinutesChanged: (String) -> Unit,
@@ -102,14 +109,13 @@ fun DailyRecordScreen(
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(20.dp),
-        verticalArrangement = Arrangement.spacedBy(14.dp)
+            .padding(horizontal = 22.dp, vertical = 24.dp),
+        verticalArrangement = Arrangement.spacedBy(18.dp)
     ) {
         item {
-            Text(text = "오늘의 피부 기록", style = MaterialTheme.typography.headlineSmall)
-            Text(
-                text = "${uiState.recordDate} 기록은 하루 1개로 저장되고 다시 저장하면 갱신됩니다.",
-                style = MaterialTheme.typography.bodyMedium
+            SectionHeader(
+                title = "오늘의 피부 기록",
+                description = "${uiState.recordDate} 기록은 하루 1개로 저장되고 다시 저장하면 갱신됩니다."
             )
         }
 
@@ -139,30 +145,34 @@ fun DailyRecordScreen(
 
         if (uiState.selectedMode == DailyRecordMode.Today) {
             item {
-                ScoreControl("건조함", ScoreKind.Dryness, uiState.dryness, onScoreChanged)
-                ScoreControl("유분", ScoreKind.Oiliness, uiState.oiliness, onScoreChanged)
-                ScoreControl("붉음", ScoreKind.Redness, uiState.redness, onScoreChanged)
-                ScoreControl("트러블", ScoreKind.Trouble, uiState.trouble, onScoreChanged)
+                AppCard(containerColor = SkinColors.Surface) {
+                    Text(text = "피부 상태 체크", style = MaterialTheme.typography.titleMedium)
+                    ScoreControl("건조함", ScoreKind.Dryness, uiState.dryness, onScoreChanged)
+                    ScoreControl("유분", ScoreKind.Oiliness, uiState.oiliness, onScoreChanged)
+                    ScoreControl("붉음", ScoreKind.Redness, uiState.redness, onScoreChanged)
+                    ScoreControl("트러블", ScoreKind.Trouble, uiState.trouble, onScoreChanged)
+                }
             }
 
             item {
-                OutlinedTextField(
-                    value = uiState.sleepHours,
-                    onValueChange = onSleepHoursChanged,
-                    modifier = Modifier.fillMaxWidth(),
-                    label = { Text("수면 시간") },
-                    singleLine = true
-                )
-            }
-
-            item {
-                OutlinedTextField(
-                    value = uiState.outdoorMinutes,
-                    onValueChange = onOutdoorMinutesChanged,
-                    modifier = Modifier.fillMaxWidth(),
-                    label = { Text("외출 시간(분)") },
-                    singleLine = true
-                )
+                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    AppCard(modifier = Modifier.weight(1f), containerColor = SkinColors.Surface) {
+                        AppTextField(
+                            value = uiState.sleepHours,
+                            onValueChange = onSleepHoursChanged,
+                            label = "수면 시간",
+                            singleLine = true
+                        )
+                    }
+                    AppCard(modifier = Modifier.weight(1f), containerColor = SkinColors.Surface) {
+                        AppTextField(
+                            value = uiState.outdoorMinutes,
+                            onValueChange = onOutdoorMinutesChanged,
+                            label = "외출 시간(분)",
+                            singleLine = true
+                        )
+                    }
+                }
             }
 
             item {
@@ -190,11 +200,11 @@ fun DailyRecordScreen(
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    OutlinedTextField(
+                    AppTextField(
                         value = uiState.presetName,
                         onValueChange = onPresetNameChanged,
                         modifier = Modifier.weight(1f),
-                        label = { Text("새 프리셋 이름") },
+                        label = "새 프리셋 이름",
                         singleLine = true
                     )
                     OutlinedButton(
@@ -224,11 +234,11 @@ fun DailyRecordScreen(
             item {
                 Text(text = "제품 검색 후 바로 추가", style = MaterialTheme.typography.titleMedium)
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    OutlinedTextField(
+                    AppTextField(
                         value = uiState.productSearchQuery,
                         onValueChange = onProductSearchQueryChanged,
                         modifier = Modifier.weight(1f),
-                        label = { Text("제품명 또는 브랜드") },
+                        label = "제품명 또는 브랜드",
                         singleLine = true
                     )
                     Button(onClick = onSearchProducts, enabled = !uiState.isLoading) {
@@ -242,45 +252,40 @@ fun DailyRecordScreen(
             }
 
             item {
-                OutlinedTextField(
+                AppTextField(
                     value = uiState.memo,
                     onValueChange = onMemoChanged,
                     modifier = Modifier.fillMaxWidth(),
-                    label = { Text("메모") },
+                    label = "메모",
                     minLines = 2,
                     maxLines = 4
                 )
             }
 
             item {
-                Card(modifier = Modifier.fillMaxWidth()) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(text = "얼굴 사진", style = MaterialTheme.typography.titleMedium)
-                        Text(
-                            text = "선택 사항입니다. 사진 없이도 저장할 수 있습니다.",
-                            style = MaterialTheme.typography.bodySmall
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        OutlinedButton(onClick = { photoPicker.launch("image/*") }) {
-                            Text(if (uiState.facePhoto == null) "사진 선택" else "사진 다시 선택")
-                        }
-                        uiState.facePhoto?.let {
-                            Text(text = "${it.fileName} 선택됨", style = MaterialTheme.typography.bodySmall)
-                        }
+                AppCard(containerColor = SkinColors.Surface) {
+                    Text(text = "얼굴 사진", style = MaterialTheme.typography.titleMedium)
+                    Text(
+                        text = "선택 사항입니다. 사진 없이도 저장할 수 있습니다.",
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                    OutlinedButton(onClick = { photoPicker.launch("image/*") }) {
+                        Text(if (uiState.facePhoto == null) "사진 선택" else "사진 다시 선택")
+                    }
+                    uiState.facePhoto?.let {
+                        Text(text = "${it.fileName} 선택됨", style = MaterialTheme.typography.bodySmall)
                     }
                 }
             }
 
             uiState.todayRecord?.let { record ->
                 item {
-                    Card(modifier = Modifier.fillMaxWidth()) {
-                        Column(modifier = Modifier.padding(16.dp)) {
-                            Text(text = "저장된 오늘 기록", style = MaterialTheme.typography.titleMedium)
-                            Text(text = "제품 ${record.products.size}개 · 수면 ${record.sleepHours}시간 · 외출 ${record.outdoorMinutes ?: 0}분")
-                            Text(text = "건조 ${record.dryness}, 유분 ${record.oiliness}, 붉음 ${record.redness}, 트러블 ${record.trouble}")
-                            record.environment?.let {
-                                Text(text = environmentSummary(it), style = MaterialTheme.typography.bodySmall)
-                            }
+                    AppCard {
+                        Text(text = "저장된 오늘 기록", style = MaterialTheme.typography.titleMedium)
+                        Text(text = "제품 ${record.products.size}개 · 수면 ${record.sleepHours}시간 · 외출 ${record.outdoorMinutes ?: 0}분")
+                        Text(text = "건조 ${record.dryness}, 유분 ${record.oiliness}, 붉음 ${record.redness}, 트러블 ${record.trouble}")
+                        record.environment?.let {
+                            Text(text = environmentSummary(it), style = MaterialTheme.typography.bodySmall)
                         }
                     }
                 }
@@ -323,16 +328,8 @@ fun DailyRecordScreen(
         } else {
             item {
                 TrendsSection(
-                    trends = uiState.trends,
-                    selectedDays = uiState.trendDays,
-                    onTrendDaysSelected = onTrendDaysSelected
+                    trends = uiState.trends
                 )
-            }
-
-            uiState.trends?.points.orEmpty().forEach { point ->
-                item(key = "trend-${point.date}") {
-                    TrendPointCard(point = point)
-                }
             }
 
             uiState.message?.let {
@@ -372,41 +369,29 @@ private fun ScoreControl(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        Text(text = "$label $value/5", style = MaterialTheme.typography.bodyLarge)
-        (0..5).chunked(3).forEach { scores ->
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(6.dp)
-            ) {
-                scores.forEach { score ->
-                    ScoreOptionButton(
-                        score = score,
-                        selected = value == score,
-                        onClick = { onScoreChanged(kind, score) },
-                        modifier = Modifier.weight(1f)
-                    )
-                }
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Text(text = label, style = MaterialTheme.typography.labelLarge)
+            Text(text = value.toString(), style = MaterialTheme.typography.labelLarge)
+        }
+        Slider(
+            value = value.toFloat(),
+            onValueChange = { onScoreChanged(kind, it.toInt()) },
+            valueRange = 0f..5f,
+            steps = 4,
+            colors = SliderDefaults.colors(
+                thumbColor = SkinColors.Ink,
+                activeTrackColor = SkinColors.PrimaryOlive,
+                inactiveTrackColor = SkinColors.Border,
+                activeTickColor = SkinColors.PrimaryOlive,
+                inactiveTickColor = SkinColors.Muted
+            )
+        )
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            (0..5).forEach { score ->
+                Text(text = score.toString(), style = MaterialTheme.typography.bodySmall)
             }
-        }
-    }
-}
-
-@Composable
-private fun ScoreOptionButton(
-    score: Int,
-    selected: Boolean,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    if (selected) {
-        Button(onClick = onClick, modifier = modifier) {
-            Text(score.toString())
-        }
-    } else {
-        OutlinedButton(onClick = onClick, modifier = modifier) {
-            Text(score.toString())
         }
     }
 }
@@ -417,15 +402,13 @@ private fun UserProductSelectRow(
     selected: Boolean,
     onClick: () -> Unit
 ) {
-    Card(
+    AppCard(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
+            .clickable(onClick = onClick),
+        containerColor = if (selected) SkinColors.PrimaryOliveSoft else SkinColors.Surface
     ) {
-        Row(
-            modifier = Modifier.padding(14.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             Checkbox(checked = selected, onCheckedChange = { onClick() })
             Column(modifier = Modifier.weight(1f)) {
                 Text(
@@ -447,17 +430,15 @@ private fun SearchResultCard(
     product: ProductDto,
     onClick: () -> Unit
 ) {
-    Card(
+    AppCard(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
+            .clickable(onClick = onClick),
+        containerColor = SkinColors.Surface
     ) {
-        Column(modifier = Modifier.padding(14.dp)) {
-            Text(text = product.name, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
-            Text(text = "${product.brand} · ${product.category.orEmpty()}", style = MaterialTheme.typography.bodySmall)
-            Spacer(modifier = Modifier.height(6.dp))
-            Text(text = "탭하면 내 제품에 추가하고 오늘 사용 제품으로 선택합니다.", style = MaterialTheme.typography.bodySmall)
-        }
+        Text(text = product.name, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
+        Text(text = "${product.brand} · ${product.category.orEmpty()}", style = MaterialTheme.typography.bodySmall)
+        Text(text = "탭하면 내 제품에 추가하고 오늘 사용 제품으로 선택합니다.", style = MaterialTheme.typography.bodySmall)
     }
 }
 
@@ -466,29 +447,27 @@ private fun HistoryRecordCard(
     date: String,
     record: DailyRecordDto?
 ) {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(14.dp)) {
-            Text(text = dateLabel(date), style = MaterialTheme.typography.titleMedium)
-            if (record == null) {
-                Text(text = "기록 없음", style = MaterialTheme.typography.bodyMedium)
-            } else {
-                Text(text = "제품 ${record.products.size}개 · 수면 ${record.sleepHours}시간 · 외출 ${record.outdoorMinutes ?: 0}분")
-                Text(text = "건조 ${record.dryness}, 유분 ${record.oiliness}, 붉음 ${record.redness}, 트러블 ${record.trouble}")
-                if (record.appliedPresets.isNotEmpty()) {
-                    Text(
-                        text = "프리셋 ${record.appliedPresets.joinToString { it.name }}",
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                }
-                if (record.facePhoto != null) {
-                    Text(text = "얼굴 사진 첨부됨", style = MaterialTheme.typography.bodySmall)
-                }
-                record.environment?.let {
-                    Text(text = environmentSummary(it), style = MaterialTheme.typography.bodySmall)
-                }
-                record.memo?.takeIf { it.isNotBlank() }?.let {
-                    Text(text = it, style = MaterialTheme.typography.bodySmall)
-                }
+    AppCard(containerColor = SkinColors.Surface) {
+        Text(text = dateLabel(date), style = MaterialTheme.typography.titleMedium)
+        if (record == null) {
+            Text(text = "기록 없음", style = MaterialTheme.typography.bodyMedium)
+        } else {
+            Text(text = "제품 ${record.products.size}개 · 수면 ${record.sleepHours}시간 · 외출 ${record.outdoorMinutes ?: 0}분")
+            Text(text = "건조 ${record.dryness}, 유분 ${record.oiliness}, 붉음 ${record.redness}, 트러블 ${record.trouble}")
+            if (record.appliedPresets.isNotEmpty()) {
+                Text(
+                    text = "프리셋 ${record.appliedPresets.joinToString { it.name }}",
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+            if (record.facePhoto != null) {
+                Text(text = "얼굴 사진 첨부됨", style = MaterialTheme.typography.bodySmall)
+            }
+            record.environment?.let {
+                Text(text = environmentSummary(it), style = MaterialTheme.typography.bodySmall)
+            }
+            record.memo?.takeIf { it.isNotBlank() }?.let {
+                Text(text = it, style = MaterialTheme.typography.bodySmall)
             }
         }
     }
@@ -506,81 +485,158 @@ private fun recentHistoryDates(fromDate: String, toDate: String): List<String> =
 
 @Composable
 private fun TrendsSection(
-    trends: DailyRecordTrendsDto?,
-    selectedDays: Int,
-    onTrendDaysSelected: (Int) -> Unit
+    trends: DailyRecordTrendsDto?
 ) {
-    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-        Text(text = "피부 상태 추이", style = MaterialTheme.typography.titleMedium)
+    Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
+        SectionHeader(
+            title = "추이",
+            description = "최근 1달간 저장된 기록을 바탕으로 피부 변화를 시각화합니다."
+        )
         Text(
-            text = trends?.let { "${it.from} - ${it.to}" } ?: "기록을 불러오는 중입니다.",
+            text = trends?.let { "${it.from} - ${it.to} · 있는 기록만 그래프에 반영" } ?: "기록을 불러오는 중입니다.",
             style = MaterialTheme.typography.bodySmall
         )
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            listOf(7, 14, 30).forEach { days ->
-                ModeButton(
-                    label = "${days}일",
-                    selected = selectedDays == days,
-                    onClick = { onTrendDaysSelected(days) }
+
+        val points = trends?.points.orEmpty()
+        TrendMetricCard(
+            title = "건조함",
+            values = points.mapNotNull { point -> point.scores.dryness?.let { TrendValue(point.date, it) } },
+            lineColor = Color(0xFF6EA8FE)
+        )
+        TrendMetricCard(
+            title = "유분",
+            values = points.mapNotNull { point -> point.scores.oiliness?.let { TrendValue(point.date, it) } },
+            lineColor = Color(0xFF8B5CF6)
+        )
+        TrendMetricCard(
+            title = "붉음",
+            values = points.mapNotNull { point -> point.scores.redness?.let { TrendValue(point.date, it) } },
+            lineColor = Color(0xFF4ECDC4)
+        )
+        TrendMetricCard(
+            title = "트러블",
+            values = points.mapNotNull { point -> point.scores.trouble?.let { TrendValue(point.date, it) } },
+            lineColor = Color(0xFFEF8F8F)
+        )
+    }
+}
+
+@Composable
+private fun TrendMetricCard(
+    title: String,
+    values: List<TrendValue>,
+    lineColor: Color
+) {
+    val average = values.map { it.score }.average().takeIf { !it.isNaN() }
+    val change = if (values.size >= 2) values.last().score - values.first().score else null
+
+    AppCard(containerColor = SkinColors.Surface) {
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Column {
+                Text(text = title, style = MaterialTheme.typography.titleMedium)
+                Text(
+                    text = average?.let { "평균 ${formatOneDecimal(it)}" } ?: "평균 없음",
+                    style = MaterialTheme.typography.bodySmall
                 )
             }
-        }
-    }
-}
-
-@Composable
-private fun TrendPointCard(point: DailyRecordTrendPointDto) {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(14.dp)) {
-            Text(text = dateLabel(point.date), style = MaterialTheme.typography.titleMedium)
-            if (point.scores.dryness == null) {
-                Text(text = "기록 없음", style = MaterialTheme.typography.bodyMedium)
-                return@Column
-            }
-
-            TrendScoreRow(label = "건조", value = point.scores.dryness)
-            TrendScoreRow(label = "유분", value = point.scores.oiliness)
-            TrendScoreRow(label = "붉음", value = point.scores.redness)
-            TrendScoreRow(label = "트러블", value = point.scores.trouble)
             Text(
-                text = "수면 ${point.sleepHours ?: "-"}시간 · 외출 ${point.outdoorMinutes ?: 0}분",
-                style = MaterialTheme.typography.bodySmall
+                text = changeLabel(change),
+                style = MaterialTheme.typography.labelLarge,
+                color = changeColor(change)
             )
-            Text(text = trendProductSummary(point), style = MaterialTheme.typography.bodySmall)
-            point.environment?.let {
-                Text(text = environmentSummary(it), style = MaterialTheme.typography.bodySmall)
-            }
+        }
+
+        if (values.isEmpty()) {
+            Text(text = "아직 그래프로 표시할 기록이 없습니다.", style = MaterialTheme.typography.bodyMedium)
+            return@AppCard
+        }
+
+        TrendLineChart(
+            values = values,
+            lineColor = lineColor,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(120.dp)
+        )
+
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Text(text = dateLabel(values.first().date), style = MaterialTheme.typography.bodySmall)
+            Text(text = "기록 ${values.size}개", style = MaterialTheme.typography.bodySmall)
+            Text(text = dateLabel(values.last().date), style = MaterialTheme.typography.bodySmall)
         }
     }
 }
 
 @Composable
-private fun TrendScoreRow(
-    label: String,
-    value: Int?
+private fun TrendLineChart(
+    values: List<TrendValue>,
+    lineColor: Color,
+    modifier: Modifier = Modifier
 ) {
-    val score = value ?: 0
-    Text(
-        text = "$label ${score}/5 ${scoreBar(score)}",
-        style = MaterialTheme.typography.bodySmall
-    )
+    Canvas(modifier = modifier) {
+        val horizontalPadding = 10.dp.toPx()
+        val verticalPadding = 16.dp.toPx()
+        val chartWidth = size.width - horizontalPadding * 2
+        val chartHeight = size.height - verticalPadding * 2
+
+        repeat(6) { index ->
+            val y = verticalPadding + chartHeight * index / 5f
+            drawLine(
+                color = SkinColors.Border,
+                start = Offset(horizontalPadding, y),
+                end = Offset(size.width - horizontalPadding, y),
+                strokeWidth = 1.dp.toPx()
+            )
+        }
+
+        val offsets = values.mapIndexed { index, value ->
+            val x = if (values.size == 1) {
+                size.width / 2f
+            } else {
+                horizontalPadding + chartWidth * index / (values.lastIndex).toFloat()
+            }
+            val y = verticalPadding + chartHeight * (5 - value.score) / 5f
+            Offset(x, y)
+        }
+
+        if (offsets.size >= 2) {
+            val path = Path().apply {
+                moveTo(offsets.first().x, offsets.first().y)
+                offsets.drop(1).forEach { point -> lineTo(point.x, point.y) }
+            }
+            drawPath(
+                path = path,
+                color = lineColor,
+                style = Stroke(width = 3.dp.toPx(), cap = StrokeCap.Round)
+            )
+        }
+
+        offsets.forEach { point ->
+            drawCircle(color = lineColor, radius = 4.dp.toPx(), center = point)
+            drawCircle(color = Color.White, radius = 2.dp.toPx(), center = point)
+        }
+    }
 }
 
-private fun scoreBar(score: Int): String =
-    (1..5).joinToString("") { index -> if (index <= score) "■" else "□" }
+private data class TrendValue(
+    val date: String,
+    val score: Int
+)
 
-private fun trendProductSummary(point: DailyRecordTrendPointDto): String {
-    if (point.productSummary.count == 0) {
-        return "사용 제품 없음"
-    }
+private fun formatOneDecimal(value: Double): String =
+    String.format("%.1f", value)
 
-    val suffix = if (point.productSummary.remainingCount > 0) {
-        " 외 ${point.productSummary.remainingCount}개"
-    } else {
-        ""
-    }
+private fun changeLabel(change: Int?): String = when {
+    change == null -> "변화량 없음"
+    change > 0 -> "+$change"
+    change < 0 -> "$change"
+    else -> "변화 없음"
+}
 
-    return "사용 제품 ${point.productSummary.count}개: ${point.productSummary.names.joinToString(", ")}$suffix"
+private fun changeColor(change: Int?): Color = when {
+    change == null || change == 0 -> SkinColors.TextSecondary
+    change > 0 -> Color(0xFFEF8F8F)
+    else -> Color(0xFF4ECDC4)
 }
 
 @Composable
@@ -588,22 +644,20 @@ private fun WeatherSummaryCard(
     userLocationLabel: String?,
     environment: DailyRecordEnvironmentDto?
 ) {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = "날씨와 환경", style = MaterialTheme.typography.titleMedium)
-            if (userLocationLabel == null) {
-                Text(
-                    text = "설정 탭에서 지역을 먼저 선택하면 오늘 기록에 기상청 관측값이 함께 저장됩니다.",
-                    style = MaterialTheme.typography.bodySmall
-                )
-            } else {
-                Text(text = userLocationLabel, style = MaterialTheme.typography.bodyMedium)
-                Text(
-                    text = environment?.let(::environmentSummary)
-                        ?: "오늘 기록을 저장하면 가장 가까운 시각의 관측값을 불러옵니다.",
-                    style = MaterialTheme.typography.bodySmall
-                )
-            }
+    AppCard {
+        Text(text = "날씨와 환경", style = MaterialTheme.typography.titleMedium)
+        if (userLocationLabel == null) {
+            Text(
+                text = "설정 탭에서 지역을 먼저 선택하면 오늘 기록에 기상청 관측값이 함께 저장됩니다.",
+                style = MaterialTheme.typography.bodySmall
+            )
+        } else {
+            Text(text = userLocationLabel, style = MaterialTheme.typography.bodyMedium)
+            Text(
+                text = environment?.let(::environmentSummary)
+                    ?: "오늘 기록을 저장하면 가장 가까운 시각의 관측값을 불러옵니다.",
+                style = MaterialTheme.typography.bodySmall
+            )
         }
     }
 }
@@ -653,7 +707,6 @@ private fun DailyRecordScreenPreview() {
         DailyRecordScreen(
             uiState = DailyRecordUiState(),
             onModeSelected = {},
-            onTrendDaysSelected = {},
             onScoreChanged = { _, _ -> },
             onSleepHoursChanged = {},
             onOutdoorMinutesChanged = {},

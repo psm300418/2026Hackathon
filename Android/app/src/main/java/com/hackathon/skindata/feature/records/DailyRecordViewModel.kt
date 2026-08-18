@@ -34,6 +34,7 @@ class DailyRecordViewModel(
                 val today = LocalDate.now()
                 val historyFrom = today.minusDays(13).toString()
                 val historyTo = today.toString()
+                val trendFrom = today.minusDays(29).toString()
                 val records = backendApiClient.getDailyRecords(
                     accessToken = accessToken,
                     from = historyFrom,
@@ -41,7 +42,7 @@ class DailyRecordViewModel(
                 ).items
                 val trends = backendApiClient.getDailyRecordTrends(
                     accessToken = accessToken,
-                    from = historyFrom,
+                    from = trendFrom,
                     to = historyTo
                 )
                 LoadResult(
@@ -93,33 +94,6 @@ class DailyRecordViewModel(
 
     fun selectMode(mode: DailyRecordMode) {
         _uiState.update { it.copy(selectedMode = mode, message = null) }
-    }
-
-    fun selectTrendDays(accessToken: String, days: Int) {
-        viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, trendDays = days, message = null) }
-
-            runCatching {
-                loadTrends(accessToken, days)
-            }.onSuccess { trends ->
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        trends = trends,
-                        historyFromDate = trends.from,
-                        historyToDate = trends.to,
-                        message = null
-                    )
-                }
-            }.onFailure { error ->
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        message = error.message ?: "추이 정보를 불러오지 못했습니다."
-                    )
-                }
-            }
-        }
     }
 
     fun onSleepHoursChanged(value: String) {
@@ -336,7 +310,7 @@ class DailyRecordViewModel(
                 )
             }.onSuccess { record ->
                 val refreshedTrends = runCatching {
-                    loadTrends(accessToken, _uiState.value.trendDays)
+                    loadTrends(accessToken)
                 }.getOrNull()
                 _uiState.update {
                     val historyRecords = listOf(record)
@@ -362,12 +336,9 @@ class DailyRecordViewModel(
         }
     }
 
-    private suspend fun loadTrends(
-        accessToken: String,
-        days: Int
-    ): DailyRecordTrendsDto {
+    private suspend fun loadTrends(accessToken: String): DailyRecordTrendsDto {
         val today = LocalDate.now()
-        val from = today.minusDays((days - 1).toLong()).toString()
+        val from = today.minusDays(29).toString()
         val to = today.toString()
         return backendApiClient.getDailyRecordTrends(
             accessToken = accessToken,
