@@ -129,7 +129,7 @@ analysis_findings
 
 ### skin_type_responses
 
-사용자가 선택한 설문 응답을 저장한다.
+사용자가 선택한 설문 응답을 저장한다. 사용자가 특정 피부 분류 축을 이미 알고 있어 직접 선택한 경우, 해당 축의 개별 문항 응답은 저장하지 않는다.
 
 - `id`
 - `skin_type_result_id`
@@ -139,7 +139,7 @@ analysis_findings
 - `score`
 - `created_at`
 
-설문 문구가 바뀌어도 과거 응답을 해석할 수 있도록 `questionnaire_id`와 선택지 버전을 결과와 함께 보존한다.
+설문 문구가 바뀌어도 과거 응답을 해석할 수 있도록 `questionnaire_id`와 선택지 버전을 결과와 함께 보존한다. 직접 선택으로 건너뛴 축은 `skin_type_results`의 코드와 점수 필드에만 반영된다.
 
 ### products
 

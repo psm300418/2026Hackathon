@@ -34,7 +34,7 @@ android {
         buildConfigField(
             "String",
             "BACKEND_BASE_URL",
-            "\"${configValue("BACKEND_BASE_URL", "http://10.0.2.2:3000")}\""
+            "\"${configValue("BACKEND_BASE_URL", "https://skindata-backend.onrender.com")}\""
         )
         buildConfigField("String", "DEMO_USER_EMAIL", "\"demo@example.com\"")
         buildConfigField("String", "DEMO_USER_PASSWORD", "\"demo1234\"")

@@ -7,7 +7,7 @@ import com.hackathon.skindata.core.designsystem.SkinColors
 
 private val LightColors = lightColorScheme(
     primary = SkinColors.PrimaryOlive,
-    onPrimary = SkinColors.Surface,
+    onPrimary = SkinColors.TextPrimary,
     primaryContainer = SkinColors.PrimaryOliveSoft,
     onPrimaryContainer = SkinColors.TextPrimary,
     secondary = SkinColors.AccentCoral,
