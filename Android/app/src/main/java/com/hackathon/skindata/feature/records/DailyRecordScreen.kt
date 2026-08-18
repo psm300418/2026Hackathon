@@ -368,20 +368,45 @@ private fun ScoreControl(
     value: Int,
     onScoreChanged: (ScoreKind, Int) -> Unit
 ) {
-    Row(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Text(text = "$label $value", style = MaterialTheme.typography.bodyLarge)
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            OutlinedButton(onClick = { onScoreChanged(kind, value - 1) }) {
-                Text("-")
+        Text(text = "$label $value/5", style = MaterialTheme.typography.bodyLarge)
+        (0..5).chunked(3).forEach { scores ->
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                scores.forEach { score ->
+                    ScoreOptionButton(
+                        score = score,
+                        selected = value == score,
+                        onClick = { onScoreChanged(kind, score) },
+                        modifier = Modifier.weight(1f)
+                    )
+                }
             }
-            Button(onClick = { onScoreChanged(kind, value + 1) }) {
-                Text("+")
-            }
+        }
+    }
+}
+
+@Composable
+private fun ScoreOptionButton(
+    score: Int,
+    selected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    if (selected) {
+        Button(onClick = onClick, modifier = modifier) {
+            Text(score.toString())
+        }
+    } else {
+        OutlinedButton(onClick = onClick, modifier = modifier) {
+            Text(score.toString())
         }
     }
 }

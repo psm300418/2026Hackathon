@@ -108,7 +108,7 @@ class AuthViewModel(
                         backendProfileVerified = false,
                         accessToken = null,
                         skinTypeCompletedAt = null,
-                        message = error.message ?: "로그인에 실패했습니다."
+                        message = error.toLoginMessage()
                     )
                 }
             }
@@ -122,5 +122,20 @@ class AuthViewModel(
                 message = "초기 피부 타입 기준점이 저장되었습니다."
             )
         }
+    }
+}
+
+private fun Throwable.toLoginMessage(): String {
+    val rawMessage = message.orEmpty()
+    return when {
+        rawMessage.contains("timeout", ignoreCase = true) ||
+            rawMessage.contains("timed out", ignoreCase = true) -> {
+            "로그인 응답 시간이 지연되고 있습니다. 잠시 후 다시 시도해주세요."
+        }
+        rawMessage.contains("network", ignoreCase = true) -> {
+            "네트워크 연결이 불안정합니다. 연결 상태를 확인한 뒤 다시 시도해주세요."
+        }
+        rawMessage.isNotBlank() -> rawMessage
+        else -> "로그인에 실패했습니다."
     }
 }

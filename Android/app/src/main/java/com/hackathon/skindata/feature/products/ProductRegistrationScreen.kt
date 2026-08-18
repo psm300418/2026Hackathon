@@ -243,7 +243,7 @@ private fun DirectProductSubmissionCard(
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = "제품 직접 등록", style = MaterialTheme.typography.titleMedium)
             Text(
-                text = "성분표나 라벨 사진에서 후보 텍스트를 추출한 뒤 확인하고 저장합니다.",
+                text = "검색해서 나오지 않는 제품은 성분표나 라벨 사진에서 후보 텍스트를 추출한 뒤 확인하고 저장합니다.",
                 style = MaterialTheme.typography.bodySmall
             )
             Spacer(modifier = Modifier.height(10.dp))
@@ -308,7 +308,7 @@ private fun DirectProductSubmissionCard(
                 modifier = Modifier.fillMaxWidth(),
                 enabled = !uiState.isSaving
             ) {
-                Text(if (uiState.isSaving) "등록 중" else "공용 DB와 내 제품에 등록")
+                Text(if (uiState.isSaving) "등록 중" else "내 제품에 등록")
             }
         }
     }

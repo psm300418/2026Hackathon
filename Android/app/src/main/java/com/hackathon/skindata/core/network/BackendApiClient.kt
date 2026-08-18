@@ -8,7 +8,9 @@ import kotlinx.serialization.json.Json
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
+import java.io.IOException
 import java.net.HttpURLConnection
+import java.net.SocketTimeoutException
 import java.net.URL
 import java.net.URLEncoder
 import java.util.UUID
@@ -20,6 +22,12 @@ class BackendApiClient(
         explicitNulls = false
     }
 ) {
+    private companion object {
+        const val CONNECT_TIMEOUT_MS = 30_000
+        const val READ_TIMEOUT_MS = 45_000
+        const val MULTIPART_READ_TIMEOUT_MS = 60_000
+    }
+
     suspend fun getMyProfile(accessToken: String): ProfileDto = withContext(Dispatchers.IO) {
         val body = request(
             path = "/api/profile/me",
@@ -304,8 +312,8 @@ class BackendApiClient(
 
         try {
             connection.requestMethod = method
-            connection.connectTimeout = 10_000
-            connection.readTimeout = 10_000
+            connection.connectTimeout = CONNECT_TIMEOUT_MS
+            connection.readTimeout = READ_TIMEOUT_MS
             connection.setRequestProperty("Accept", "application/json")
 
             if (accessToken != null) {
@@ -332,6 +340,10 @@ class BackendApiClient(
             }
 
             return response
+        } catch (error: SocketTimeoutException) {
+            throw IllegalStateException("서버 응답 시간이 초과되었습니다. 잠시 후 다시 시도해주세요.", error)
+        } catch (error: IOException) {
+            throw IllegalStateException("네트워크 연결이 불안정합니다. 연결 상태를 확인한 뒤 다시 시도해주세요.", error)
         } finally {
             connection.disconnect()
         }
@@ -351,8 +363,8 @@ class BackendApiClient(
 
         try {
             connection.requestMethod = method
-            connection.connectTimeout = 10_000
-            connection.readTimeout = 20_000
+            connection.connectTimeout = CONNECT_TIMEOUT_MS
+            connection.readTimeout = MULTIPART_READ_TIMEOUT_MS
             connection.doOutput = true
             connection.setRequestProperty("Accept", "application/json")
             connection.setRequestProperty("Authorization", "Bearer $accessToken")
@@ -396,6 +408,10 @@ class BackendApiClient(
             }
 
             return response
+        } catch (error: SocketTimeoutException) {
+            throw IllegalStateException("서버 응답 시간이 초과되었습니다. 사진 크기를 줄이거나 잠시 후 다시 시도해주세요.", error)
+        } catch (error: IOException) {
+            throw IllegalStateException("네트워크 연결이 불안정합니다. 연결 상태를 확인한 뒤 다시 시도해주세요.", error)
         } finally {
             connection.disconnect()
         }

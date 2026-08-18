@@ -221,7 +221,7 @@ class ProductRegistrationViewModel(
                         submissionIngredientsText = "",
                         submissionAiExtractedText = null,
                         submissionPhoto = null,
-                        message = "공용 DB에 등록하고 내 제품 목록에 추가했습니다."
+                        message = "내 제품 목록에 추가했습니다."
                     )
                 }
             }.onFailure { error ->
