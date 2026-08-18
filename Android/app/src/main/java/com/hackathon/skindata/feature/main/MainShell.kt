@@ -5,9 +5,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Analytics
+import androidx.compose.material.icons.outlined.EditNote
+import androidx.compose.material.icons.outlined.Inventory2
+import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,8 +24,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.hackathon.skindata.core.designsystem.InfoCard
-import com.hackathon.skindata.core.designsystem.SectionHeader
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
+import com.hackathon.skindata.core.designsystem.SkinColors
+import com.hackathon.skindata.core.designsystem.SkinOutlinedButton as OutlinedButton
 import com.hackathon.skindata.core.designsystem.SkinSpacing
 import com.hackathon.skindata.feature.analysis.AnalysisRoute
 import com.hackathon.skindata.feature.products.ProductRegistrationRoute
@@ -32,17 +42,32 @@ fun MainShellRoute(
     message: String?,
     onSignOut: () -> Unit
 ) {
-    var selectedTab by remember { mutableStateOf(MainTab.Home) }
+    var selectedTab by remember { mutableStateOf(MainTab.Products) }
 
     Scaffold(
         bottomBar = {
-            NavigationBar {
+            NavigationBar(
+                containerColor = SkinColors.Surface,
+                tonalElevation = 0.dp
+            ) {
                 MainTab.entries.forEach { tab ->
                     NavigationBarItem(
                         selected = selectedTab == tab,
                         onClick = { selectedTab = tab },
-                        icon = { Text(tab.icon) },
-                        label = { Text(tab.label) }
+                        icon = {
+                            Icon(
+                                imageVector = tab.icon,
+                                contentDescription = null
+                            )
+                        },
+                        label = { Text(tab.label) },
+                        colors = NavigationBarItemDefaults.colors(
+                            selectedIconColor = SkinColors.Ink,
+                            selectedTextColor = SkinColors.Ink,
+                            indicatorColor = SkinColors.PrimaryOlive,
+                            unselectedIconColor = SkinColors.Muted,
+                            unselectedTextColor = SkinColors.Muted
+                        )
                     )
                 }
             }
@@ -54,11 +79,7 @@ fun MainShellRoute(
                 .padding(innerPadding)
         ) {
             when (selectedTab) {
-                MainTab.Home -> HomeTab(
-                    backendProfileVerified = backendProfileVerified,
-                    message = message
-                )
-                MainTab.Products -> ProductsTab()
+                MainTab.Products -> ProductsTab(accessToken = accessToken, message = message)
                 MainTab.Record -> DailyRecordRoute(accessToken = accessToken)
                 MainTab.Analysis -> AnalysisRoute(accessToken = accessToken)
                 MainTab.Settings -> SettingsTab(
@@ -70,57 +91,30 @@ fun MainShellRoute(
     }
 }
 
-private enum class MainTab(val label: String, val icon: String) {
-    Home("홈", "홈"),
-    Products("제품", "제품"),
-    Record("기록", "기록"),
-    Analysis("분석", "분석"),
-    Settings("설정", "설정")
+private enum class MainTab(val label: String, val icon: ImageVector) {
+    Products("제품", Icons.Outlined.Inventory2),
+    Record("기록", Icons.Outlined.EditNote),
+    Analysis("분석", Icons.Outlined.Analytics),
+    Settings("설정", Icons.Outlined.Settings)
 }
 
 @Composable
-private fun HomeTab(
-    backendProfileVerified: Boolean,
+private fun ProductsTab(
+    accessToken: String,
     message: String?
 ) {
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(SkinSpacing.Screen),
+            .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(SkinSpacing.Item)
     ) {
-        SectionHeader(title = "홈")
-        InfoCard(
-            title = if (backendProfileVerified) {
-                "기록 준비 완료"
-            } else {
-                "로그인 세션 확인"
-            },
-            body = if (backendProfileVerified) {
-                "초기 피부 타입 기준점과 로그인 상태가 준비되었습니다."
-            } else {
-                "로그인 세션은 확인했지만 프로필 동기화 상태를 다시 확인해야 합니다."
-            }
-        )
         message?.let {
-            Text(text = it)
+            Text(
+                text = it,
+                modifier = Modifier.padding(horizontal = SkinSpacing.Screen, vertical = SkinSpacing.Compact)
+            )
         }
-    }
-}
-
-@Composable
-private fun ProductsTab() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(SkinSpacing.Screen),
-        verticalArrangement = Arrangement.spacedBy(SkinSpacing.Item)
-    ) {
-        SectionHeader(title = "제품")
-        InfoCard(
-            title = "제품 관리는 설정에서",
-            body = "이전 사용 제품과 성분표 사진 기반 직접 등록은 설정 탭에서 관리합니다."
-        )
+        ProductRegistrationRoute(accessToken = accessToken)
     }
 }
 
@@ -132,13 +126,10 @@ private fun SettingsTab(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
     ) {
         LocationSettingsRoute(accessToken = accessToken)
         RecordReminderSettingsRoute()
-        ProductRegistrationRoute(
-            accessToken = accessToken,
-            modifier = Modifier.weight(1f)
-        )
         OutlinedButton(
             onClick = onSignOut,
             modifier = Modifier

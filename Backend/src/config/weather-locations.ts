@@ -1,25 +1,320 @@
 import type { WeatherLocationOption } from "../types/weather.js";
 
-export const WEATHER_LOCATION_OPTIONS: WeatherLocationOption[] = [
-  { id: "seoul-gangnam", regionLabel: "서울특별시 강남구", stationId: 108, stationName: "서울" },
-  { id: "seoul-jongno", regionLabel: "서울특별시 종로구", stationId: 108, stationName: "서울" },
-  { id: "busan-haeundae", regionLabel: "부산광역시 해운대구", stationId: 159, stationName: "부산" },
-  { id: "daegu-suseong", regionLabel: "대구광역시 수성구", stationId: 143, stationName: "대구" },
-  { id: "incheon-namdong", regionLabel: "인천광역시 남동구", stationId: 112, stationName: "인천" },
-  { id: "gwangju-bukgu", regionLabel: "광주광역시 북구", stationId: 156, stationName: "광주" },
-  { id: "daejeon-yuseong", regionLabel: "대전광역시 유성구", stationId: 133, stationName: "대전" },
-  { id: "ulsan-namgu", regionLabel: "울산광역시 남구", stationId: 152, stationName: "울산" },
-  { id: "sejong", regionLabel: "세종특별자치시", stationId: 239, stationName: "세종" },
-  { id: "gyeonggi-suwon", regionLabel: "경기도 수원시", stationId: 119, stationName: "수원" },
-  { id: "gangwon-chuncheon", regionLabel: "강원특별자치도 춘천시", stationId: 101, stationName: "춘천" },
-  { id: "chungbuk-cheongju", regionLabel: "충청북도 청주시", stationId: 131, stationName: "청주" },
-  { id: "chungnam-cheonan", regionLabel: "충청남도 천안시", stationId: 232, stationName: "천안" },
-  { id: "jeonbuk-jeonju", regionLabel: "전북특별자치도 전주시", stationId: 146, stationName: "전주" },
-  { id: "jeonnam-mokpo", regionLabel: "전라남도 목포시", stationId: 165, stationName: "목포" },
-  { id: "gyeongbuk-pohang", regionLabel: "경상북도 포항시", stationId: 138, stationName: "포항" },
-  { id: "gyeongnam-changwon", regionLabel: "경상남도 창원시", stationId: 155, stationName: "창원" },
-  { id: "jeju-jeju", regionLabel: "제주특별자치도 제주시", stationId: 184, stationName: "제주" }
+type WeatherRegionSeed = {
+  provinceLabel: string;
+  provinceCode: string;
+  stationId: number;
+  stationName: string;
+  cityLabels: string[];
+};
+
+const WEATHER_REGION_SEEDS: WeatherRegionSeed[] = [
+  {
+    provinceLabel: "서울특별시",
+    provinceCode: "seoul",
+    stationId: 108,
+    stationName: "서울",
+    cityLabels: [
+      "종로구",
+      "중구",
+      "용산구",
+      "성동구",
+      "광진구",
+      "동대문구",
+      "중랑구",
+      "성북구",
+      "강북구",
+      "도봉구",
+      "노원구",
+      "은평구",
+      "서대문구",
+      "마포구",
+      "양천구",
+      "강서구",
+      "구로구",
+      "금천구",
+      "영등포구",
+      "동작구",
+      "관악구",
+      "서초구",
+      "강남구",
+      "송파구",
+      "강동구"
+    ]
+  },
+  {
+    provinceLabel: "부산광역시",
+    provinceCode: "busan",
+    stationId: 159,
+    stationName: "부산",
+    cityLabels: [
+      "중구",
+      "서구",
+      "동구",
+      "영도구",
+      "부산진구",
+      "동래구",
+      "남구",
+      "북구",
+      "해운대구",
+      "사하구",
+      "금정구",
+      "강서구",
+      "연제구",
+      "수영구",
+      "사상구",
+      "기장군"
+    ]
+  },
+  {
+    provinceLabel: "대구광역시",
+    provinceCode: "daegu",
+    stationId: 143,
+    stationName: "대구",
+    cityLabels: ["중구", "동구", "서구", "남구", "북구", "수성구", "달서구", "달성군", "군위군"]
+  },
+  {
+    provinceLabel: "인천광역시",
+    provinceCode: "incheon",
+    stationId: 112,
+    stationName: "인천",
+    cityLabels: ["중구", "동구", "미추홀구", "연수구", "남동구", "부평구", "계양구", "서구", "강화군", "옹진군"]
+  },
+  {
+    provinceLabel: "광주광역시",
+    provinceCode: "gwangju",
+    stationId: 156,
+    stationName: "광주",
+    cityLabels: ["동구", "서구", "남구", "북구", "광산구"]
+  },
+  {
+    provinceLabel: "대전광역시",
+    provinceCode: "daejeon",
+    stationId: 133,
+    stationName: "대전",
+    cityLabels: ["동구", "중구", "서구", "유성구", "대덕구"]
+  },
+  {
+    provinceLabel: "울산광역시",
+    provinceCode: "ulsan",
+    stationId: 152,
+    stationName: "울산",
+    cityLabels: ["중구", "남구", "동구", "북구", "울주군"]
+  },
+  {
+    provinceLabel: "세종특별자치시",
+    provinceCode: "sejong",
+    stationId: 239,
+    stationName: "세종",
+    cityLabels: ["세종특별자치시"]
+  },
+  {
+    provinceLabel: "경기도",
+    provinceCode: "gyeonggi",
+    stationId: 119,
+    stationName: "수원",
+    cityLabels: [
+      "수원시",
+      "성남시",
+      "의정부시",
+      "안양시",
+      "부천시",
+      "광명시",
+      "평택시",
+      "동두천시",
+      "안산시",
+      "고양시",
+      "과천시",
+      "구리시",
+      "남양주시",
+      "오산시",
+      "시흥시",
+      "군포시",
+      "의왕시",
+      "하남시",
+      "용인시",
+      "파주시",
+      "이천시",
+      "안성시",
+      "김포시",
+      "화성시",
+      "광주시",
+      "양주시",
+      "포천시",
+      "여주시",
+      "연천군",
+      "가평군",
+      "양평군"
+    ]
+  },
+  {
+    provinceLabel: "강원특별자치도",
+    provinceCode: "gangwon",
+    stationId: 101,
+    stationName: "춘천",
+    cityLabels: [
+      "춘천시",
+      "원주시",
+      "강릉시",
+      "동해시",
+      "태백시",
+      "속초시",
+      "삼척시",
+      "홍천군",
+      "횡성군",
+      "영월군",
+      "평창군",
+      "정선군",
+      "철원군",
+      "화천군",
+      "양구군",
+      "인제군",
+      "고성군",
+      "양양군"
+    ]
+  },
+  {
+    provinceLabel: "충청북도",
+    provinceCode: "chungbuk",
+    stationId: 131,
+    stationName: "청주",
+    cityLabels: ["청주시", "충주시", "제천시", "보은군", "옥천군", "영동군", "증평군", "진천군", "괴산군", "음성군", "단양군"]
+  },
+  {
+    provinceLabel: "충청남도",
+    provinceCode: "chungnam",
+    stationId: 232,
+    stationName: "천안",
+    cityLabels: [
+      "천안시",
+      "공주시",
+      "보령시",
+      "아산시",
+      "서산시",
+      "논산시",
+      "계룡시",
+      "당진시",
+      "금산군",
+      "부여군",
+      "서천군",
+      "청양군",
+      "홍성군",
+      "예산군",
+      "태안군"
+    ]
+  },
+  {
+    provinceLabel: "전북특별자치도",
+    provinceCode: "jeonbuk",
+    stationId: 146,
+    stationName: "전주",
+    cityLabels: ["전주시", "군산시", "익산시", "정읍시", "남원시", "김제시", "완주군", "진안군", "무주군", "장수군", "임실군", "순창군", "고창군", "부안군"]
+  },
+  {
+    provinceLabel: "전라남도",
+    provinceCode: "jeonnam",
+    stationId: 165,
+    stationName: "목포",
+    cityLabels: [
+      "목포시",
+      "여수시",
+      "순천시",
+      "나주시",
+      "광양시",
+      "담양군",
+      "곡성군",
+      "구례군",
+      "고흥군",
+      "보성군",
+      "화순군",
+      "장흥군",
+      "강진군",
+      "해남군",
+      "영암군",
+      "무안군",
+      "함평군",
+      "영광군",
+      "장성군",
+      "완도군",
+      "진도군",
+      "신안군"
+    ]
+  },
+  {
+    provinceLabel: "경상북도",
+    provinceCode: "gyeongbuk",
+    stationId: 138,
+    stationName: "포항",
+    cityLabels: [
+      "포항시",
+      "경주시",
+      "김천시",
+      "안동시",
+      "구미시",
+      "영주시",
+      "영천시",
+      "상주시",
+      "문경시",
+      "경산시",
+      "의성군",
+      "청송군",
+      "영양군",
+      "영덕군",
+      "청도군",
+      "고령군",
+      "성주군",
+      "칠곡군",
+      "예천군",
+      "봉화군",
+      "울진군",
+      "울릉군"
+    ]
+  },
+  {
+    provinceLabel: "경상남도",
+    provinceCode: "gyeongnam",
+    stationId: 155,
+    stationName: "창원",
+    cityLabels: [
+      "창원시",
+      "진주시",
+      "통영시",
+      "사천시",
+      "김해시",
+      "밀양시",
+      "거제시",
+      "양산시",
+      "의령군",
+      "함안군",
+      "창녕군",
+      "고성군",
+      "남해군",
+      "하동군",
+      "산청군",
+      "함양군",
+      "거창군",
+      "합천군"
+    ]
+  },
+  {
+    provinceLabel: "제주특별자치도",
+    provinceCode: "jeju",
+    stationId: 184,
+    stationName: "제주",
+    cityLabels: ["제주시", "서귀포시"]
+  }
 ];
+
+export const WEATHER_LOCATION_OPTIONS: WeatherLocationOption[] = WEATHER_REGION_SEEDS.flatMap(
+  (region) =>
+    region.cityLabels.map((cityLabel, cityIndex) => ({
+      id: `${region.provinceCode}-${String(cityIndex + 1).padStart(3, "0")}`,
+      regionLabel:
+        region.provinceLabel === cityLabel ? region.provinceLabel : `${region.provinceLabel} ${cityLabel}`,
+      stationId: region.stationId,
+      stationName: region.stationName
+    }))
+);
 
 export const findWeatherLocationOption = (id: string): WeatherLocationOption | undefined =>
   WEATHER_LOCATION_OPTIONS.find((option) => option.id === id);

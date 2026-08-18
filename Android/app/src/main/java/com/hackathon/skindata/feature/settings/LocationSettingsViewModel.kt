@@ -28,10 +28,13 @@ class LocationSettingsViewModel(
                     it.weatherStationId == savedLocation?.weatherStationId &&
                         it.regionLabel == savedLocation.regionLabel
                 }
+                val selectedProvinceLabel = selectedOption?.provinceLabel()
+                    ?: options.firstOrNull()?.provinceLabel()
                 _uiState.update {
                     it.copy(
                         isLoading = false,
                         options = options,
+                        selectedProvinceLabel = selectedProvinceLabel,
                         savedLocation = savedLocation,
                         selectedLocationId = selectedOption?.id,
                         message = null
@@ -48,8 +51,25 @@ class LocationSettingsViewModel(
         }
     }
 
+    fun selectProvince(provinceLabel: String) {
+        _uiState.update {
+            it.copy(
+                selectedProvinceLabel = provinceLabel,
+                selectedLocationId = null,
+                message = null
+            )
+        }
+    }
+
     fun selectLocation(locationId: String) {
-        _uiState.update { it.copy(selectedLocationId = locationId, message = null) }
+        _uiState.update { state ->
+            val selectedOption = state.options.firstOrNull { it.id == locationId }
+            state.copy(
+                selectedProvinceLabel = selectedOption?.provinceLabel() ?: state.selectedProvinceLabel,
+                selectedLocationId = locationId,
+                message = null
+            )
+        }
     }
 
     fun save(accessToken: String) {

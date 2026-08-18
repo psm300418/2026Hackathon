@@ -3,16 +3,15 @@ package com.hackathon.skindata.feature.settings
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AssistChip
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,6 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.hackathon.skindata.core.designsystem.SkinOutlinedButton as OutlinedButton
+import com.hackathon.skindata.core.designsystem.SkinPrimaryButton as Button
 import com.hackathon.skindata.core.network.LocationOptionDto
 import com.hackathon.skindata.ui.theme.SkinDataTheme
 
@@ -38,6 +39,7 @@ fun LocationSettingsRoute(
 
     LocationSettingsScreen(
         uiState = uiState,
+        onSelectProvince = viewModel::selectProvince,
         onSelectLocation = viewModel::selectLocation,
         onSave = { viewModel.save(accessToken) }
     )
@@ -46,9 +48,14 @@ fun LocationSettingsRoute(
 @Composable
 fun LocationSettingsScreen(
     uiState: LocationSettingsUiState,
+    onSelectProvince: (String) -> Unit,
     onSelectLocation: (String) -> Unit,
     onSave: () -> Unit
 ) {
+    val groupedOptions = uiState.options.groupBy { it.provinceLabel() }
+    val selectedProvinceLabel = uiState.selectedProvinceLabel ?: groupedOptions.keys.firstOrNull()
+    val cityOptions = selectedProvinceLabel?.let { groupedOptions[it] }.orEmpty()
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -77,25 +84,41 @@ fun LocationSettingsScreen(
             if (uiState.isLoading) {
                 CircularProgressIndicator()
             } else {
-                uiState.options.chunked(2).forEach { rowOptions ->
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
+                Text(text = "도/광역시", style = MaterialTheme.typography.labelMedium)
+                Spacer(modifier = Modifier.height(6.dp))
+                groupedOptions.keys.chunked(2).forEach { rowOptions ->
+                    LocationOptionRow {
+                        rowOptions.forEach { provinceLabel ->
+                            LocationTextButton(
+                                label = provinceLabel,
+                                selected = provinceLabel == selectedProvinceLabel,
+                                onClick = { onSelectProvince(provinceLabel) },
+                                modifier = Modifier.weight(1f)
+                            )
+                        }
+                        repeat(2 - rowOptions.size) {
+                            Spacer(modifier = Modifier.weight(1f))
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(text = "시/군/구", style = MaterialTheme.typography.labelMedium)
+                Spacer(modifier = Modifier.height(6.dp))
+                cityOptions.chunked(2).forEach { rowOptions ->
+                    LocationOptionRow {
                         rowOptions.forEach { option ->
-                            val selected = option.id == uiState.selectedLocationId
-                            LocationOptionButton(
-                                option = option,
-                                selected = selected,
+                            LocationTextButton(
+                                label = option.cityLabel(),
+                                selected = option.id == uiState.selectedLocationId,
                                 onClick = { onSelectLocation(option.id) },
                                 modifier = Modifier.weight(1f)
                             )
                         }
-                        if (rowOptions.size == 1) {
+                        repeat(2 - rowOptions.size) {
                             Spacer(modifier = Modifier.weight(1f))
                         }
                     }
-                    Spacer(modifier = Modifier.height(8.dp))
                 }
             }
 
@@ -107,7 +130,7 @@ fun LocationSettingsScreen(
             Button(
                 onClick = onSave,
                 modifier = Modifier.fillMaxWidth(),
-                enabled = !uiState.isSaving && !uiState.isLoading
+                enabled = !uiState.isSaving && !uiState.isLoading && uiState.selectedLocationId != null
             ) {
                 Text(if (uiState.isSaving) "저장 중" else "지역 저장")
             }
@@ -116,19 +139,30 @@ fun LocationSettingsScreen(
 }
 
 @Composable
-private fun LocationOptionButton(
-    option: LocationOptionDto,
+private fun LocationOptionRow(content: @Composable RowScope.() -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        content = content
+    )
+}
+
+@Composable
+private fun LocationTextButton(
+    label: String,
     selected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     if (selected) {
         Button(onClick = onClick, modifier = modifier) {
-            Text(option.regionLabel)
+            Text(label)
         }
     } else {
         OutlinedButton(onClick = onClick, modifier = modifier) {
-            Text(option.regionLabel)
+            Text(label)
         }
     }
 }
@@ -143,8 +177,10 @@ private fun LocationSettingsScreenPreview() {
                     LocationOptionDto("seoul-gangnam", "서울특별시 강남구", 108, "서울"),
                     LocationOptionDto("gyeonggi-suwon", "경기도 수원시", 119, "수원")
                 ),
+                selectedProvinceLabel = "서울특별시",
                 selectedLocationId = "seoul-gangnam"
             ),
+            onSelectProvince = {},
             onSelectLocation = {},
             onSave = {}
         )

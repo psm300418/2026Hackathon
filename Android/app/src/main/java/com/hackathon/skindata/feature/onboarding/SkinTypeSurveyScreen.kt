@@ -181,7 +181,11 @@ fun SkinTypeSurveyScreen(
                         coroutineScope.launch { scrollState.animateScrollTo(0) }
                     },
                     modifier = Modifier.weight(1f),
-                    enabled = activeSections.isNotEmpty() && uiState.currentSectionIndex > 0
+                    enabled = activeSections.isNotEmpty() && uiState.currentSectionIndex > 0,
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = MaterialTheme.colorScheme.onSurface,
+                        disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
                 ) {
                     Text("이전")
                 }
