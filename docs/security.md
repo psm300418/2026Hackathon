@@ -25,6 +25,8 @@
 - Android 앱은 로그인 후 Supabase access token을 저장한다.
 - Backend API 요청 시 `Authorization: Bearer <token>` 헤더를 사용한다.
 - Backend는 모든 보호 API에서 access token을 검증한다.
+- 회원가입에서 Supabase Admin API가 필요하면 Backend에서만 호출한다.
+- 해커톤 시연용 이메일 인증 우회는 Backend의 제한된 회원가입 API에서만 처리하며, Android에는 service role key를 넣지 않는다.
 
 ### 인가
 

@@ -73,15 +73,12 @@ class AuthViewModel(
 
             runCatching {
                 if (isSignUp) {
-                    SupabaseProvider.client.auth.signUpWith(Email) {
-                        this.email = email
-                        this.password = password
-                    }
-                } else {
-                    SupabaseProvider.client.auth.signInWith(Email) {
-                        this.email = email
-                        this.password = password
-                    }
+                    backendApiClient.signup(email = email, password = password)
+                }
+
+                SupabaseProvider.client.auth.signInWith(Email) {
+                    this.email = email
+                    this.password = password
                 }
 
                 val accessToken = SupabaseProvider.client.auth.currentAccessTokenOrNull()

@@ -118,10 +118,6 @@ class ProductRegistrationViewModel(
         _uiState.update { it.copy(submissionBrand = value, message = null) }
     }
 
-    fun onSubmissionCategoryChanged(value: String) {
-        _uiState.update { it.copy(submissionCategory = value, message = null) }
-    }
-
     fun onSubmissionIngredientsChanged(value: String) {
         _uiState.update { it.copy(submissionIngredientsText = value, message = null) }
     }
@@ -204,7 +200,7 @@ class ProductRegistrationViewModel(
                         itemType = state.submissionItemType.code,
                         name = name,
                         brand = brand,
-                        category = state.submissionCategory.trim().ifBlank { null },
+                        category = null,
                         aiExtractedText = state.submissionAiExtractedText,
                         confirmedIngredientsText = ingredientsText
                     )
@@ -217,7 +213,6 @@ class ProductRegistrationViewModel(
                         userProducts = userProducts,
                         submissionName = "",
                         submissionBrand = "",
-                        submissionCategory = "",
                         submissionIngredientsText = "",
                         submissionAiExtractedText = null,
                         submissionPhoto = null,

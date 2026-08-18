@@ -15,7 +15,6 @@ data class ProductRegistrationUiState(
     val submissionItemType: ProductItemType = ProductItemType.Cosmetic,
     val submissionName: String = "",
     val submissionBrand: String = "",
-    val submissionCategory: String = "",
     val submissionIngredientsText: String = "",
     val submissionAiExtractedText: String? = null,
     val submissionPhoto: FacePhotoUpload? = null,

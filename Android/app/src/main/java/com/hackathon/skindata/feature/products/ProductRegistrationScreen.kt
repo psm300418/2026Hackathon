@@ -68,7 +68,6 @@ fun ProductRegistrationRoute(
         onSubmissionItemTypeSelected = viewModel::selectSubmissionItemType,
         onSubmissionNameChanged = viewModel::onSubmissionNameChanged,
         onSubmissionBrandChanged = viewModel::onSubmissionBrandChanged,
-        onSubmissionCategoryChanged = viewModel::onSubmissionCategoryChanged,
         onSubmissionIngredientsChanged = viewModel::onSubmissionIngredientsChanged,
         onSubmissionPhotoSelected = viewModel::setSubmissionPhoto,
         onExtractSubmission = { viewModel.extractSubmission(accessToken) },
@@ -88,7 +87,6 @@ fun ProductRegistrationScreen(
     onSubmissionItemTypeSelected: (ProductItemType) -> Unit,
     onSubmissionNameChanged: (String) -> Unit,
     onSubmissionBrandChanged: (String) -> Unit,
-    onSubmissionCategoryChanged: (String) -> Unit,
     onSubmissionIngredientsChanged: (String) -> Unit,
     onSubmissionPhotoSelected: (FacePhotoUpload?) -> Unit,
     onExtractSubmission: () -> Unit,
@@ -194,7 +192,6 @@ fun ProductRegistrationScreen(
                 onItemTypeSelected = onSubmissionItemTypeSelected,
                 onNameChanged = onSubmissionNameChanged,
                 onBrandChanged = onSubmissionBrandChanged,
-                onCategoryChanged = onSubmissionCategoryChanged,
                 onIngredientsChanged = onSubmissionIngredientsChanged,
                 onPickPhoto = { labelPhotoPicker.launch("image/*") },
                 onExtract = onExtractSubmission,
@@ -227,7 +224,6 @@ private fun DirectProductSubmissionCard(
     onItemTypeSelected: (ProductItemType) -> Unit,
     onNameChanged: (String) -> Unit,
     onBrandChanged: (String) -> Unit,
-    onCategoryChanged: (String) -> Unit,
     onIngredientsChanged: (String) -> Unit,
     onPickPhoto: () -> Unit,
     onExtract: () -> Unit,
@@ -271,12 +267,6 @@ private fun DirectProductSubmissionCard(
             value = uiState.submissionBrand,
             onValueChange = onBrandChanged,
             label = "브랜드",
-            singleLine = true
-        )
-        AppTextField(
-            value = uiState.submissionCategory,
-            onValueChange = onCategoryChanged,
-            label = "카테고리",
             singleLine = true
         )
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -421,7 +411,6 @@ private fun ProductRegistrationScreenPreview() {
             onSubmissionItemTypeSelected = {},
             onSubmissionNameChanged = {},
             onSubmissionBrandChanged = {},
-            onSubmissionCategoryChanged = {},
             onSubmissionIngredientsChanged = {},
             onSubmissionPhotoSelected = {},
             onExtractSubmission = {},

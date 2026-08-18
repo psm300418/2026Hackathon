@@ -38,6 +38,17 @@ class BackendApiClient(
         json.decodeFromString<ApiResponse<ProfileDto>>(body).data
     }
 
+    suspend fun signup(email: String, password: String): BackendSignupDto = withContext(Dispatchers.IO) {
+        val body = request(
+            path = "/api/auth/signup",
+            method = "POST",
+            accessToken = null,
+            requestBody = json.encodeToString(BackendSignupRequest(email = email, password = password))
+        )
+
+        json.decodeFromString<ApiResponse<BackendSignupDto>>(body).data
+    }
+
     suspend fun getLocationOptions(): LocationOptionsDto = withContext(Dispatchers.IO) {
         val body = request(
             path = "/api/profile/location-options",
@@ -430,6 +441,19 @@ data class ProfileDto(
     val displayName: String? = null,
     val skinTypeCode: String? = null,
     val skinTypeCompletedAt: String? = null
+)
+
+@Serializable
+data class BackendSignupRequest(
+    val email: String,
+    val password: String
+)
+
+@Serializable
+data class BackendSignupDto(
+    val created: Boolean,
+    val userId: String? = null,
+    val message: String
 )
 
 @Serializable

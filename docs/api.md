@@ -51,7 +51,42 @@ GET /api/health/supabase
 
 ---
 
-## 4. Profile
+## 4. Auth
+
+해커톤 시연에서는 회원가입 과정에서 Supabase 이메일 발송 제한에 걸리지 않도록 Backend가 Supabase Admin API로 가입을 처리한다. Android에는 service role key를 넣지 않는다.
+
+### 회원가입
+
+```text
+POST /api/auth/signup
+```
+
+요청 예시:
+
+```json
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+```
+
+응답 예시:
+
+```json
+{
+  "data": {
+    "created": true,
+    "userId": "auth-user-id",
+    "message": "회원가입이 완료되었습니다."
+  }
+}
+```
+
+이미 가입된 이메일이면 새 사용자를 만들지 않고 로그인 안내 메시지를 반환한다. Android는 이 API 호출 후 Supabase email/password 로그인으로 세션을 만든다.
+
+---
+
+## 5. Profile
 
 로그인한 사용자의 앱 프로필을 조회한다. 프로필이 없으면 Backend가 검증된 사용자 ID 기준으로 생성한다.
 
@@ -82,7 +117,7 @@ GET /api/profile/me
 
 ---
 
-## 5. Onboarding / Skin Type Survey
+## 6. Onboarding / Skin Type Survey
 
 회원가입 또는 최초 로그인 이후 초기 피부 타입 설문을 저장하고 조회한다. 설문 문항 원본은 `docs/DB/skin_type_question.md`를 기준으로 한다.
 
