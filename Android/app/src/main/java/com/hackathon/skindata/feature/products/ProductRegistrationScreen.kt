@@ -65,6 +65,7 @@ fun ProductRegistrationRoute(
         onSearch = viewModel::search,
         onSelectProduct = viewModel::selectProduct,
         onSaveSelectedProduct = { viewModel.saveSelectedProduct(accessToken) },
+        onShowDirectSubmission = viewModel::showDirectSubmission,
         onUsageStatusChange = { userProductId, usageStatus ->
             viewModel.updateUsageStatus(accessToken, userProductId, usageStatus)
         },
@@ -87,6 +88,7 @@ fun ProductRegistrationScreen(
     onSearch: () -> Unit,
     onSelectProduct: (ProductDto) -> Unit,
     onSaveSelectedProduct: () -> Unit,
+    onShowDirectSubmission: () -> Unit,
     onUsageStatusChange: (String, String) -> Unit,
     onSubmissionItemTypeSelected: (ProductItemType) -> Unit,
     onSubmissionNameChanged: (String) -> Unit,
@@ -192,18 +194,29 @@ fun ProductRegistrationScreen(
             }
         }
 
-        if (uiState.hasSearched && !uiState.isLoading && uiState.searchResults.isEmpty()) {
+        if (uiState.hasSearched && !uiState.isLoading) {
             item {
-            DirectProductSubmissionCard(
-                uiState = uiState,
-                onItemTypeSelected = onSubmissionItemTypeSelected,
-                onNameChanged = onSubmissionNameChanged,
-                onBrandChanged = onSubmissionBrandChanged,
-                onIngredientsChanged = onSubmissionIngredientsChanged,
-                onPickPhoto = { labelPhotoPicker.launch("image/*") },
-                onExtract = onExtractSubmission,
-                onConfirm = onConfirmSubmission
-            )
+                OutlinedButton(
+                    onClick = onShowDirectSubmission,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("찾는 제품 없음")
+                }
+            }
+        }
+
+        if (uiState.isDirectSubmissionExpanded) {
+            item {
+                DirectProductSubmissionCard(
+                    uiState = uiState,
+                    onItemTypeSelected = onSubmissionItemTypeSelected,
+                    onNameChanged = onSubmissionNameChanged,
+                    onBrandChanged = onSubmissionBrandChanged,
+                    onIngredientsChanged = onSubmissionIngredientsChanged,
+                    onPickPhoto = { labelPhotoPicker.launch("image/*") },
+                    onExtract = onExtractSubmission,
+                    onConfirm = onConfirmSubmission
+                )
             }
         }
 
@@ -444,6 +457,7 @@ private fun ProductRegistrationScreenPreview() {
             onSearch = {},
             onSelectProduct = {},
             onSaveSelectedProduct = {},
+            onShowDirectSubmission = {},
             onUsageStatusChange = { _, _ -> },
             onSubmissionItemTypeSelected = {},
             onSubmissionNameChanged = {},

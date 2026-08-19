@@ -48,6 +48,7 @@ class ProductRegistrationViewModel(
             it.copy(
                 query = value,
                 hasSearched = false,
+                isDirectSubmissionExpanded = false,
                 searchResults = emptyList(),
                 selectedProduct = null,
                 message = null
@@ -77,6 +78,7 @@ class ProductRegistrationViewModel(
                 it.copy(
                     isLoading = true,
                     hasSearched = true,
+                    isDirectSubmissionExpanded = false,
                     searchResults = emptyList(),
                     selectedProduct = null
                 )
@@ -90,7 +92,7 @@ class ProductRegistrationViewModel(
                         isLoading = false,
                         searchResults = response.items,
                         message = if (response.items.isEmpty()) {
-                            "검색 결과가 없습니다. 직접 등록을 이용해주세요."
+                            "검색 결과가 없습니다."
                         } else {
                             null
                         }
@@ -141,6 +143,17 @@ class ProductRegistrationViewModel(
         _uiState.update {
             it.copy(
                 selectedProduct = product,
+                isDirectSubmissionExpanded = false,
+                message = null
+            )
+        }
+    }
+
+    fun showDirectSubmission() {
+        _uiState.update {
+            it.copy(
+                selectedProduct = null,
+                isDirectSubmissionExpanded = true,
                 message = null
             )
         }

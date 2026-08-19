@@ -10,6 +10,7 @@ data class ProductRegistrationUiState(
     val isLoading: Boolean = false,
     val isSaving: Boolean = false,
     val hasSearched: Boolean = false,
+    val isDirectSubmissionExpanded: Boolean = false,
     val searchResults: List<ProductDto> = emptyList(),
     val userProducts: List<UserProductDto> = emptyList(),
     val selectedProduct: ProductDto? = null,
