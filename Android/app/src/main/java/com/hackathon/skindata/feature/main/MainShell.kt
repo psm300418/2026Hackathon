@@ -31,6 +31,7 @@ import com.hackathon.skindata.core.designsystem.SkinColors
 import com.hackathon.skindata.core.designsystem.SkinOutlinedButton as OutlinedButton
 import com.hackathon.skindata.core.designsystem.SkinSpacing
 import com.hackathon.skindata.feature.analysis.AnalysisRoute
+import com.hackathon.skindata.feature.onboarding.SkinTypeSurveyRoute
 import com.hackathon.skindata.feature.products.ProductRegistrationRoute
 import com.hackathon.skindata.feature.records.DailyRecordRoute
 import com.hackathon.skindata.feature.settings.LocationSettingsRoute
@@ -124,6 +125,16 @@ private fun SettingsTab(
     accessToken: String,
     onSignOut: () -> Unit
 ) {
+    var isRetakingSkinTypeSurvey by remember { mutableStateOf(false) }
+
+    if (isRetakingSkinTypeSurvey) {
+        SkinTypeSurveyRoute(
+            accessToken = accessToken,
+            onCompleted = { isRetakingSkinTypeSurvey = false }
+        )
+        return
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -138,6 +149,14 @@ private fun SettingsTab(
         )
         LocationSettingsRoute(accessToken = accessToken)
         RecordReminderSettingsRoute()
+        OutlinedButton(
+            onClick = { isRetakingSkinTypeSurvey = true },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = SkinSpacing.Screen, vertical = SkinSpacing.Compact)
+        ) {
+            Text("초기 설문 다시 하기")
+        }
         OutlinedButton(
             onClick = onSignOut,
             modifier = Modifier
