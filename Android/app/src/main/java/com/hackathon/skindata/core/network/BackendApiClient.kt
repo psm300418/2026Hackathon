@@ -775,10 +775,49 @@ data class AnalysisResultDto(
     val requestedAt: String,
     val confidenceLevel: String,
     val summary: String,
+    val trendPoints: List<AnalysisTrendPointDto> = emptyList(),
+    val notableEvents: List<AnalysisNotableEventDto> = emptyList(),
+    val factorSummaries: List<AnalysisFactorSummaryDto> = emptyList(),
     val positiveSuspectedIngredients: List<AnalysisFindingDto>,
     val negativeSuspectedIngredients: List<AnalysisFindingDto>,
     val limitations: List<String>,
     val nextRecordsToAdd: List<String>
+)
+
+@Serializable
+data class AnalysisTrendPointDto(
+    val date: String,
+    val totalScore: Double,
+    val dryness: Double,
+    val oiliness: Double,
+    val redness: Double,
+    val trouble: Double,
+    val sleepHours: Double,
+    val outdoorMinutes: Int? = null,
+    val humidityPercent: Double? = null,
+    val temperatureCelsius: Double? = null
+)
+
+@Serializable
+data class AnalysisNotableEventDto(
+    val date: String,
+    val title: String,
+    val severity: String,
+    val totalScore: Double,
+    val baselineScore: Double,
+    val scoreDelta: Double,
+    val factorTags: List<String> = emptyList(),
+    val reasons: List<String> = emptyList(),
+    val productNames: List<String> = emptyList()
+)
+
+@Serializable
+data class AnalysisFactorSummaryDto(
+    val factorTag: String,
+    val label: String,
+    val hitCount: Int,
+    val eventCount: Int,
+    val description: String
 )
 
 @Serializable

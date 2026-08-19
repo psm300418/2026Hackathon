@@ -124,6 +124,23 @@ const selectedSeedExternalIds = [
 
 const externalProducts: DemoProduct[] = [
   {
+    externalId: "demo_admin-cosmetic-glow-night-cream",
+    source: "admin",
+    itemType: "cosmetic",
+    name: "글로우 리치 나이트 크림",
+    normalizedName: "글로우 리치 나이트 크림",
+    brand: "데모랩",
+    category: "크림",
+    ingredientsText:
+      "정제수, 글리세린, 아이소프로필미리스테이트, 세테아릴알코올, 나이아신아마이드, 시어버터, 다이메티콘, 향료, 리날룰, 리모넨, 토코페롤, 카보머, 트라이에탄올아민",
+    verificationStatus: "verified",
+    sourceUrl: "https://example.com/demo-glow-night-cream",
+    sourceCheckedAt: "2026-08-19",
+    region: "KR",
+    formulaVersion: "Demo formula for hackathon analysis scenario",
+    seedBatch: DEMO_SEED_BATCH
+  },
+  {
     externalId: "demo_admin-shower-drforhair-folligen-shampoo",
     source: "admin",
     itemType: "shower_product",
@@ -195,6 +212,13 @@ const userProductSeeds: UserProductSeed[] = [
     isPastExperience: true,
     pastReactionMemo: "두피가 기름진 날 사용하면 개운하지만, 민감한 날은 약간 당김.",
     memo: "격일 사용"
+  },
+  {
+    productExternalId: "demo_admin-cosmetic-glow-night-cream",
+    usageStatus: "current",
+    isPastExperience: false,
+    pastReactionMemo: null,
+    memo: "최근 테스트를 시작한 리치 크림. 향료 포함 여부를 분석 포인트로 확인"
   },
   {
     productExternalId: "demo_admin-supplement-centrum-multigummies",
@@ -568,7 +592,8 @@ const buildDailyRecords = (today: string): DailyRecordSeed[] => {
   for (let index = 0; index < 30; index += 1) {
     const date = toDateString(addDays(startDate, index));
     const weekend = index % 7 === 5 || index % 7 === 6;
-    const poorSleep = index % 9 === 2 || index % 11 === 5;
+    const eventNightCream = index >= 14 && index <= 17;
+    const poorSleep = index % 9 === 2 || index % 11 === 5 || index === 14 || index === 22;
     const longOutdoor = weekend || index % 8 === 3;
     const shampooDay = index % 2 === 0;
     const supplementDay = index % 5 !== 1;
@@ -578,17 +603,69 @@ const buildDailyRecords = (today: string): DailyRecordSeed[] => {
     const outdoorPenalty = longOutdoor ? 1 : 0;
     const serumBenefit = serumDay ? 0.6 : 0;
 
-    const dryness = clampScore(4 - trendImprovement * 1.8 + poorSleepPenalty * 0.4 - serumBenefit);
-    const oiliness = clampScore(2 + (weekend ? 0 : 0.3) + (index % 10 === 4 ? 1 : 0));
-    const redness = clampScore(2 + poorSleepPenalty + outdoorPenalty * 0.4 - trendImprovement * 0.9);
-    const trouble = clampScore(2 + (poorSleep ? 1 : 0) + (index % 13 === 4 ? 1 : 0) - trendImprovement * 0.8);
-    const sleepHours = poorSleep ? 5.4 : Number((6.7 + (index % 5) * 0.25 + (weekend ? 0.6 : 0)).toFixed(1));
-    const outdoorMinutes = longOutdoor ? 130 + (index % 4) * 20 : 25 + (index % 5) * 10;
+    let dryness = clampScore(4 - trendImprovement * 1.8 + poorSleepPenalty * 0.4 - serumBenefit);
+    let oiliness = clampScore(2 + (weekend ? 0 : 0.3) + (index % 10 === 4 ? 1 : 0));
+    let redness = clampScore(2 + poorSleepPenalty + outdoorPenalty * 0.4 - trendImprovement * 0.9);
+    let trouble = clampScore(2 + (poorSleep ? 1 : 0) + (index % 13 === 4 ? 1 : 0) - trendImprovement * 0.8);
+    let sleepHours = poorSleep ? 5.4 : Number((6.7 + (index % 5) * 0.25 + (weekend ? 0.6 : 0)).toFixed(1));
+    let outdoorMinutes = longOutdoor ? 130 + (index % 4) * 20 : 25 + (index % 5) * 10;
+    let memo = memoPool[index % memoPool.length];
+    let temperatureCelsius = Number((27.2 + (index % 9) * 0.45 + (longOutdoor ? 0.8 : 0)).toFixed(1));
+    let humidityPercent = 57 + (index % 8) * 4 + (index % 6 === 0 ? 9 : 0);
+    let precipitationAmountMm = index % 12 === 5 ? 4.5 : 0;
+
+    if (index === 14) {
+      dryness = 3;
+      oiliness = 4;
+      redness = 4;
+      trouble = 5;
+      sleepHours = 5.1;
+      outdoorMinutes = 155;
+      temperatureCelsius = 31.4;
+      humidityPercent = 86;
+      precipitationAmountMm = 0;
+      memo = "늦게 자고 외출이 길었던 날. 글로우 리치 나이트 크림을 처음 사용함.";
+    } else if (index === 15) {
+      dryness = 3;
+      oiliness = 4;
+      redness = 4;
+      trouble = 4;
+      sleepHours = 5.6;
+      outdoorMinutes = 60;
+      temperatureCelsius = 30.8;
+      humidityPercent = 88;
+      precipitationAmountMm = 5.2;
+      memo = "습도가 높고 비가 온 날. 전날 생긴 트러블이 이어짐.";
+    } else if (index === 22) {
+      dryness = 2;
+      oiliness = 3;
+      redness = 5;
+      trouble = 3;
+      sleepHours = 5.0;
+      outdoorMinutes = 145;
+      temperatureCelsius = 32.1;
+      humidityPercent = 82;
+      precipitationAmountMm = 0;
+      memo = "수면 부족과 긴 외출 후 붉음이 크게 올라옴.";
+    } else if (index === 25) {
+      dryness = 5;
+      oiliness = 2;
+      redness = 3;
+      trouble = 2;
+      sleepHours = 7.2;
+      outdoorMinutes = 35;
+      temperatureCelsius = 28.0;
+      humidityPercent = 34;
+      precipitationAmountMm = 0;
+      memo = "습도가 낮아 세안 후 당김과 건조함이 강하게 느껴짐.";
+    }
+
     const productExternalIds = [
       "seed_97_ko_official-001",
       "seed_97_ko_official-015",
       "seed_additional_100_ko_official-009",
       ...(serumDay ? ["seed_97_ko_official-005"] : []),
+      ...(eventNightCream ? ["demo_admin-cosmetic-glow-night-cream"] : []),
       ...(shampooDay ? ["demo_admin-shower-drforhair-folligen-shampoo"] : []),
       ...(supplementDay ? ["demo_admin-supplement-centrum-multigummies"] : [])
     ];
@@ -606,13 +683,13 @@ const buildDailyRecords = (today: string): DailyRecordSeed[] => {
       trouble,
       sleepHours,
       outdoorMinutes,
-      memo: memoPool[index % memoPool.length],
+      memo,
       productExternalIds,
       routineNames,
       environment: {
-        temperatureCelsius: Number((27.2 + (index % 9) * 0.45 + (longOutdoor ? 0.8 : 0)).toFixed(1)),
-        humidityPercent: 57 + (index % 8) * 4 + (index % 6 === 0 ? 9 : 0),
-        precipitationAmountMm: index % 12 === 5 ? 4.5 : 0,
+        temperatureCelsius,
+        humidityPercent,
+        precipitationAmountMm,
         windSpeedMps: Number((1.1 + (index % 6) * 0.25).toFixed(1))
       }
     });

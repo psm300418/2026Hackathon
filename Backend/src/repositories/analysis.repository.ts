@@ -4,6 +4,9 @@ import type {
   AnalysisConfidenceLevel,
   AnalysisFindingRow,
   AnalysisFindingType,
+  AnalysisFactorSummary,
+  AnalysisNotableEvent,
+  AnalysisTrendPoint,
   AnalysisRunRow
 } from "../types/analysis.js";
 
@@ -15,12 +18,62 @@ const stringArraySchema = z.preprocess(
   z.array(z.string())
 );
 
+const trendPointSchema = z.object({
+  date: z.string(),
+  totalScore: z.coerce.number(),
+  dryness: z.coerce.number(),
+  oiliness: z.coerce.number(),
+  redness: z.coerce.number(),
+  trouble: z.coerce.number(),
+  sleepHours: z.coerce.number(),
+  outdoorMinutes: z.coerce.number().nullable(),
+  humidityPercent: z.coerce.number().nullable(),
+  temperatureCelsius: z.coerce.number().nullable()
+});
+
+const factorTagSchema = z.enum([
+  "low_sleep",
+  "high_humidity",
+  "low_humidity",
+  "high_temperature",
+  "long_outdoor",
+  "rain",
+  "first_product_use",
+  "product_change"
+]);
+
+const notableEventSchema = z.object({
+  date: z.string(),
+  title: z.string(),
+  severity: z.enum(["medium", "high"]),
+  totalScore: z.coerce.number(),
+  baselineScore: z.coerce.number(),
+  scoreDelta: z.coerce.number(),
+  factorTags: z.array(factorTagSchema),
+  reasons: z.array(z.string()),
+  productNames: z.array(z.string())
+});
+
+const factorSummarySchema = z.object({
+  factorTag: factorTagSchema,
+  label: z.string(),
+  hitCount: z.coerce.number(),
+  eventCount: z.coerce.number(),
+  description: z.string()
+});
+
+const jsonArraySchema = <T extends z.ZodTypeAny>(schema: T) =>
+  z.preprocess((value) => (Array.isArray(value) ? value : []), z.array(schema));
+
 const analysisRunRowSchema = z.object({
   id: z.string().uuid(),
   user_id: z.string().uuid(),
   requested_at: z.string(),
   confidence_level: confidenceSchema,
   summary: z.string(),
+  trend_points: jsonArraySchema(trendPointSchema),
+  notable_events: jsonArraySchema(notableEventSchema),
+  factor_summaries: jsonArraySchema(factorSummarySchema),
   limitations: stringArraySchema,
   next_records_to_add: stringArraySchema,
   created_at: z.string()
@@ -44,6 +97,9 @@ const analysisRunSelect = [
   "requested_at",
   "confidence_level",
   "summary",
+  "trend_points",
+  "notable_events",
+  "factor_summaries",
   "limitations",
   "next_records_to_add",
   "created_at"
@@ -65,6 +121,9 @@ export const createAnalysisRun = async (params: {
   userId: string;
   confidenceLevel: AnalysisConfidenceLevel;
   summary: string;
+  trendPoints: AnalysisTrendPoint[];
+  notableEvents: AnalysisNotableEvent[];
+  factorSummaries: AnalysisFactorSummary[];
   limitations: string[];
   nextRecordsToAdd: string[];
 }): Promise<AnalysisRunRow> => {
@@ -75,6 +134,9 @@ export const createAnalysisRun = async (params: {
       user_id: params.userId,
       confidence_level: params.confidenceLevel,
       summary: params.summary,
+      trend_points: params.trendPoints,
+      notable_events: params.notableEvents,
+      factor_summaries: params.factorSummaries,
       limitations: params.limitations,
       next_records_to_add: params.nextRecordsToAdd
     })

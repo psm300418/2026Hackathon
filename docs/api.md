@@ -887,6 +887,9 @@ POST /api/analysis/run
 - 최근 30일의 피부 기록은 상세 evidence로 사용한다.
 - 전체 기간의 피부 기록은 Backend가 성분별 노출 횟수, 개선일 동반 횟수, 악화일 동반 횟수, 마지막 노출일 같은 압축 통계로 집계한다.
 - 이전 최신 분석 결과의 요약과 후보 성분 이름을 함께 사용해 분석 맥락을 이어간다.
+- 최근 평균 대비 피부 점수가 튄 날짜를 `notableEvents`로 계산하고, 같은 날의 수면·습도·기온·외출·첫 사용 제품을 후보 요인으로 붙인다.
+- `trendPoints`는 Android에서 최근 30일 피부 점수 차트를 그리는 데 사용한다.
+- `factorSummaries`는 후보 요인이 특이 변화일과 얼마나 함께 나타났는지 보여준다.
 - AI에는 전체 기간의 원본 기록 전체를 그대로 전달하지 않고, 최근 상세 기록과 장기 압축 통계, 이전 분석 요약만 전달한다.
 - OpenAI 호출 실패 시 Backend 집계 기반 fallback 분석을 저장하고 반환할 수 있다.
 
@@ -897,8 +900,48 @@ POST /api/analysis/run
   "data": {
     "analysisRunId": "analysis-run-id",
     "requestedAt": "2026-08-18T09:00:00.000Z",
-    "confidenceLevel": "data_insufficient",
-    "summary": "현재 기록 수가 적어 신뢰도는 낮지만 반복 후보를 요약했습니다.",
+    "confidenceLevel": "medium",
+    "summary": "8월 14일 트러블 점수가 평소보다 높았고, 수면 부족·높은 습도·첫 사용 제품이 같은 날 함께 기록되었습니다.",
+    "trendPoints": [
+      {
+        "date": "2026-08-14",
+        "totalScore": 16,
+        "dryness": 3,
+        "oiliness": 4,
+        "redness": 4,
+        "trouble": 5,
+        "sleepHours": 5.1,
+        "outdoorMinutes": 155,
+        "humidityPercent": 86,
+        "temperatureCelsius": 31.4
+      }
+    ],
+    "notableEvents": [
+      {
+        "date": "2026-08-14",
+        "title": "트러블이 평소보다 두드러진 날",
+        "severity": "high",
+        "totalScore": 16,
+        "baselineScore": 9.1,
+        "scoreDelta": 6.9,
+        "factorTags": ["low_sleep", "high_humidity", "long_outdoor", "first_product_use"],
+        "reasons": [
+          "수면 시간이 5.1시간으로 짧았습니다.",
+          "습도가 86%로 높았습니다.",
+          "처음 사용한 제품: 글로우 리치 나이트 크림"
+        ],
+        "productNames": ["글로우 리치 나이트 크림"]
+      }
+    ],
+    "factorSummaries": [
+      {
+        "factorTag": "low_sleep",
+        "label": "수면 부족",
+        "hitCount": 5,
+        "eventCount": 2,
+        "description": "수면 부족 조건이 특이 변화일 2회와 함께 나타났습니다."
+      }
+    ],
     "positiveSuspectedIngredients": [
       {
         "id": "finding-id",

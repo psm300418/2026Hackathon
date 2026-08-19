@@ -12,11 +12,15 @@ import type {
   AnalysisConfidenceLevel,
   AnalysisEnvironmentSummary,
   AnalysisEvidence,
+  AnalysisFactorSummary,
+  AnalysisFactorTag,
   AnalysisFindingDto,
   AnalysisFindingRow,
   AnalysisIngredientStat,
+  AnalysisNotableEvent,
   AnalysisResultDto,
   AnalysisRunRow,
+  AnalysisTrendPoint,
   GeneratedAnalysis,
   GeneratedAnalysisFinding
 } from "../types/analysis.js";
@@ -27,6 +31,8 @@ const ANALYSIS_WINDOW_DAYS = 30;
 const ALL_RECORDS_FROM = "1900-01-01";
 const MAX_CANDIDATE_INGREDIENTS = 12;
 const WATER_NAMES = new Set(["정제수", "water", "aqua"]);
+const BASELINE_LOOKBACK_DAYS = 7;
+const NOTABLE_EVENT_DELTA = 2;
 
 type IngredientAccumulator = {
   name: string;
@@ -60,6 +66,11 @@ const normalizeName = (value: string) => value.trim().toLowerCase().replace(/\s+
 const totalSkinScore = (record: DailyRecordDto) =>
   record.dryness + record.oiliness + record.redness + record.trouble;
 
+const average = (values: number[]) =>
+  values.length === 0
+    ? 0
+    : values.reduce((sum, value) => sum + value, 0) / values.length;
+
 const signalForRecord = (
   previousRecord: DailyRecordDto | undefined,
   record: DailyRecordDto
@@ -88,6 +99,232 @@ const ingredientNamesForProduct = (product: ProductSearchItemDto): string[] => {
     : splitIngredientsText(product.ingredientsText);
 
   return names.filter((name) => !WATER_NAMES.has(normalizeName(name)));
+};
+
+const toTrendPoints = (records: DailyRecordDto[]): AnalysisTrendPoint[] =>
+  [...records]
+    .sort((left, right) => left.recordDate.localeCompare(right.recordDate))
+    .map((record) => ({
+      date: record.recordDate,
+      totalScore: totalSkinScore(record),
+      dryness: record.dryness,
+      oiliness: record.oiliness,
+      redness: record.redness,
+      trouble: record.trouble,
+      sleepHours: record.sleepHours,
+      outdoorMinutes: record.outdoorMinutes,
+      humidityPercent: record.environment?.humidityPercent ?? null,
+      temperatureCelsius: record.environment?.temperatureCelsius ?? null
+    }));
+
+const factorLabelByTag: Record<AnalysisFactorTag, string> = {
+  low_sleep: "수면 부족",
+  high_humidity: "높은 습도",
+  low_humidity: "낮은 습도",
+  high_temperature: "높은 기온",
+  long_outdoor: "긴 외출",
+  rain: "강수",
+  first_product_use: "첫 사용 제품",
+  product_change: "제품 변화"
+};
+
+const firstUsedDateByUserProductId = (records: DailyRecordDto[]) => {
+  const firstDateByProductId = new Map<string, string>();
+
+  for (const record of [...records].sort((left, right) => left.recordDate.localeCompare(right.recordDate))) {
+    for (const userProduct of record.products) {
+      if (!firstDateByProductId.has(userProduct.id)) {
+        firstDateByProductId.set(userProduct.id, record.recordDate);
+      }
+    }
+  }
+
+  return firstDateByProductId;
+};
+
+const previousProductIds = (records: DailyRecordDto[], index: number) =>
+  new Set(records[index - 1]?.products.map((userProduct) => userProduct.id) ?? []);
+
+const reasonsForRecord = (
+  record: DailyRecordDto,
+  records: DailyRecordDto[],
+  index: number,
+  firstDateByProductId: Map<string, string>
+) => {
+  const factorTags = new Set<AnalysisFactorTag>();
+  const reasons: string[] = [];
+  const productNames: string[] = [];
+  const previousIds = previousProductIds(records, index);
+  const firstProducts = record.products.filter(
+    (userProduct) => firstDateByProductId.get(userProduct.id) === record.recordDate
+  );
+  const changedProducts = record.products.filter((userProduct) => !previousIds.has(userProduct.id));
+
+  if (record.sleepHours < 6) {
+    factorTags.add("low_sleep");
+    reasons.push(`수면 시간이 ${record.sleepHours}시간으로 짧았습니다.`);
+  }
+  if ((record.environment?.humidityPercent ?? 0) >= 80) {
+    factorTags.add("high_humidity");
+    reasons.push(`습도가 ${record.environment?.humidityPercent}%로 높았습니다.`);
+  }
+  if (
+    record.environment?.humidityPercent !== null &&
+    record.environment?.humidityPercent !== undefined &&
+    record.environment.humidityPercent <= 35
+  ) {
+    factorTags.add("low_humidity");
+    reasons.push(`습도가 ${record.environment.humidityPercent}%로 낮았습니다.`);
+  }
+  if ((record.environment?.temperatureCelsius ?? 0) >= 30) {
+    factorTags.add("high_temperature");
+    reasons.push(`기온이 ${record.environment?.temperatureCelsius}도로 높았습니다.`);
+  }
+  if ((record.outdoorMinutes ?? 0) >= 120) {
+    factorTags.add("long_outdoor");
+    reasons.push(`외출 시간이 ${record.outdoorMinutes}분으로 길었습니다.`);
+  }
+  if ((record.environment?.precipitationAmountMm ?? 0) > 0) {
+    factorTags.add("rain");
+    reasons.push(`강수량 ${record.environment?.precipitationAmountMm}mm가 함께 기록되었습니다.`);
+  }
+  if (firstProducts.length > 0) {
+    factorTags.add("first_product_use");
+    const names = firstProducts.map((userProduct) => userProduct.product.name).slice(0, 3);
+    productNames.push(...names);
+    reasons.push(`처음 사용한 제품: ${names.join(", ")}`);
+  } else if (changedProducts.length > 0 && index > 0) {
+    factorTags.add("product_change");
+    const names = changedProducts.map((userProduct) => userProduct.product.name).slice(0, 3);
+    productNames.push(...names);
+    reasons.push(`전날과 달라진 제품: ${names.join(", ")}`);
+  }
+
+  return {
+    factorTags: [...factorTags],
+    reasons,
+    productNames: [...new Set(productNames)]
+  };
+};
+
+const buildNotableEvents = (records: DailyRecordDto[]): AnalysisNotableEvent[] => {
+  const ascendingRecords = [...records].sort((left, right) => left.recordDate.localeCompare(right.recordDate));
+  const firstDateByProductId = firstUsedDateByUserProductId(ascendingRecords);
+
+  return ascendingRecords
+    .map((record, index) => {
+      const baselineRecords = ascendingRecords.slice(
+        Math.max(0, index - BASELINE_LOOKBACK_DAYS),
+        index
+      );
+      const baselineScore = Number(
+        average(baselineRecords.map(totalSkinScore)).toFixed(1)
+      );
+      const totalScore = totalSkinScore(record);
+      const scoreDelta = Number((totalScore - baselineScore).toFixed(1));
+
+      if (baselineRecords.length < 3 || scoreDelta < NOTABLE_EVENT_DELTA) {
+        return null;
+      }
+
+      const context = reasonsForRecord(record, ascendingRecords, index, firstDateByProductId);
+      const title = record.trouble >= 4
+        ? "트러블이 평소보다 두드러진 날"
+        : record.redness >= 4
+          ? "붉음이 평소보다 두드러진 날"
+          : "피부 점수가 평소보다 오른 날";
+
+      return {
+        date: record.recordDate,
+        title,
+        severity: scoreDelta >= 3 ? "high" as const : "medium" as const,
+        totalScore,
+        baselineScore,
+        scoreDelta,
+        factorTags: context.factorTags,
+        reasons: context.reasons.length > 0
+          ? context.reasons
+          : ["피부 점수가 최근 평균보다 올랐지만 함께 기록된 생활/환경 요인은 뚜렷하지 않습니다."],
+        productNames: context.productNames
+      };
+    })
+    .filter((event): event is AnalysisNotableEvent => event !== null)
+    .sort((left, right) => right.scoreDelta - left.scoreDelta)
+    .slice(0, 5);
+};
+
+const hasFactor = (
+  record: DailyRecordDto,
+  records: DailyRecordDto[],
+  index: number,
+  firstDateByProductId: Map<string, string>,
+  factorTag: AnalysisFactorTag
+) => {
+  if (factorTag === "low_sleep") {
+    return record.sleepHours < 6;
+  }
+  if (factorTag === "high_humidity") {
+    return (record.environment?.humidityPercent ?? 0) >= 80;
+  }
+  if (factorTag === "low_humidity") {
+    return record.environment?.humidityPercent !== null &&
+      record.environment?.humidityPercent !== undefined &&
+      record.environment.humidityPercent <= 35;
+  }
+  if (factorTag === "high_temperature") {
+    return (record.environment?.temperatureCelsius ?? 0) >= 30;
+  }
+  if (factorTag === "long_outdoor") {
+    return (record.outdoorMinutes ?? 0) >= 120;
+  }
+  if (factorTag === "rain") {
+    return (record.environment?.precipitationAmountMm ?? 0) > 0;
+  }
+  if (factorTag === "first_product_use") {
+    return record.products.some(
+      (userProduct) => firstDateByProductId.get(userProduct.id) === record.recordDate
+    );
+  }
+
+  return index > 0 && record.products.some((userProduct) => !previousProductIds(records, index).has(userProduct.id));
+};
+
+const buildFactorSummaries = (
+  records: DailyRecordDto[],
+  notableEvents: AnalysisNotableEvent[]
+): AnalysisFactorSummary[] => {
+  const ascendingRecords = [...records].sort((left, right) => left.recordDate.localeCompare(right.recordDate));
+  const firstDateByProductId = firstUsedDateByUserProductId(ascendingRecords);
+  const eventDatesByFactor = new Map<AnalysisFactorTag, Set<string>>();
+
+  for (const event of notableEvents) {
+    for (const tag of event.factorTags) {
+      const dates = eventDatesByFactor.get(tag) ?? new Set<string>();
+      dates.add(event.date);
+      eventDatesByFactor.set(tag, dates);
+    }
+  }
+
+  return (Object.keys(factorLabelByTag) as AnalysisFactorTag[])
+    .map((factorTag) => {
+      const hitCount = ascendingRecords.filter((record, index) =>
+        hasFactor(record, ascendingRecords, index, firstDateByProductId, factorTag)
+      ).length;
+      const eventCount = eventDatesByFactor.get(factorTag)?.size ?? 0;
+
+      return {
+        factorTag,
+        label: factorLabelByTag[factorTag],
+        hitCount,
+        eventCount,
+        description: eventCount > 0
+          ? `${factorLabelByTag[factorTag]} 조건이 특이 변화일 ${eventCount}회와 함께 나타났습니다.`
+          : `${factorLabelByTag[factorTag]} 조건은 ${hitCount}회 기록됐지만 뚜렷한 악화 이벤트와의 반복은 아직 약합니다.`
+      };
+    })
+    .filter((summary) => summary.hitCount > 0)
+    .sort((left, right) => right.eventCount - left.eventCount || right.hitCount - left.hitCount)
+    .slice(0, 5);
 };
 
 const ensureAccumulator = (
@@ -249,6 +486,9 @@ const buildEvidence = async (userId: string): Promise<AnalysisEvidence> => {
   const recentRecords = records.filter((record) => record.recordDate >= recentFrom);
   const previousRun = await findLatestAnalysisRun(userId);
   const previousFindings = previousRun ? await listAnalysisFindings(previousRun.id) : [];
+  const trendPoints = toTrendPoints(recentRecords);
+  const notableEvents = buildNotableEvents(recentRecords);
+  const factorSummaries = buildFactorSummaries(recentRecords, notableEvents);
 
   return {
     generatedAt: new Date().toISOString(),
@@ -258,6 +498,9 @@ const buildEvidence = async (userId: string): Promise<AnalysisEvidence> => {
     previousAnalysis: toPreviousAnalysisEvidence(previousRun, previousFindings),
     ingredientStats: buildIngredientStats(records, recentFrom),
     environmentSummary: buildEnvironmentSummary(recentRecords),
+    trendPoints,
+    notableEvents,
+    factorSummaries,
     limitations: baseLimitations(recentRecords.length)
   };
 };
@@ -291,7 +534,9 @@ const fallbackAnalysis = (evidence: AnalysisEvidence): GeneratedAnalysis => {
     confidenceLevel,
     summary: evidence.recentRecordCount === 0
       ? "최근 30일 피부 기록이 없어 분석할 수 있는 데이터가 아직 부족합니다."
-      : "AI 설명 생성에 실패해 기록 기반 통계 요약만 표시합니다. 성분 후보는 관련 가능성으로만 참고해주세요.",
+      : evidence.notableEvents.length > 0
+        ? `${evidence.notableEvents[0].date}에 평소 대비 피부 점수가 ${evidence.notableEvents[0].scoreDelta}점 높았습니다. 함께 기록된 후보 요인을 우선 확인해보세요.`
+        : "최근 30일 기록에서 큰 급증일은 뚜렷하지 않았고, 성분 후보는 관련 가능성으로만 참고해주세요.",
     positiveSuspectedIngredients: fallbackFindings(evidence.ingredientStats, "positive"),
     negativeSuspectedIngredients: fallbackFindings(evidence.ingredientStats, "negative"),
     limitations: evidence.limitations,
@@ -313,12 +558,16 @@ const clampFindings = (findings: GeneratedAnalysisFinding[]) =>
 
 const createAndStoreAnalysis = async (
   userId: string,
-  generatedAnalysis: GeneratedAnalysis
+  generatedAnalysis: GeneratedAnalysis,
+  evidence: AnalysisEvidence
 ): Promise<AnalysisResultDto> => {
   const run = await createAnalysisRun({
     userId,
     confidenceLevel: generatedAnalysis.confidenceLevel,
     summary: generatedAnalysis.summary,
+    trendPoints: evidence.trendPoints,
+    notableEvents: evidence.notableEvents,
+    factorSummaries: evidence.factorSummaries,
     limitations: generatedAnalysis.limitations,
     nextRecordsToAdd: generatedAnalysis.nextRecordsToAdd
   });
@@ -362,6 +611,9 @@ const toAnalysisResultDto = (
   requestedAt: run.requested_at,
   confidenceLevel: run.confidence_level,
   summary: run.summary,
+  trendPoints: run.trend_points,
+  notableEvents: run.notable_events,
+  factorSummaries: run.factor_summaries,
   positiveSuspectedIngredients: findings
     .filter((finding) => finding.finding_type === "positive_suspect")
     .map(toFindingDto),
@@ -380,7 +632,7 @@ export const runAnalysis = async (userId: string): Promise<AnalysisResultDto> =>
     limitations: [...new Set([...evidence.limitations, ...generatedAnalysis.limitations])]
   };
 
-  return createAndStoreAnalysis(userId, mergedAnalysis);
+  return createAndStoreAnalysis(userId, mergedAnalysis, evidence);
 };
 
 export const getLatestAnalysis = async (userId: string): Promise<AnalysisResultDto | null> => {

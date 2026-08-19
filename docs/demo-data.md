@@ -1,6 +1,6 @@
 # Demo Data
 
-> 문서 상태: 초안  
+> 문서 상태: 초안
 > 목적: 해커톤 시연용 계정, 제품, 프리셋, 최근 30일 기록 준비
 
 ## 1. 실행 방법
@@ -28,7 +28,7 @@ DEMO_USER_PASSWORD=demo1234
 
 ### 공용 제품 DB
 
-시연 데이터는 역할이 다른 제품을 보여주기 위해 아래 6개 제품을 준비한다.
+시연 데이터는 역할이 다른 제품과 분석 포인트를 보여주기 위해 아래 7개 제품을 준비한다.
 
 | 역할 | 브랜드 | 제품명 | item_type | 출처 |
 | --- | --- | --- | --- | --- |
@@ -36,14 +36,15 @@ DEMO_USER_PASSWORD=demo1234
 | 로션 | 라운드랩 | 소나무 진정 시카 로션 | `cosmetic` | 기존 공식 seed |
 | 에센스 | 라운드랩 | 자작나무 수분 앰플 | `cosmetic` | 기존 공식 seed |
 | 선크림 | 에스트라 | 더마UV365 장벽수분 무기자차 선크림 | `cosmetic` | 기존 공식 seed |
+| 테스트 크림 | 데모랩 | 글로우 리치 나이트 크림 | `cosmetic` | 해커톤 데모용 admin 제품 |
 | 샴푸 | 닥터포헤어 | 폴리젠 플러스 탈모 완화 샴푸 | `shower_product` | DailyMed label, 닥터포헤어 공식몰 |
 | 영양제 | 센트룸 | 센트룸 멀티구미 | `supplement` | Haleon Korea 보도자료 |
 
-샴푸와 영양제는 기존 DB에 부족한 카테고리를 보완하기 위해 `source=admin`, `verification_status=verified`, `seed_batch=demo_hackathon_20260818`로 저장한다.
+테스트 크림, 샴푸, 영양제는 기존 DB에 부족한 카테고리와 분석 시나리오를 보완하기 위해 `source=admin`, `verification_status=verified`, `seed_batch=demo_hackathon_20260818`로 저장한다.
 
 ### 내 제품
 
-데모 계정의 `user_products`에 6개 제품을 모두 `current`로 등록한다. `past_reaction_memo`에는 사용자가 이전 사용 경험을 입력한 것처럼 짧은 현실적인 메모를 넣는다.
+데모 계정의 `user_products`에 7개 제품을 모두 `current`로 등록한다. `past_reaction_memo`에는 사용자가 이전 사용 경험을 입력한 것처럼 짧은 현실적인 메모를 넣는다.
 
 ### 프리셋
 
@@ -67,6 +68,13 @@ DEMO_USER_PASSWORD=demo1234
 - 환경 스냅샷: 서울특별시 강남구 기준의 데모 온도, 습도, 강수량, 풍속
 - 메모: 수면 부족, 외출, 보습, 두피 관리 같은 짧은 사용자 메모
 
+분석 시연이 밋밋하지 않도록 아래 포인트를 의도적으로 포함한다.
+
+- 최근 30일 중간 지점에 `글로우 리치 나이트 크림` 첫 사용일을 만들고, 같은 날 수면 부족, 긴 외출, 높은 습도를 함께 기록한다.
+- 다음 날에도 높은 습도와 강수, 트러블 지속 기록을 남겨 “첫 사용 제품 + 환경 요인”을 후보 요인으로 볼 수 있게 한다.
+- 후반부에는 수면 부족과 긴 외출 후 붉음이 크게 오른 날을 만든다.
+- 별도의 날에는 낮은 습도와 건조함 급증을 만들어 제품 후보뿐 아니라 환경 후보도 보이게 한다.
+
 ## 3. 출처
 
 - 라운드랩 1025 독도 토너: `https://roundlab.com/products/1025-dokdo-toner`
@@ -76,6 +84,7 @@ DEMO_USER_PASSWORD=demo1234
 - 닥터포헤어 폴리젠 플러스 탈모 완화 샴푸 공식몰: `https://drforhair.co.kr/product/%ED%8F%B4%EB%A6%AC%EC%A0%A0-%ED%94%8C%EB%9F%AC%EC%8A%A4-%ED%83%88%EB%AA%A8-%EC%99%84%ED%99%94-%EC%83%B4%ED%91%B8-500ml/968/`
 - Dr.FORHAIR FOLLIGEN DailyMed label: `https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?audience=consumer&setid=f2dcca44-72a4-4e90-92e9-08c3d95e4893`
 - 센트룸 멀티구미 Haleon Korea 보도자료: `https://www.haleon.com/kr/news/press-releases/brand/2021/2021-04-01`
+- 글로우 리치 나이트 크림: 해커톤 분석 시연을 위한 데모 제품이며 실제 제품 출처가 아니다.
 
 ## 4. 시연 시 보완하면 좋은 데이터
 

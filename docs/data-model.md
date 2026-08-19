@@ -380,6 +380,9 @@ T3 범위에서는 제품 직접 등록을 열지 않고 seed 공용 제품 DB�
 - `requested_at`
 - `confidence_level`
 - `summary`
+- `trend_points`
+- `notable_events`
+- `factor_summaries`
 - `limitations`
 - `next_records_to_add`
 - `created_at`
@@ -387,6 +390,9 @@ T3 범위에서는 제품 직접 등록을 열지 않고 seed 공용 제품 DB�
 `confidence_level`은 `strong`, `medium`, `weak`, `data_insufficient`를 고려한다.
 분석 실행은 최근 30일 상세 기록, 전체 기간 압축 통계, 이전 최신 분석 요약을 바탕으로 생성한다.
 전체 기간의 원본 기록을 매번 AI에 모두 전달하지 않고 Backend에서 성분별 노출/개선/악화 통계로 압축한다.
+`trend_points`는 최근 30일 차트용 피부 점수와 생활·환경 값을 저장한다.
+`notable_events`는 최근 평균 대비 피부 점수가 오른 날짜와 같은 날 함께 기록된 후보 요인을 저장한다.
+`factor_summaries`는 수면 부족, 높은 습도, 첫 사용 제품 같은 요인이 특이 변화일과 얼마나 함께 나타났는지 저장한다.
 
 ### analysis_findings
 
