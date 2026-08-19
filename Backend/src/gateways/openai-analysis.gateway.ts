@@ -68,6 +68,9 @@ export const generateAnalysisWithOpenAi = async (
           "evidence.notableEvents는 최근 평균 대비 피부 점수가 튄 날짜이며, reasons는 같은 날 함께 기록된 후보 요인이다.",
           "evidence.factorSummaries는 후보 요인이 기록 전체와 특이 변화일에서 얼마나 반복됐는지 요약한 값이다.",
           "성분 후보는 각 방향 최대 5개로 제한하고, 데이터가 부족하면 confidenceLevel을 data_insufficient 또는 weak로 낮춰라.",
+          "ingredientStats에서 positiveSignalCount가 negativeSignalCount보다 큰 항목은 긍정 후보로, negativeSignalCount가 positiveSignalCount보다 큰 항목은 부정 후보로 우선 검토한다.",
+          "여러 제품에 반복해서 겹치는 일반 계면활성제보다 한 제품 또는 한 루틴 변화에 특징적으로 등장한 성분을 우선한다.",
+          "한 방향의 후보가 존재하면 해당 배열을 비우지 말고 최소 1개 이상 반환한다.",
           "생활/환경 요인은 limitations 또는 nextRecordsToAdd에 반영하되 성분 원인처럼 표현하지 마라.",
           "반환 JSON 형식:",
           JSON.stringify({

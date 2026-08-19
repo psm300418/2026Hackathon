@@ -31,6 +31,7 @@ const ANALYSIS_WINDOW_DAYS = 30;
 const ALL_RECORDS_FROM = "1900-01-01";
 const MAX_CANDIDATE_INGREDIENTS = 12;
 const WATER_NAMES = new Set(["정제수", "water", "aqua"]);
+const BACKGROUND_EXPOSURE_RATIO = 0.5;
 const BASELINE_LOOKBACK_DAYS = 7;
 const NOTABLE_EVENT_DELTA = 2;
 
@@ -40,6 +41,8 @@ type IngredientAccumulator = {
   recentExposureCount: number;
   positiveSignalCount: number;
   negativeSignalCount: number;
+  recentPositiveSignalCount: number;
+  recentNegativeSignalCount: number;
   lastExposedAt: string;
   productNames: Set<string>;
   itemTypes: Set<string>;
@@ -344,6 +347,8 @@ const ensureAccumulator = (
     recentExposureCount: 0,
     positiveSignalCount: 0,
     negativeSignalCount: 0,
+    recentPositiveSignalCount: 0,
+    recentNegativeSignalCount: 0,
     lastExposedAt: "",
     productNames: new Set<string>(),
     itemTypes: new Set<string>()
@@ -376,6 +381,8 @@ const buildIngredientStats = (
       stat.recentExposureCount += isRecent ? 1 : 0;
       stat.positiveSignalCount += signal > 0 ? 1 : 0;
       stat.negativeSignalCount += signal < 0 ? 1 : 0;
+      stat.recentPositiveSignalCount += isRecent && signal > 0 ? 1 : 0;
+      stat.recentNegativeSignalCount += isRecent && signal < 0 ? 1 : 0;
       stat.lastExposedAt = record.recordDate;
 
       for (const userProduct of record.products) {
@@ -387,7 +394,16 @@ const buildIngredientStats = (
     }
   });
 
-  return [...stats.values()]
+  const recentRecordCount = records.filter((record) => record.recordDate >= recentFrom).length;
+  const backgroundExposureCutoff = Math.ceil(recentRecordCount * BACKGROUND_EXPOSURE_RATIO);
+
+  const candidates = [...stats.values()]
+    .filter((stat) => {
+      const isBackgroundExposure = recentRecordCount > 0 &&
+        stat.recentExposureCount >= backgroundExposureCutoff;
+      const hasDirectionalSignal = stat.recentPositiveSignalCount !== stat.recentNegativeSignalCount;
+      return !isBackgroundExposure && hasDirectionalSignal;
+    })
     .map((stat) => ({
       name: stat.name,
       totalExposureCount: stat.totalExposureCount,
@@ -397,13 +413,38 @@ const buildIngredientStats = (
       lastExposedAt: stat.lastExposedAt,
       productNames: [...stat.productNames].slice(0, 5),
       itemTypes: [...stat.itemTypes]
-    }))
-    .sort((left, right) => {
-      const leftSignal = left.positiveSignalCount + left.negativeSignalCount + left.recentExposureCount;
-      const rightSignal = right.positiveSignalCount + right.negativeSignalCount + right.recentExposureCount;
-      return rightSignal - leftSignal || right.totalExposureCount - left.totalExposureCount;
-    })
-    .slice(0, MAX_CANDIDATE_INGREDIENTS);
+    }));
+
+  const sortDirection = (direction: "positive" | "negative") =>
+    (left: AnalysisIngredientStat, right: AnalysisIngredientStat) => {
+      const leftSignal = direction === "positive"
+        ? left.positiveSignalCount - left.negativeSignalCount
+        : left.negativeSignalCount - left.positiveSignalCount;
+      const rightSignal = direction === "positive"
+        ? right.positiveSignalCount - right.negativeSignalCount
+        : right.negativeSignalCount - right.positiveSignalCount;
+
+      return rightSignal - leftSignal ||
+        left.productNames.length - right.productNames.length ||
+        right.recentExposureCount - left.recentExposureCount ||
+        right.totalExposureCount - left.totalExposureCount;
+    };
+
+  const positiveCandidates = candidates
+    .filter((stat) => stat.positiveSignalCount > stat.negativeSignalCount)
+    .sort(sortDirection("positive"))
+    .slice(0, MAX_CANDIDATE_INGREDIENTS / 2);
+  const negativeCandidates = candidates
+    .filter((stat) => stat.negativeSignalCount > stat.positiveSignalCount)
+    .sort(sortDirection("negative"))
+    .slice(0, MAX_CANDIDATE_INGREDIENTS / 2);
+  const candidateByName = new Map<string, AnalysisIngredientStat>();
+
+  for (const candidate of [...positiveCandidates, ...negativeCandidates]) {
+    candidateByName.set(normalizeName(candidate.name), candidate);
+  }
+
+  return [...candidateByName.values()].slice(0, MAX_CANDIDATE_INGREDIENTS);
 };
 
 const buildEnvironmentSummary = (records: DailyRecordDto[]): AnalysisEnvironmentSummary =>
@@ -510,10 +551,15 @@ const fallbackFindings = (
   type: "positive" | "negative"
 ): GeneratedAnalysisFinding[] => {
   const scoreKey = type === "positive" ? "positiveSignalCount" : "negativeSignalCount";
+  const oppositeScoreKey = type === "positive" ? "negativeSignalCount" : "positiveSignalCount";
 
   return stats
-    .filter((stat) => stat[scoreKey] > 0)
-    .sort((left, right) => right[scoreKey] - left[scoreKey] || right.recentExposureCount - left.recentExposureCount)
+    .filter((stat) => stat[scoreKey] > stat[oppositeScoreKey])
+    .sort((left, right) =>
+      (right[scoreKey] - right[oppositeScoreKey]) -
+        (left[scoreKey] - left[oppositeScoreKey]) ||
+      right.recentExposureCount - left.recentExposureCount
+    )
     .slice(0, 5)
     .map((stat) => ({
       name: stat.name,
@@ -627,8 +673,15 @@ const toAnalysisResultDto = (
 export const runAnalysis = async (userId: string): Promise<AnalysisResultDto> => {
   const evidence = await buildEvidence(userId);
   const generatedAnalysis = await generateAnalysisWithOpenAi(evidence).catch(() => fallbackAnalysis(evidence));
+  const fallback = fallbackAnalysis(evidence);
   const mergedAnalysis = {
     ...generatedAnalysis,
+    positiveSuspectedIngredients: generatedAnalysis.positiveSuspectedIngredients.length > 0
+      ? generatedAnalysis.positiveSuspectedIngredients
+      : fallback.positiveSuspectedIngredients,
+    negativeSuspectedIngredients: generatedAnalysis.negativeSuspectedIngredients.length > 0
+      ? generatedAnalysis.negativeSuspectedIngredients
+      : fallback.negativeSuspectedIngredients,
     limitations: [...new Set([...evidence.limitations, ...generatedAnalysis.limitations])]
   };
 

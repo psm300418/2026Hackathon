@@ -141,6 +141,74 @@ const externalProducts: DemoProduct[] = [
     seedBatch: DEMO_SEED_BATCH
   },
   {
+    externalId: "demo_admin-cleanser-cosrx-hydrium-triple-ha",
+    source: "admin",
+    itemType: "cosmetic",
+    name: "하이드리움 트리플 히알루로닉 모이스처라이징 클렌저",
+    normalizedName: "하이드리움 트리플 히알루로닉 모이스처라이징 클렌저",
+    brand: "COSRX",
+    category: "폼클렌징",
+    ingredientsText:
+      "Water, Glycerin, Stearic Acid, Myristic Acid, Lauric Acid, Potassium Hydroxide, Palmitic Acid, Potassium Cocoyl Glycinate, Coco-Glucoside, Glyceryl Stearate, Fragrance, Polyquaternium-7, Acrylates/C10-30 Alkyl Acrylate Crosspolymer, Sodium Cocoyl Isethionate, Arachidic Acid, Disodium EDTA, 1,2-Hexanediol, Oleic Acid, Sodium Benzoate, Quillaja Saponaria Bark Extract, Citric Acid, Butylene Glycol, Panthenol, Hyaluronic Acid, Ethylhexylglycerin, Hydrolyzed Hyaluronic Acid, Sodium Hyaluronate",
+    verificationStatus: "verified",
+    sourceUrl: "https://www.cosrx.com/products/triple-hyaluronic-moisturizing-cleanser",
+    sourceCheckedAt: "2026-08-19",
+    region: "US",
+    formulaVersion: "COSRX official product page checked:2026-08-19",
+    seedBatch: DEMO_SEED_BATCH
+  },
+  {
+    externalId: "demo_admin-cleanser-cosrx-ac-calming-foam",
+    source: "admin",
+    itemType: "cosmetic",
+    name: "AC 컬렉션 카밍 폼 클렌저",
+    normalizedName: "AC 컬렉션 카밍 폼 클렌저",
+    brand: "COSRX",
+    category: "폼클렌징",
+    ingredientsText:
+      "Water, Glycerin, Stearic Acid, Myristic Acid, PEG-32, Potassium Hydroxide, Palmitic Acid, Lauric Acid, Glyceryl Stearate, PEG-100 Stearate, Lauramide DEA, Cocamidopropyl Betaine, Potassium Cocoate, Salicylic Acid, Sodium Chloride, Arachidic Acid, Lavandula Hybrida Oil, Linalool, Disodium EDTA, Oleic Acid, Limonene, Asiaticoside, Asiatic Acid, Madecassic Acid",
+    verificationStatus: "verified",
+    sourceUrl: "https://www.cosrx.com/products/ac-collection-calming-foam-cleanser",
+    sourceCheckedAt: "2026-08-19",
+    region: "US",
+    formulaVersion: "COSRX official product page checked:2026-08-19",
+    seedBatch: DEMO_SEED_BATCH
+  },
+  {
+    externalId: "demo_admin-cleanser-cosrx-low-ph-good-morning",
+    source: "admin",
+    itemType: "cosmetic",
+    name: "약산성 굿모닝 젤 클렌저",
+    normalizedName: "약산성 굿모닝 젤 클렌저",
+    brand: "COSRX",
+    category: "젤클렌저",
+    ingredientsText:
+      "Water, Cocamidopropyl Betaine, Sodium Lauroyl Methyl Isethionate, Sodium Chloride, Polysorbate 20, Styrax Japonicus Branch/Fruit/Leaf Extract, Butylene Glycol, Saccharomyces Ferment, Cryptomeria Japonica Leaf Extract, Nelumbo Nucifera Leaf Extract, Pinus Palustris Leaf Extract, Ulmus Davidiana Root Extract, Oenothera Biennis Flower Extract, Pueraria Lobata Root Extract, Melaleuca Alternifolia Tea Tree Leaf Oil, Allantoin, Caprylyl Glycol, Ethylhexylglycerin, Betaine Salicylate, Citric Acid, Ethyl Hexanediol, 1,2-Hexanediol, Trisodium Ethylenediamine Disuccinate, Sodium Benzoate, Disodium EDTA",
+    verificationStatus: "verified",
+    sourceUrl: "https://www.cosrx.com/products/low-ph-good-morning-gel-cleanser",
+    sourceCheckedAt: "2026-08-19",
+    region: "US",
+    formulaVersion: "COSRX official product page checked:2026-08-19",
+    seedBatch: DEMO_SEED_BATCH
+  },
+  {
+    externalId: "demo_admin-cleanser-cosrx-red-rice-inositol",
+    source: "admin",
+    itemType: "cosmetic",
+    name: "레드 라이스 이노시톨 포어 클라리파잉 딥 클렌저",
+    normalizedName: "레드 라이스 이노시톨 포어 클라리파잉 딥 클렌저",
+    brand: "COSRX",
+    category: "폼클렌징",
+    ingredientsText:
+      "Aqua, Glycerin, Sodium Cocoyl Glycinate, Cellulose, Sodium Lauroyl Glutamate, Hydrated Silica, Kaolin, Disodium Cocoamphodiacetate, 1,2-Hexanediol, Oryza Sativa Rice Seed Water, Betaine, Sodium Chloride, Sodium Sweetalmondamphoacetate, Lauryl Betaine, Sodium Methyl Cocoyl Taurate, Glycol Distearate, Sodium Polyacrylate, Glycol Stearate, Ethylhexylglycerin, Hydroxyacetophenone, Acrylates/C10-30 Alkyl Acrylate Crosspolymer, Citric Acid, Inositol, Polyglycerin-3, Phytosteryl/Octyldodecyl Lauroyl Glutamate, Gardenia Florida Fruit Extract, Dextrin, Cyanocobalamin, Hexylene Glycol, Butylene Glycol, Panthenol, Oryza Sativa Rice Seed Extract, Niacinamide, Gluconolactone, Phytic Acid, Beta-Glucan, Sodium Hyaluronate, Tocopherol, Ceramide NP, Hydrolyzed Hyaluronic Acid, Sodium Acetylated Hyaluronate",
+    verificationStatus: "verified",
+    sourceUrl: "https://www.cosrx.com/products/cosrx-red-rice-inositol-pore-clarifying-deep-cleanser",
+    sourceCheckedAt: "2026-08-19",
+    region: "US",
+    formulaVersion: "COSRX official product page checked:2026-08-19",
+    seedBatch: DEMO_SEED_BATCH
+  },
+  {
     externalId: "demo_admin-shower-drforhair-folligen-shampoo",
     source: "admin",
     itemType: "shower_product",
@@ -221,6 +289,34 @@ const userProductSeeds: UserProductSeed[] = [
     memo: "최근 테스트를 시작한 리치 크림. 향료 포함 여부를 분석 포인트로 확인"
   },
   {
+    productExternalId: "demo_admin-cleanser-cosrx-hydrium-triple-ha",
+    usageStatus: "current",
+    isPastExperience: true,
+    pastReactionMemo: "당김이 적고 세안 후 건조함이 덜한 편.",
+    memo: "1주차 데모 클렌저"
+  },
+  {
+    productExternalId: "demo_admin-cleanser-cosrx-ac-calming-foam",
+    usageStatus: "current",
+    isPastExperience: true,
+    pastReactionMemo: "트러블이 올라온 주간에 세안 후 개운함이 강함.",
+    memo: "2주차 데모 클렌저"
+  },
+  {
+    productExternalId: "demo_admin-cleanser-cosrx-low-ph-good-morning",
+    usageStatus: "current",
+    isPastExperience: true,
+    pastReactionMemo: "약산성 젤 타입이라 평소 아침 세안에 무난함.",
+    memo: "3주차 데모 클렌저"
+  },
+  {
+    productExternalId: "demo_admin-cleanser-cosrx-red-rice-inositol",
+    usageStatus: "current",
+    isPastExperience: false,
+    pastReactionMemo: null,
+    memo: "4주차 데모 클렌저. 포어/딥클렌징 계열"
+  },
+  {
     productExternalId: "demo_admin-supplement-centrum-multigummies",
     usageStatus: "current",
     isPastExperience: true,
@@ -245,6 +341,22 @@ const routineSeeds: DemoRoutineSeed[] = [
       "seed_97_ko_official-005",
       "seed_97_ko_official-015"
     ]
+  },
+  {
+    name: "1주차 수분 클렌징",
+    productExternalIds: ["demo_admin-cleanser-cosrx-hydrium-triple-ha"]
+  },
+  {
+    name: "2주차 BHA 클렌징",
+    productExternalIds: ["demo_admin-cleanser-cosrx-ac-calming-foam"]
+  },
+  {
+    name: "3주차 약산성 클렌징",
+    productExternalIds: ["demo_admin-cleanser-cosrx-low-ph-good-morning"]
+  },
+  {
+    name: "4주차 포어 클렌징",
+    productExternalIds: ["demo_admin-cleanser-cosrx-red-rice-inositol"]
   },
   {
     name: "두피/영양 관리",
@@ -576,6 +688,34 @@ const upsertRoutines = async (userId: string, userProductIdByExternalId: Map<str
 
 const clampScore = (value: number) => Math.max(0, Math.min(5, Math.round(value)));
 
+const cleanserScheduleForIndex = (index: number) => {
+  if (index < 7) {
+    return {
+      productExternalId: "demo_admin-cleanser-cosrx-hydrium-triple-ha",
+      routineName: "1주차 수분 클렌징"
+    };
+  }
+
+  if (index < 14) {
+    return {
+      productExternalId: "demo_admin-cleanser-cosrx-ac-calming-foam",
+      routineName: "2주차 BHA 클렌징"
+    };
+  }
+
+  if (index < 21) {
+    return {
+      productExternalId: "demo_admin-cleanser-cosrx-low-ph-good-morning",
+      routineName: "3주차 약산성 클렌징"
+    };
+  }
+
+  return {
+    productExternalId: "demo_admin-cleanser-cosrx-red-rice-inositol",
+    routineName: "4주차 포어 클렌징"
+  };
+};
+
 const buildDailyRecords = (today: string): DailyRecordSeed[] => {
   const endDate = new Date(`${today}T00:00:00.000Z`);
   const startDate = addDays(endDate, -29);
@@ -591,6 +731,7 @@ const buildDailyRecords = (today: string): DailyRecordSeed[] => {
 
   for (let index = 0; index < 30; index += 1) {
     const date = toDateString(addDays(startDate, index));
+    const cleanser = cleanserScheduleForIndex(index);
     const weekend = index % 7 === 5 || index % 7 === 6;
     const eventNightCream = index >= 14 && index <= 17;
     const poorSleep = index % 9 === 2 || index % 11 === 5 || index === 14 || index === 22;
@@ -613,6 +754,49 @@ const buildDailyRecords = (today: string): DailyRecordSeed[] => {
     let temperatureCelsius = Number((27.2 + (index % 9) * 0.45 + (longOutdoor ? 0.8 : 0)).toFixed(1));
     let humidityPercent = 57 + (index % 8) * 4 + (index % 6 === 0 ? 9 : 0);
     let precipitationAmountMm = index % 12 === 5 ? 4.5 : 0;
+
+    if (index >= 7 && index <= 13) {
+      trouble = clampScore(trouble - 1);
+      redness = clampScore(redness - 0.5);
+      memo = "BHA 폼클렌징 주간. 트러블과 붉음이 조금씩 잦아드는 흐름.";
+    }
+
+    if (index === 7) {
+      dryness = 3;
+      oiliness = 3;
+      redness = 3;
+      trouble = 4;
+      memo = "AC 카밍 폼클렌저로 바꾼 첫날. 기존 트러블이 아직 남아 있음.";
+    } else if (index === 8) {
+      dryness = 3;
+      oiliness = 2;
+      redness = 3;
+      trouble = 3;
+      memo = "BHA 클렌징 둘째 날. 트러블 붉음이 조금 내려감.";
+    } else if (index === 9) {
+      dryness = 2;
+      oiliness = 2;
+      redness = 2;
+      trouble = 2;
+      memo = "BHA 클렌징 주간 중반. 트러블과 유분이 같이 낮아짐.";
+    } else if (index === 10) {
+      dryness = 2;
+      oiliness = 2;
+      redness = 1;
+      trouble = 2;
+      memo = "AC 카밍 폼클렌저 사용 후 붉음이 안정적인 날.";
+    } else if (index === 11 || index === 12 || index === 13) {
+      dryness = 2;
+      oiliness = 2;
+      redness = 1;
+      trouble = 1;
+      memo = "BHA 클렌징 주간 후반. 트러블 점수가 낮게 유지됨.";
+    }
+
+    if (index >= 21 && index <= 29) {
+      dryness = clampScore(dryness + 0.7);
+      memo = "포어 딥클렌징 주간. 세안 후 당김을 더 의식해서 기록함.";
+    }
 
     if (index === 14) {
       dryness = 3;
@@ -664,6 +848,7 @@ const buildDailyRecords = (today: string): DailyRecordSeed[] => {
       "seed_97_ko_official-001",
       "seed_97_ko_official-015",
       "seed_additional_100_ko_official-009",
+      cleanser.productExternalId,
       ...(serumDay ? ["seed_97_ko_official-005"] : []),
       ...(eventNightCream ? ["demo_admin-cosmetic-glow-night-cream"] : []),
       ...(shampooDay ? ["demo_admin-shower-drforhair-folligen-shampoo"] : []),
@@ -671,6 +856,7 @@ const buildDailyRecords = (today: string): DailyRecordSeed[] => {
     ];
     const routineNames = [
       "아침 기본 루틴",
+      cleanser.routineName,
       ...(serumDay ? ["저녁 회복 루틴"] : []),
       ...(shampooDay || supplementDay ? ["두피/영양 관리"] : [])
     ];
