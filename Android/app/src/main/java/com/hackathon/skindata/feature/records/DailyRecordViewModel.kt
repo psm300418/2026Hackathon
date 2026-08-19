@@ -16,6 +16,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.ZoneId
+
+private val seoulZoneId: ZoneId = ZoneId.of("Asia/Seoul")
+private fun todayInSeoul(): LocalDate = LocalDate.now(seoulZoneId)
 
 class DailyRecordViewModel(
     private val backendApiClient: BackendApiClient = BackendApiClient()
@@ -31,7 +35,7 @@ class DailyRecordViewModel(
                 val userProducts = backendApiClient.getUserProducts(accessToken).items
                 val presets = backendApiClient.getProductPresets(accessToken).items
                 val location = backendApiClient.getMyLocation(accessToken)
-                val today = LocalDate.now()
+                val today = todayInSeoul()
                 val historyFrom = today.minusDays(13).toString()
                 val historyTo = today.toString()
                 val trendFrom = today.minusDays(29).toString()
@@ -337,7 +341,7 @@ class DailyRecordViewModel(
     }
 
     private suspend fun loadTrends(accessToken: String): DailyRecordTrendsDto {
-        val today = LocalDate.now()
+        val today = todayInSeoul()
         val from = today.minusDays(29).toString()
         val to = today.toString()
         return backendApiClient.getDailyRecordTrends(

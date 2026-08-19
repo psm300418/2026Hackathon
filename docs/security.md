@@ -25,6 +25,7 @@
 - Android 앱은 로그인 후 Supabase access token을 저장한다.
 - Backend API 요청 시 `Authorization: Bearer <token>` 헤더를 사용한다.
 - Backend는 모든 보호 API에서 access token을 검증한다.
+- Android는 보호 API가 401을 반환하면 Supabase session refresh 후 같은 요청을 한 번만 재시도한다. 재시도도 실패하면 재로그인이 필요하다고 안내한다.
 - 회원가입에서 Supabase Admin API가 필요하면 Backend에서만 호출한다.
 - 해커톤 시연용 이메일 인증 우회는 Backend의 제한된 회원가입 API에서만 처리하며, Android에는 service role key를 넣지 않는다.
 
@@ -131,6 +132,7 @@ local.properties
 - PostgreSQL에는 사진 경로, 업로드 시각, 연결된 피부 기록 ID 등 메타데이터만 저장한다.
 - 사진 파일 경로는 사용자 ID 기준으로 분리한다.
 - 사용자가 피부 기록을 삭제하면 연결된 사진도 함께 삭제하는 정책을 우선 고려한다.
+- 피부 기록의 얼굴 사진을 교체할 때는 새 사진 업로드와 새 메타데이터 저장을 먼저 완료한 뒤 기존 사진과 메타데이터를 정리한다.
 - MVP에서는 AI 분석에 사진 원본을 반드시 전달하지 않는다. 사진 기반 분석을 추가할 경우 별도 동의와 전송 범위를 명확히 한다.
 
 ### 제품 성분표 및 라벨 사진 정책

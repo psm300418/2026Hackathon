@@ -1,6 +1,7 @@
 package com.hackathon.skindata.core.network
 
 import com.hackathon.skindata.BuildConfig
+import io.github.jan.supabase.auth.auth
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
@@ -27,6 +28,11 @@ class BackendApiClient(
         const val READ_TIMEOUT_MS = 45_000
         const val MULTIPART_READ_TIMEOUT_MS = 60_000
     }
+
+    private data class BackendResponse(
+        val responseCode: Int,
+        val body: String
+    )
 
     suspend fun getMyProfile(accessToken: String): ProfileDto = withContext(Dispatchers.IO) {
         val body = request(
@@ -312,12 +318,45 @@ class BackendApiClient(
         json.decodeFromString<ApiResponse<AnalysisResultDto>>(body).data
     }
 
-    private fun request(
+    private suspend fun request(
         path: String,
         method: String,
         accessToken: String?,
         requestBody: String? = null
     ): String {
+        try {
+            val initialResponse = executeRequest(
+                path = path,
+                method = method,
+                accessToken = accessToken,
+                requestBody = requestBody
+            )
+
+            if (initialResponse.responseCode == HttpURLConnection.HTTP_UNAUTHORIZED && accessToken != null) {
+                val refreshedToken = refreshAccessToken()
+                val retryResponse = executeRequest(
+                    path = path,
+                    method = method,
+                    accessToken = refreshedToken,
+                    requestBody = requestBody
+                )
+                return retryResponse.bodyOrThrow()
+            }
+
+            return initialResponse.bodyOrThrow()
+        } catch (error: SocketTimeoutException) {
+            throw IllegalStateException("서버 응답 시간이 초과되었습니다. 잠시 후 다시 시도해주세요.", error)
+        } catch (error: IOException) {
+            throw IllegalStateException("네트워크 연결이 불안정합니다. 연결 상태를 확인한 뒤 다시 시도해주세요.", error)
+        }
+    }
+
+    private fun executeRequest(
+        path: String,
+        method: String,
+        accessToken: String?,
+        requestBody: String? = null
+    ): BackendResponse {
         val endpoint = URL("${baseUrl.trimEnd('/')}${path}")
         val connection = endpoint.openConnection() as HttpURLConnection
 
@@ -346,21 +385,13 @@ class BackendApiClient(
                 connection.errorStream?.bufferedReader()?.use { it.readText() }.orEmpty()
             }
 
-            if (responseCode !in 200..299) {
-                throw IllegalStateException("Backend request failed: $responseCode $response")
-            }
-
-            return response
-        } catch (error: SocketTimeoutException) {
-            throw IllegalStateException("서버 응답 시간이 초과되었습니다. 잠시 후 다시 시도해주세요.", error)
-        } catch (error: IOException) {
-            throw IllegalStateException("네트워크 연결이 불안정합니다. 연결 상태를 확인한 뒤 다시 시도해주세요.", error)
+            return BackendResponse(responseCode = responseCode, body = response)
         } finally {
             connection.disconnect()
         }
     }
 
-    private fun multipartRequest(
+    private suspend fun multipartRequest(
         path: String,
         method: String,
         accessToken: String,
@@ -368,6 +399,45 @@ class BackendApiClient(
         file: FacePhotoUpload?,
         fileFieldName: String = "facePhoto"
     ): String {
+        try {
+            val initialResponse = executeMultipartRequest(
+                path = path,
+                method = method,
+                accessToken = accessToken,
+                fields = fields,
+                file = file,
+                fileFieldName = fileFieldName
+            )
+
+            if (initialResponse.responseCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                val refreshedToken = refreshAccessToken()
+                val retryResponse = executeMultipartRequest(
+                    path = path,
+                    method = method,
+                    accessToken = refreshedToken,
+                    fields = fields,
+                    file = file,
+                    fileFieldName = fileFieldName
+                )
+                return retryResponse.bodyOrThrow()
+            }
+
+            return initialResponse.bodyOrThrow()
+        } catch (error: SocketTimeoutException) {
+            throw IllegalStateException("서버 응답 시간이 초과되었습니다. 사진 크기를 줄이거나 잠시 후 다시 시도해주세요.", error)
+        } catch (error: IOException) {
+            throw IllegalStateException("네트워크 연결이 불안정합니다. 연결 상태를 확인한 뒤 다시 시도해주세요.", error)
+        }
+    }
+
+    private fun executeMultipartRequest(
+        path: String,
+        method: String,
+        accessToken: String,
+        fields: Map<String, String>,
+        file: FacePhotoUpload?,
+        fileFieldName: String = "facePhoto"
+    ): BackendResponse {
         val boundary = "SkinData-${UUID.randomUUID()}"
         val endpoint = URL("${baseUrl.trimEnd('/')}${path}")
         val connection = endpoint.openConnection() as HttpURLConnection
@@ -414,18 +484,26 @@ class BackendApiClient(
                 connection.errorStream?.bufferedReader()?.use { it.readText() }.orEmpty()
             }
 
-            if (responseCode !in 200..299) {
-                throw IllegalStateException("Backend request failed: $responseCode $response")
-            }
-
-            return response
-        } catch (error: SocketTimeoutException) {
-            throw IllegalStateException("서버 응답 시간이 초과되었습니다. 사진 크기를 줄이거나 잠시 후 다시 시도해주세요.", error)
-        } catch (error: IOException) {
-            throw IllegalStateException("네트워크 연결이 불안정합니다. 연결 상태를 확인한 뒤 다시 시도해주세요.", error)
+            return BackendResponse(responseCode = responseCode, body = response)
         } finally {
             connection.disconnect()
         }
+    }
+
+    private suspend fun refreshAccessToken(): String {
+        return runCatching {
+            SupabaseProvider.client.auth.refreshCurrentSession()
+            SupabaseProvider.client.auth.currentAccessTokenOrNull()
+        }.getOrNull()
+            ?: throw IllegalStateException("로그인 세션이 만료되었습니다. 다시 로그인해주세요.")
+    }
+
+    private fun BackendResponse.bodyOrThrow(): String {
+        if (responseCode !in 200..299) {
+            throw IllegalStateException("Backend request failed: $responseCode $body")
+        }
+
+        return body
     }
 }
 

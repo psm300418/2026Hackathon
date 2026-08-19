@@ -8,14 +8,18 @@ import com.hackathon.skindata.core.network.ProductPresetDto
 import com.hackathon.skindata.core.network.UserLocationDto
 import com.hackathon.skindata.core.network.UserProductDto
 import java.time.LocalDate
+import java.time.ZoneId
+
+private val seoulZoneId: ZoneId = ZoneId.of("Asia/Seoul")
+private fun todayInSeoul(): LocalDate = LocalDate.now(seoulZoneId)
 
 data class DailyRecordUiState(
     val isLoading: Boolean = false,
     val isSaving: Boolean = false,
     val selectedMode: DailyRecordMode = DailyRecordMode.Today,
-    val recordDate: String = LocalDate.now().toString(),
-    val historyFromDate: String = LocalDate.now().minusDays(13).toString(),
-    val historyToDate: String = LocalDate.now().toString(),
+    val recordDate: String = todayInSeoul().toString(),
+    val historyFromDate: String = todayInSeoul().minusDays(13).toString(),
+    val historyToDate: String = todayInSeoul().toString(),
     val dryness: Int = 2,
     val oiliness: Int = 2,
     val redness: Int = 1,

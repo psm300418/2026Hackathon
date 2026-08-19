@@ -508,11 +508,18 @@ const confidenceRank: Record<AnalysisConfidenceLevel, number> = {
   strong: 3
 };
 
-const strongerConfidence = (
-  left: AnalysisConfidenceLevel,
-  right: AnalysisConfidenceLevel
-): AnalysisConfidenceLevel =>
-  confidenceRank[left] >= confidenceRank[right] ? left : right;
+const conservativeConfidence = (
+  generatedConfidence: AnalysisConfidenceLevel,
+  fallbackConfidence: AnalysisConfidenceLevel
+): AnalysisConfidenceLevel => {
+  if (generatedConfidence === "data_insufficient" && fallbackConfidence !== "data_insufficient") {
+    return "weak";
+  }
+
+  return confidenceRank[generatedConfidence] <= confidenceRank[fallbackConfidence]
+    ? generatedConfidence
+    : fallbackConfidence;
+};
 
 const baseLimitations = (recentRecordCount: number): string[] => {
   if (recentRecordCount === 0) {
@@ -724,7 +731,7 @@ export const runAnalysis = async (userId: string): Promise<AnalysisResultDto> =>
   const fallback = fallbackAnalysis(evidence);
   const mergedAnalysis = {
     ...generatedAnalysis,
-    confidenceLevel: strongerConfidence(generatedAnalysis.confidenceLevel, fallback.confidenceLevel),
+    confidenceLevel: conservativeConfidence(generatedAnalysis.confidenceLevel, fallback.confidenceLevel),
     positiveSuspectedIngredients: mergeFindings(
       generatedAnalysis.positiveSuspectedIngredients,
       fallback.positiveSuspectedIngredients

@@ -335,6 +335,61 @@ export const replaceSkinPhotoMetadata = async (params: {
   return skinPhotoRowSchema.parse(data);
 };
 
+export const insertSkinPhotoMetadata = async (params: {
+  userId: string;
+  dailyRecordId: string;
+  storagePath: string;
+  originalFileName: string | null;
+  contentType: string;
+  fileSize: number;
+}): Promise<SkinPhotoRow> => {
+  const supabase = createSupabaseAdminClient();
+  const { data, error } = await supabase
+    .from("skin_photos")
+    .insert({
+      user_id: params.userId,
+      daily_record_id: params.dailyRecordId,
+      storage_path: params.storagePath,
+      original_file_name: params.originalFileName,
+      content_type: params.contentType,
+      file_size: params.fileSize,
+      taken_at: new Date().toISOString()
+    })
+    .select(
+      [
+        "id",
+        "user_id",
+        "daily_record_id",
+        "storage_path",
+        "original_file_name",
+        "content_type",
+        "file_size",
+        "taken_at",
+        "created_at"
+      ].join(", ")
+    )
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return skinPhotoRowSchema.parse(data);
+};
+
+export const removeSkinPhotoMetadataByIds = async (skinPhotoIds: string[]): Promise<void> => {
+  if (skinPhotoIds.length === 0) {
+    return;
+  }
+
+  const supabase = createSupabaseAdminClient();
+  const { error } = await supabase.from("skin_photos").delete().in("id", skinPhotoIds);
+
+  if (error) {
+    throw error;
+  }
+};
+
 export const removeSkinPhotosForDailyRecord = async (dailyRecordId: string): Promise<SkinPhotoRow[]> => {
   const existingPhotos = await listSkinPhotos([dailyRecordId]);
 

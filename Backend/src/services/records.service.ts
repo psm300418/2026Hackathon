@@ -5,10 +5,10 @@ import {
   listDailyRecordProducts,
   listDailyRecords,
   listSkinPhotos,
-  removeSkinPhotosForDailyRecord,
+  insertSkinPhotoMetadata,
+  removeSkinPhotoMetadataByIds,
   replaceDailyRecordPresets,
   replaceDailyRecordProducts,
-  replaceSkinPhotoMetadata,
   upsertDailyRecord
 } from "../repositories/daily-records.repository.js";
 import { listDailyRecordEnvironments } from "../repositories/weather.repository.js";
@@ -299,20 +299,9 @@ const replaceDailyRecordPhoto = async (
   }
 
   const supabase = createSupabaseAdminClient();
-  const existingPhotos = await removeSkinPhotosForDailyRecord(recordId);
-
-  if (existingPhotos.length > 0) {
-    const { error: removeError } = await supabase.storage
-      .from(SKIN_PHOTO_BUCKET)
-      .remove(existingPhotos.map((photo) => photo.storage_path));
-
-    if (removeError) {
-      throw removeError;
-    }
-  }
-
+  const existingPhotos = await listSkinPhotos([recordId]);
   const extension = file.mimetype === "image/png" ? "png" : "jpg";
-  const storagePath = `${userId}/${recordId}/face-photo.${extension}`;
+  const storagePath = `${userId}/${recordId}/face-photo-${Date.now()}.${extension}`;
   const { error: uploadError } = await supabase.storage
     .from(SKIN_PHOTO_BUCKET)
     .upload(storagePath, file.buffer, {
@@ -324,7 +313,7 @@ const replaceDailyRecordPhoto = async (
     throw uploadError;
   }
 
-  await replaceSkinPhotoMetadata({
+  await insertSkinPhotoMetadata({
     userId,
     dailyRecordId: recordId,
     storagePath,
@@ -332,6 +321,22 @@ const replaceDailyRecordPhoto = async (
     contentType: file.mimetype,
     fileSize: file.size
   });
+
+  try {
+    await removeSkinPhotoMetadataByIds(existingPhotos.map((photo) => photo.id));
+
+    if (existingPhotos.length > 0) {
+      const { error: removeError } = await supabase.storage
+        .from(SKIN_PHOTO_BUCKET)
+        .remove(existingPhotos.map((photo) => photo.storage_path));
+
+      if (removeError) {
+        console.warn("Failed to remove previous skin photos", removeError);
+      }
+    }
+  } catch (error) {
+    console.warn("Failed to clean up previous skin photo metadata", error);
+  }
 };
 
 export const saveDailyRecord = async (

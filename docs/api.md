@@ -882,6 +882,8 @@ POST /api/analysis/run
 
 사용자가 분석 탭에서 요청하면 현재까지 저장된 기록을 바탕으로 AI 분석을 수행한다.
 
+분석 신뢰도는 AI 응답과 Backend fallback 근거를 함께 보되 보수적으로 병합한다. AI가 `data_insufficient`로 판단한 경우 기록량이 충분하더라도 최대 `weak`까지만 보정한다.
+
 분석 입력 범위:
 
 - 최근 30일의 피부 기록은 상세 evidence로 사용한다.
