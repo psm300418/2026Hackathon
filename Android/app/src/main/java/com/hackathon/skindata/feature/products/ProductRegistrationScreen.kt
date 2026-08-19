@@ -65,6 +65,9 @@ fun ProductRegistrationRoute(
         onSearch = viewModel::search,
         onSelectProduct = viewModel::selectProduct,
         onSaveSelectedProduct = { viewModel.saveSelectedProduct(accessToken) },
+        onUsageStatusChange = { userProductId, usageStatus ->
+            viewModel.updateUsageStatus(accessToken, userProductId, usageStatus)
+        },
         onSubmissionItemTypeSelected = viewModel::selectSubmissionItemType,
         onSubmissionNameChanged = viewModel::onSubmissionNameChanged,
         onSubmissionBrandChanged = viewModel::onSubmissionBrandChanged,
@@ -84,6 +87,7 @@ fun ProductRegistrationScreen(
     onSearch: () -> Unit,
     onSelectProduct: (ProductDto) -> Unit,
     onSaveSelectedProduct: () -> Unit,
+    onUsageStatusChange: (String, String) -> Unit,
     onSubmissionItemTypeSelected: (ProductItemType) -> Unit,
     onSubmissionNameChanged: (String) -> Unit,
     onSubmissionBrandChanged: (String) -> Unit,
@@ -96,6 +100,8 @@ fun ProductRegistrationScreen(
     val labelPhotoPicker = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         onSubmissionPhotoSelected(uri?.toLabelPhotoUpload(context))
     }
+    val currentProducts = uiState.userProducts.filter { it.usageStatus == "current" }
+    val pastProducts = uiState.userProducts.filter { it.usageStatus != "current" }
 
     LazyColumn(
         modifier = modifier
@@ -105,8 +111,8 @@ fun ProductRegistrationScreen(
     ) {
         item {
             SectionHeader(
-                title = "이전 사용 제품",
-                description = "써본 제품을 검색해서 저장하면 이후 기록 분석의 참고 데이터가 됩니다."
+                title = "제품",
+                description = null
             )
         }
 
@@ -186,7 +192,8 @@ fun ProductRegistrationScreen(
             }
         }
 
-        item {
+        if (uiState.hasSearched && !uiState.isLoading && uiState.searchResults.isEmpty()) {
+            item {
             DirectProductSubmissionCard(
                 uiState = uiState,
                 onItemTypeSelected = onSubmissionItemTypeSelected,
@@ -197,22 +204,48 @@ fun ProductRegistrationScreen(
                 onExtract = onExtractSubmission,
                 onConfirm = onConfirmSubmission
             )
+            }
         }
 
         item {
-            Text(text = "내 제품 목록", style = MaterialTheme.typography.titleMedium)
+            Text(text = "사용중", style = MaterialTheme.typography.titleMedium)
         }
 
-        if (uiState.userProducts.isEmpty()) {
+        if (currentProducts.isEmpty()) {
             item {
                 Text(
-                    text = "아직 저장한 제품이 없습니다.",
+                    text = "사용중인 제품이 없습니다.",
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
         } else {
-            items(uiState.userProducts, key = { it.id }) { userProduct ->
-                UserProductCard(userProduct = userProduct)
+            items(currentProducts, key = { it.id }) { userProduct ->
+                UserProductCard(
+                    userProduct = userProduct,
+                    actionLabel = "과거 사용으로",
+                    onAction = { onUsageStatusChange(userProduct.id, "past") }
+                )
+            }
+        }
+
+        item {
+            Text(text = "과거 사용", style = MaterialTheme.typography.titleMedium)
+        }
+
+        if (pastProducts.isEmpty()) {
+            item {
+                Text(
+                    text = "과거 사용 제품이 없습니다.",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+        } else {
+            items(pastProducts, key = { it.id }) { userProduct ->
+                UserProductCard(
+                    userProduct = userProduct,
+                    actionLabel = "사용중으로",
+                    onAction = { onUsageStatusChange(userProduct.id, "current") }
+                )
             }
         }
     }
@@ -231,10 +264,6 @@ private fun DirectProductSubmissionCard(
 ) {
     AppCard {
         Text(text = "제품 직접 등록", style = MaterialTheme.typography.titleMedium)
-        Text(
-            text = "검색해서 나오지 않는 제품은 성분표나 라벨 사진에서 후보 텍스트를 추출한 뒤 확인하고 저장합니다.",
-            style = MaterialTheme.typography.bodySmall
-        )
         Spacer(modifier = Modifier.height(8.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             ProductItemType.entries.forEach { itemType ->
@@ -324,7 +353,11 @@ private fun ProductCard(
 }
 
 @Composable
-private fun UserProductCard(userProduct: UserProductDto) {
+private fun UserProductCard(
+    userProduct: UserProductDto,
+    actionLabel: String,
+    onAction: () -> Unit
+) {
     AppCard(containerColor = SkinColors.Surface) {
         ProductMeta(product = userProduct.product)
         Text(
@@ -335,6 +368,9 @@ private fun UserProductCard(userProduct: UserProductDto) {
         Text(text = representativeIngredients(userProduct.product), style = MaterialTheme.typography.bodySmall)
         userProduct.pastReactionMemo?.takeIf { it.isNotBlank() }?.let {
             Text(text = "메모: $it", style = MaterialTheme.typography.bodyMedium)
+        }
+        OutlinedButton(onClick = onAction) {
+            Text(actionLabel)
         }
     }
 }
@@ -408,6 +444,7 @@ private fun ProductRegistrationScreenPreview() {
             onSearch = {},
             onSelectProduct = {},
             onSaveSelectedProduct = {},
+            onUsageStatusChange = { _, _ -> },
             onSubmissionItemTypeSelected = {},
             onSubmissionNameChanged = {},
             onSubmissionBrandChanged = {},

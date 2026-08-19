@@ -47,6 +47,9 @@ class ProductRegistrationViewModel(
         _uiState.update {
             it.copy(
                 query = value,
+                hasSearched = false,
+                searchResults = emptyList(),
+                selectedProduct = null,
                 message = null
             )
         }
@@ -70,7 +73,14 @@ class ProductRegistrationViewModel(
         }
 
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, searchResults = emptyList(), selectedProduct = null) }
+            _uiState.update {
+                it.copy(
+                    isLoading = true,
+                    hasSearched = true,
+                    searchResults = emptyList(),
+                    selectedProduct = null
+                )
+            }
 
             runCatching {
                 backendApiClient.searchProducts(query)
@@ -80,7 +90,7 @@ class ProductRegistrationViewModel(
                         isLoading = false,
                         searchResults = response.items,
                         message = if (response.items.isEmpty()) {
-                            "검색 결과가 없습니다. 아래에서 성분표 또는 라벨 사진으로 직접 등록할 수 있습니다."
+                            "검색 결과가 없습니다. 직접 등록을 이용해주세요."
                         } else {
                             null
                         }
@@ -91,6 +101,36 @@ class ProductRegistrationViewModel(
                     it.copy(
                         isLoading = false,
                         message = error.message ?: "제품 검색에 실패했습니다."
+                    )
+                }
+            }
+        }
+    }
+
+    fun updateUsageStatus(accessToken: String, userProductId: String, usageStatus: String) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isSaving = true, message = null) }
+
+            runCatching {
+                backendApiClient.updateUserProductStatus(
+                    accessToken = accessToken,
+                    userProductId = userProductId,
+                    usageStatus = usageStatus
+                )
+                backendApiClient.getUserProducts(accessToken).items
+            }.onSuccess { userProducts ->
+                _uiState.update {
+                    it.copy(
+                        isSaving = false,
+                        userProducts = userProducts,
+                        message = if (usageStatus == "current") "사용중으로 이동했습니다." else "과거 사용으로 이동했습니다."
+                    )
+                }
+            }.onFailure { error ->
+                _uiState.update {
+                    it.copy(
+                        isSaving = false,
+                        message = error.message ?: "제품 상태를 변경하지 못했습니다."
                     )
                 }
             }

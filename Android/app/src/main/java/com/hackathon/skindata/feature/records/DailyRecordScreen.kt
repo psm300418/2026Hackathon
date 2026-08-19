@@ -9,6 +9,8 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,6 +29,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -84,6 +89,7 @@ fun DailyRecordRoute(
 }
 
 @Composable
+@OptIn(ExperimentalLayoutApi::class)
 fun DailyRecordScreen(
     uiState: DailyRecordUiState,
     onModeSelected: (DailyRecordMode) -> Unit,
@@ -105,6 +111,7 @@ fun DailyRecordScreen(
     val photoPicker = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         onPhotoSelected(uri?.toFacePhotoUpload(context))
     }
+    var isProductListExpanded by remember { mutableStateOf(false) }
 
     LazyColumn(
         modifier = Modifier
@@ -115,7 +122,7 @@ fun DailyRecordScreen(
         item {
             SectionHeader(
                 title = "오늘의 피부 기록",
-                description = "${uiState.recordDate} 기록은 하루 1개로 저장되고 다시 저장하면 갱신됩니다."
+                description = uiState.recordDate
             )
         }
 
@@ -189,8 +196,11 @@ fun DailyRecordScreen(
                 if (uiState.presets.isEmpty()) {
                     Text(text = "저장된 프리셋이 없습니다.", style = MaterialTheme.typography.bodyMedium)
                 } else {
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        uiState.presets.take(3).forEach { preset ->
+                    FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        uiState.presets.forEach { preset ->
                             AssistChip(
                                 onClick = { onApplyPreset(preset.id) },
                                 label = { Text(preset.name) }
@@ -217,22 +227,41 @@ fun DailyRecordScreen(
             }
 
             item {
-                Text(text = "오늘 사용한 제품", style = MaterialTheme.typography.titleMedium)
-                if (uiState.userProducts.isEmpty()) {
-                    Text(text = "아직 내 제품이 없습니다. 아래에서 제품을 검색해 추가할 수 있습니다.")
+                AppCard(containerColor = SkinColors.Surface) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { isProductListExpanded = !isProductListExpanded },
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(text = "오늘 사용한 제품", style = MaterialTheme.typography.titleMedium)
+                        Text(
+                            text = if (isProductListExpanded) "닫기" else "열기",
+                            style = MaterialTheme.typography.labelLarge
+                        )
+                    }
+                    Text(
+                        text = "선택 ${uiState.selectedUserProductIds.size}개",
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                    if (uiState.userProducts.isEmpty()) {
+                        Text(text = "검색해서 제품을 추가할 수 있습니다.", style = MaterialTheme.typography.bodyMedium)
+                    }
                 }
             }
 
-            items(uiState.userProducts, key = { it.id }) { userProduct ->
-                UserProductSelectRow(
-                    userProduct = userProduct,
-                    selected = userProduct.id in uiState.selectedUserProductIds,
-                    onClick = { onToggleProduct(userProduct.id) }
-                )
+            if (isProductListExpanded) {
+                items(uiState.userProducts, key = { it.id }) { userProduct ->
+                    UserProductSelectRow(
+                        userProduct = userProduct,
+                        selected = userProduct.id in uiState.selectedUserProductIds,
+                        onClick = { onToggleProduct(userProduct.id) }
+                    )
+                }
             }
 
             item {
-                Text(text = "제품 검색 후 바로 추가", style = MaterialTheme.typography.titleMedium)
+                Text(text = "제품 검색", style = MaterialTheme.typography.titleMedium)
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     AppTextField(
                         value = uiState.productSearchQuery,
@@ -380,6 +409,7 @@ private fun ScoreControl(
             onValueChange = { onScoreChanged(kind, it.toInt()) },
             valueRange = 0f..5f,
             steps = 4,
+            modifier = Modifier.height(32.dp),
             colors = SliderDefaults.colors(
                 thumbColor = SkinColors.Ink,
                 activeTrackColor = SkinColors.PrimaryOlive,
@@ -389,9 +419,9 @@ private fun ScoreControl(
             )
         )
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            (0..5).forEach { score ->
-                Text(text = score.toString(), style = MaterialTheme.typography.bodySmall)
-            }
+            Text(text = "0 없음", style = MaterialTheme.typography.bodySmall)
+            Text(text = "3 보통", style = MaterialTheme.typography.bodySmall)
+            Text(text = "5 심함", style = MaterialTheme.typography.bodySmall)
         }
     }
 }
@@ -438,7 +468,6 @@ private fun SearchResultCard(
     ) {
         Text(text = product.name, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
         Text(text = "${product.brand} · ${product.category.orEmpty()}", style = MaterialTheme.typography.bodySmall)
-        Text(text = "탭하면 내 제품에 추가하고 오늘 사용 제품으로 선택합니다.", style = MaterialTheme.typography.bodySmall)
     }
 }
 

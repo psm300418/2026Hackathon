@@ -243,10 +243,10 @@ MFDS 성분 마스터와 매칭되지 않은 성분은 별도 보정 전까지 `
 - `created_at`
 - `updated_at`
 
-사용자는 공용 제품 DB의 제품을 자신의 제품 목록에 추가한다. 제품이 공용 DB에 없다면 먼저 `product_submissions` 흐름으로 제품을 등록한다.
-T3 범위에서는 제품 직접 등록을 열지 않고 seed 공용 제품 DB에서 검색한 제품만 추가한다.
+사용자는 공용 제품 DB의 제품을 자신의 제품 목록에 추가한다. 제품이 공용 DB에 없다면 `product_submissions` 흐름으로 제품을 등록한다.
 같은 사용자가 같은 제품을 다시 등록하면 새 행을 만들지 않고 기존 행을 갱신한다.
 이전 사용 제품 등록 화면에서는 `started_at`을 입력받지 않고 `null`로 저장한다.
+제품 조회 시 최근 30일 오늘 기록에 포함되지 않은 `current` 제품은 `past`로 보정한다. 오늘 기록에 다시 포함된 제품은 저장 직후 `current`로 갱신된다. 사용자는 제품 탭에서 상태를 직접 이동할 수 있다.
 
 ### user_locations
 
@@ -322,7 +322,7 @@ T3 범위에서는 제품 직접 등록을 열지 않고 seed 공용 제품 DB�
 - `user_product_id`
 - `created_at`
 
-하나의 오늘 기록에는 여러 제품이 포함될 수 있다. 제품 사용 기록만으로 `user_products.usage_status`를 자동 변경하지 않는다.
+하나의 오늘 기록에는 여러 제품이 포함될 수 있다. 오늘 기록에 포함된 제품은 현재 사용중인 제품으로 간주해 `user_products.usage_status=current`로 갱신한다.
 
 ### daily_record_presets
 

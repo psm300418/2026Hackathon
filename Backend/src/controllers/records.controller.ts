@@ -1,5 +1,6 @@
 import type { RequestHandler } from "express";
 import {
+  deleteProductPresetById,
   getDailyRecordTrends,
   getDailyRecords,
   getProductPresets,
@@ -7,7 +8,8 @@ import {
   parseDailyRecordQuery,
   parseProductPresetInput,
   saveDailyRecord,
-  saveProductPreset
+  saveProductPreset,
+  updateProductPresetById
 } from "../services/records.service.js";
 import { ApiError } from "../types/http.js";
 
@@ -33,6 +35,41 @@ export const listProductPresetsController: RequestHandler = async (req, res, nex
 
     const items = await getProductPresets(req.userId);
     res.json({ data: { items } });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateProductPresetController: RequestHandler = async (req, res, next) => {
+  try {
+    if (!req.userId) {
+      throw new ApiError(401, "UNAUTHORIZED", "로그인이 필요합니다.");
+    }
+
+    if (typeof req.params.presetId !== "string") {
+      throw new ApiError(400, "BAD_REQUEST", "프리셋 ID가 올바르지 않습니다.");
+    }
+
+    const input = parseProductPresetInput(req.body);
+    const data = await updateProductPresetById(req.userId, req.params.presetId, input);
+    res.json({ data });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteProductPresetController: RequestHandler = async (req, res, next) => {
+  try {
+    if (!req.userId) {
+      throw new ApiError(401, "UNAUTHORIZED", "로그인이 필요합니다.");
+    }
+
+    if (typeof req.params.presetId !== "string") {
+      throw new ApiError(400, "BAD_REQUEST", "프리셋 ID가 올바르지 않습니다.");
+    }
+
+    await deleteProductPresetById(req.userId, req.params.presetId);
+    res.json({ data: { deleted: true } });
   } catch (error) {
     next(error);
   }

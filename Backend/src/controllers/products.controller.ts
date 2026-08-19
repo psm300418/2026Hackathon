@@ -3,8 +3,10 @@ import {
   getUserProducts,
   parseProductSearchQuery,
   parseUserProductInput,
+  parseUserProductStatusInput,
   saveUserProduct,
-  searchProductCatalog
+  searchProductCatalog,
+  updateUserProductUsageStatus
 } from "../services/products.service.js";
 import { ApiError } from "../types/http.js";
 
@@ -40,6 +42,24 @@ export const listUserProductsController: RequestHandler = async (req, res, next)
 
     const data = await getUserProducts(req.userId);
     res.json({ data: { items: data } });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateUserProductStatusController: RequestHandler = async (req, res, next) => {
+  try {
+    if (!req.userId) {
+      throw new ApiError(401, "UNAUTHORIZED", "로그인이 필요합니다.");
+    }
+
+    if (typeof req.params.userProductId !== "string") {
+      throw new ApiError(400, "BAD_REQUEST", "제품 ID가 올바르지 않습니다.");
+    }
+
+    const input = parseUserProductStatusInput(req.body);
+    const data = await updateUserProductUsageStatus(req.userId, req.params.userProductId, input);
+    res.json({ data });
   } catch (error) {
     next(error);
   }

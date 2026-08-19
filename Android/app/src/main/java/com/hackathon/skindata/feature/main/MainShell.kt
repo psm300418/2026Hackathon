@@ -35,6 +35,7 @@ import com.hackathon.skindata.feature.onboarding.SkinTypeSurveyRoute
 import com.hackathon.skindata.feature.products.ProductRegistrationRoute
 import com.hackathon.skindata.feature.records.DailyRecordRoute
 import com.hackathon.skindata.feature.settings.LocationSettingsRoute
+import com.hackathon.skindata.feature.settings.PresetSettingsRoute
 import com.hackathon.skindata.feature.settings.RecordReminderSettingsRoute
 
 @Composable
@@ -44,7 +45,7 @@ fun MainShellRoute(
     message: String?,
     onSignOut: () -> Unit
 ) {
-    var selectedTab by remember { mutableStateOf(MainTab.Products) }
+    var selectedTab by remember { mutableStateOf(MainTab.Record) }
 
     Scaffold(
         bottomBar = {
@@ -94,9 +95,9 @@ fun MainShellRoute(
 }
 
 private enum class MainTab(val label: String, val icon: ImageVector) {
-    Products("제품", Icons.Outlined.Inventory2),
     Record("기록", Icons.Outlined.EditNote),
     Analysis("분석", Icons.Outlined.Analytics),
+    Products("제품", Icons.Outlined.Inventory2),
     Settings("설정", Icons.Outlined.Settings)
 }
 
@@ -144,11 +145,12 @@ private fun SettingsTab(
     ) {
         SectionHeader(
             title = "설정",
-            description = "지역, 기록 알림, 앱 사용 환경을 관리합니다.",
+            description = null,
             modifier = Modifier.padding(horizontal = SkinSpacing.Screen)
         )
         LocationSettingsRoute(accessToken = accessToken)
         RecordReminderSettingsRoute()
+        PresetSettingsRoute(accessToken = accessToken)
         OutlinedButton(
             onClick = { isRetakingSkinTypeSurvey = true },
             modifier = Modifier

@@ -6,7 +6,13 @@ import {
   replaceProductIngredients,
   searchProducts
 } from "../repositories/products.repository.js";
-import { listUserProducts, upsertUserProduct } from "../repositories/user-products.repository.js";
+import {
+  listLatestUsedDatesByUserProductId,
+  listUserProducts,
+  updateUserProductStatus,
+  updateUserProductStatuses,
+  upsertUserProduct
+} from "../repositories/user-products.repository.js";
 import { ApiError } from "../types/http.js";
 import type {
   ProductIngredientDto,
@@ -20,6 +26,7 @@ import type {
 } from "../types/products.js";
 
 const MAX_SEARCH_RESULTS = 20;
+const CURRENT_PRODUCT_WINDOW_DAYS = 30;
 
 const productSearchQuerySchema = z.object({
   q: z.string().trim().min(1, "검색어를 입력해주세요.").max(80),
@@ -34,8 +41,13 @@ const userProductInputSchema = z.object({
   memo: z.string().trim().max(500).optional().nullable()
 });
 
+const userProductStatusInputSchema = z.object({
+  usageStatus: z.enum(["current", "past", "paused"])
+});
+
 export const parseProductSearchQuery = (query: unknown) => productSearchQuerySchema.parse(query);
 export const parseUserProductInput = (body: unknown) => userProductInputSchema.parse(body);
+export const parseUserProductStatusInput = (body: unknown) => userProductStatusInputSchema.parse(body);
 
 const normalizeText = (value: string) => value.trim().toLowerCase().replace(/\s+/g, "");
 
@@ -203,7 +215,81 @@ export const saveUserProduct = async (
   return toUserProductDto(userProduct, groupIngredientsByProductId(ingredients));
 };
 
+const addDays = (date: Date, days: number) => {
+  const nextDate = new Date(date);
+  nextDate.setUTCDate(nextDate.getUTCDate() + days);
+  return nextDate;
+};
+
+const toDateString = (date: Date) => date.toISOString().slice(0, 10);
+
+const todayInSeoul = () =>
+  new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Seoul",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).format(new Date());
+
+export const markUserProductsCurrent = async (
+  userId: string,
+  userProductIds: string[]
+): Promise<void> => {
+  await updateUserProductStatuses({
+    userId,
+    userProductIds: [...new Set(userProductIds)],
+    usageStatus: "current"
+  });
+};
+
+const syncCurrentProductsFromUsage = async (userId: string): Promise<void> => {
+  const userProducts = await listUserProducts(userId);
+  const cutoffDate = toDateString(
+    addDays(new Date(`${todayInSeoul()}T00:00:00.000Z`), -(CURRENT_PRODUCT_WINDOW_DAYS - 1))
+  );
+  const latestUsedDateById = await listLatestUsedDatesByUserProductId(
+    userId,
+    userProducts.map((userProduct) => userProduct.id)
+  );
+  const toPastIds = userProducts
+    .filter((userProduct) => userProduct.usage_status === "current")
+    .filter((userProduct) => {
+      const latestUsedDate = latestUsedDateById.get(userProduct.id);
+      return !latestUsedDate || latestUsedDate < cutoffDate;
+    })
+    .map((userProduct) => userProduct.id);
+
+  await updateUserProductStatuses({
+    userId,
+    userProductIds: toPastIds,
+    usageStatus: "past"
+  });
+};
+
+export const updateUserProductUsageStatus = async (
+  userId: string,
+  userProductId: string,
+  input: z.infer<typeof userProductStatusInputSchema>
+): Promise<UserProductDto> => {
+  try {
+    const userProduct = await updateUserProductStatus({
+      userId,
+      userProductId,
+      usageStatus: input.usageStatus
+    });
+    const ingredients = await listProductIngredients([userProduct.product_id]);
+    return toUserProductDto(userProduct, groupIngredientsByProductId(ingredients));
+  } catch (error) {
+    if (error instanceof Error && error.message === "USER_PRODUCT_NOT_FOUND") {
+      throw new ApiError(404, "NOT_FOUND", "내 제품을 찾을 수 없습니다.");
+    }
+
+    throw error;
+  }
+};
+
 export const getUserProducts = async (userId: string): Promise<UserProductDto[]> => {
+  await syncCurrentProductsFromUsage(userId);
   const userProducts = await listUserProducts(userId);
   const productIds = userProducts.map((userProduct) => userProduct.product_id);
   const ingredients = await listProductIngredients(productIds);

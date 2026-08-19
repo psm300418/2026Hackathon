@@ -44,6 +44,47 @@ export const upsertProductPreset = async (params: {
   return productPresetRowSchema.parse(data);
 };
 
+export const updateProductPreset = async (params: {
+  userId: string;
+  routineId: string;
+  name: string;
+}): Promise<ProductPresetRow> => {
+  const supabase = createSupabaseAdminClient();
+  const { data, error } = await supabase
+    .from("routines")
+    .update({ name: params.name })
+    .eq("user_id", params.userId)
+    .eq("id", params.routineId)
+    .select("id, user_id, name, created_at, updated_at")
+    .maybeSingle();
+
+  if (error) {
+    throw error;
+  }
+
+  if (!data) {
+    throw new Error("PRODUCT_PRESET_NOT_FOUND");
+  }
+
+  return productPresetRowSchema.parse(data);
+};
+
+export const deleteProductPreset = async (params: {
+  userId: string;
+  routineId: string;
+}): Promise<void> => {
+  const supabase = createSupabaseAdminClient();
+  const { error } = await supabase
+    .from("routines")
+    .delete()
+    .eq("user_id", params.userId)
+    .eq("id", params.routineId);
+
+  if (error) {
+    throw error;
+  }
+};
+
 export const replaceProductPresetItems = async (
   routineId: string,
   userProductIds: string[]

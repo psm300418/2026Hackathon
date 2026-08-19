@@ -9,6 +9,7 @@ data class ProductRegistrationUiState(
     val reactionMemo: String = "",
     val isLoading: Boolean = false,
     val isSaving: Boolean = false,
+    val hasSearched: Boolean = false,
     val searchResults: List<ProductDto> = emptyList(),
     val userProducts: List<UserProductDto> = emptyList(),
     val selectedProduct: ProductDto? = null,

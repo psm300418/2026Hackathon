@@ -472,6 +472,8 @@ POST /api/user-products
 GET /api/user-products
 ```
 
+조회 시 Backend는 최근 30일 사용 기록을 기준으로 `usageStatus`를 보정한다. `current` 제품이 최근 30일 동안 오늘 기록에 한 번도 포함되지 않았다면 `past`로 이동하고, 이후 오늘 기록에 다시 포함되면 `current`로 돌아간다.
+
 응답 예시:
 
 ```json
@@ -504,6 +506,28 @@ GET /api/user-products
   }
 }
 ```
+
+---
+
+### 사용자 제품 상태 변경
+
+```text
+PATCH /api/user-products/{userProductId}/status
+```
+
+요청 예시:
+
+```json
+{
+  "usageStatus": "current"
+}
+```
+
+정책:
+
+- 인증 필요.
+- 사용자는 제품 탭에서 내 제품을 `current`, `past`, `paused`로 직접 이동할 수 있다.
+- 로그인 사용자의 제품이 아니면 `404 NOT_FOUND`를 반환한다.
 
 ---
 
@@ -562,9 +586,11 @@ GET https://apis.data.go.kr/1471000/CsmtcsIngdCpntInfoService01/getCsmtcsIngdCpn
 ```text
 POST /api/product-presets
 GET  /api/product-presets
+PUT  /api/product-presets/{presetId}
+DELETE /api/product-presets/{presetId}
 ```
 
-반복적으로 함께 사용하는 제품 묶음을 등록한다. 오늘 기록 화면에서 프리셋을 적용하면 프리셋에 포함된 제품들이 오늘 사용 제품으로 선택된다.
+반복적으로 함께 사용하는 제품 묶음을 등록, 조회, 수정, 삭제한다. 오늘 기록 화면에서 프리셋을 적용하면 프리셋에 포함된 제품들이 오늘 사용 제품으로 선택된다. 설정 탭에서는 저장된 프리셋의 이름과 포함 제품을 수정하거나 삭제할 수 있다.
 
 요청 예시:
 
@@ -604,6 +630,7 @@ GET  /api/product-presets
 - 인증 필요.
 - `userProductIds`는 모두 로그인 사용자의 `user_products`여야 한다.
 - 같은 프리셋 안에 같은 제품을 중복 저장하지 않는다.
+- 수정, 삭제 대상이 로그인 사용자의 프리셋이 아니면 `404 NOT_FOUND`를 반환한다.
 
 ---
 
@@ -706,7 +733,7 @@ JSON 요청이 필요한 테스트나 사진 없는 저장에서는 `application
 - 오늘 사용 제품은 여러 개 선택할 수 있다.
 - 기록 화면에서 공용 제품 DB에 있는 제품을 검색해 `user_products`에 추가한 뒤 바로 `userProductIds`에 포함할 수 있다.
 - 공용 제품 DB에 없는 제품을 성분표 사진으로 새로 등록하는 흐름은 `product-submissions` 단계에서 제공한다.
-- 제품 사용 기록 저장만으로 `user_products.usage_status`를 자동 변경하지 않는다.
+- 오늘 기록에 포함된 제품은 저장 직후 `user_products.usage_status=current`로 갱신한다.
 - 얼굴 사진은 선택 입력이다. 사진 없이도 오늘 기록을 저장할 수 있다.
 - 사용자의 지역이 설정되어 있으면 Backend가 기상청 API허브 ASOS 관측 API에서 기록 저장 시점과 가장 가까운 시각의 기온, 습도, 강수량, 풍속 등을 조회해 기록에 스냅샷으로 저장한다.
 - 날씨 API 호출이 실패해도 오늘 기록 저장은 실패시키지 않고, 환경 정보만 비워 둘 수 있다.

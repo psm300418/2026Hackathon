@@ -6,6 +6,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
@@ -206,6 +209,21 @@ class BackendApiClient(
         json.decodeFromString<ApiResponse<UserProductDto>>(body).data
     }
 
+    suspend fun updateUserProductStatus(
+        accessToken: String,
+        userProductId: String,
+        usageStatus: String
+    ): UserProductDto = withContext(Dispatchers.IO) {
+        val body = request(
+            path = "/api/user-products/$userProductId/status",
+            method = "PATCH",
+            accessToken = accessToken,
+            requestBody = json.encodeToString(UpdateUserProductStatusRequest(usageStatus = usageStatus))
+        )
+
+        json.decodeFromString<ApiResponse<UserProductDto>>(body).data
+    }
+
     suspend fun getProductPresets(accessToken: String): ProductPresetsDto = withContext(Dispatchers.IO) {
         val body = request(
             path = "/api/product-presets",
@@ -234,6 +252,38 @@ class BackendApiClient(
         )
 
         json.decodeFromString<ApiResponse<ProductPresetDto>>(body).data
+    }
+
+    suspend fun updateProductPreset(
+        accessToken: String,
+        presetId: String,
+        name: String,
+        userProductIds: List<String>
+    ): ProductPresetDto = withContext(Dispatchers.IO) {
+        val body = request(
+            path = "/api/product-presets/$presetId",
+            method = "PUT",
+            accessToken = accessToken,
+            requestBody = json.encodeToString(
+                SaveProductPresetRequest(
+                    name = name,
+                    userProductIds = userProductIds
+                )
+            )
+        )
+
+        json.decodeFromString<ApiResponse<ProductPresetDto>>(body).data
+    }
+
+    suspend fun deleteProductPreset(
+        accessToken: String,
+        presetId: String
+    ): Unit = withContext(Dispatchers.IO) {
+        request(
+            path = "/api/product-presets/$presetId",
+            method = "DELETE",
+            accessToken = accessToken
+        )
     }
 
     suspend fun getDailyRecords(
@@ -500,10 +550,34 @@ class BackendApiClient(
 
     private fun BackendResponse.bodyOrThrow(): String {
         if (responseCode !in 200..299) {
-            throw IllegalStateException("Backend request failed: $responseCode $body")
+            throw IllegalStateException(userFacingErrorMessage())
         }
 
         return body
+    }
+
+    private fun BackendResponse.userFacingErrorMessage(): String {
+        val serverMessage = runCatching {
+            val root = json.parseToJsonElement(body).jsonObject
+            root["error"]
+                ?.jsonObject
+                ?.get("message")
+                ?.jsonPrimitive
+                ?.contentOrNull
+        }.getOrNull()
+
+        if (!serverMessage.isNullOrBlank()) {
+            return serverMessage
+        }
+
+        return when (responseCode) {
+            HttpURLConnection.HTTP_BAD_REQUEST -> "입력값을 다시 확인해주세요."
+            HttpURLConnection.HTTP_UNAUTHORIZED -> "로그인이 만료되었습니다. 다시 로그인해주세요."
+            HttpURLConnection.HTTP_FORBIDDEN -> "이 작업을 할 권한이 없습니다."
+            HttpURLConnection.HTTP_NOT_FOUND -> "요청한 정보를 찾을 수 없습니다."
+            in 500..599 -> "서버에 일시적인 문제가 있습니다. 잠시 후 다시 시도해주세요."
+            else -> "요청을 처리하지 못했습니다. 잠시 후 다시 시도해주세요."
+        }
     }
 }
 
@@ -860,6 +934,11 @@ data class AnalysisResultDto(
     val negativeSuspectedIngredients: List<AnalysisFindingDto>,
     val limitations: List<String>,
     val nextRecordsToAdd: List<String>
+)
+
+@Serializable
+data class UpdateUserProductStatusRequest(
+    val usageStatus: String
 )
 
 @Serializable

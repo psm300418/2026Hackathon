@@ -13,14 +13,16 @@ import {
 } from "../repositories/daily-records.repository.js";
 import { listDailyRecordEnvironments } from "../repositories/weather.repository.js";
 import {
+  deleteProductPreset,
   listProductPresetItems,
   listProductPresets,
   listProductPresetsByIds,
   replaceProductPresetItems,
+  updateProductPreset,
   upsertProductPreset
 } from "../repositories/product-presets.repository.js";
 import { listUserProductsByIds } from "../repositories/user-products.repository.js";
-import { getUserProducts } from "./products.service.js";
+import { getUserProducts, markUserProductsCurrent } from "./products.service.js";
 import {
   attachWeatherEnvironmentToDailyRecord,
   toDailyRecordEnvironmentDto
@@ -183,6 +185,50 @@ export const getProductPresets = async (userId: string): Promise<ProductPresetDt
   const itemsByRoutineId = groupRoutineItems(items);
 
   return presets.map((preset) => toProductPresetDto(preset, itemsByRoutineId, userProductById));
+};
+
+export const updateProductPresetById = async (
+  userId: string,
+  presetId: string,
+  input: {
+    name: string;
+    userProductIds: string[];
+  }
+): Promise<ProductPresetDto> => {
+  const userProductIds = uniqueStrings(input.userProductIds);
+  await ensureOwnedUserProducts(userId, userProductIds);
+
+  try {
+    const preset = await updateProductPreset({
+      userId,
+      routineId: presetId,
+      name: input.name
+    });
+    const items = await replaceProductPresetItems(preset.id, userProductIds);
+    const userProducts = await getUserProducts(userId);
+    const userProductById = mapUserProductsById(userProducts);
+
+    return toProductPresetDto(preset, groupRoutineItems(items), userProductById);
+  } catch (error) {
+    if (error instanceof Error && error.message === "PRODUCT_PRESET_NOT_FOUND") {
+      throw new ApiError(404, "NOT_FOUND", "프리셋을 찾을 수 없습니다.");
+    }
+
+    throw error;
+  }
+};
+
+export const deleteProductPresetById = async (
+  userId: string,
+  presetId: string
+): Promise<void> => {
+  const presets = await listProductPresetsByIds(userId, [presetId]);
+
+  if (presets.length === 0) {
+    throw new ApiError(404, "NOT_FOUND", "프리셋을 찾을 수 없습니다.");
+  }
+
+  await deleteProductPreset({ userId, routineId: presetId });
 };
 
 const groupDailyRecordProducts = (items: DailyRecordProductRow[]) => {
@@ -376,6 +422,7 @@ export const saveDailyRecord = async (
   });
 
   await replaceDailyRecordProducts(record.id, userProductIds);
+  await markUserProductsCurrent(userId, userProductIds);
   await replaceDailyRecordPresets(record.id, presetIds);
   await replaceDailyRecordPhoto(userId, record.id, file);
   const environments: DailyRecordEnvironmentRow[] = [];

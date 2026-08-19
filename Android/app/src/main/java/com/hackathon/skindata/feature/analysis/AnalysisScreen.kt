@@ -101,6 +101,10 @@ fun AnalysisScreen(
             }
         } else {
             item {
+                KeyInsightsCard(analysis = analysis)
+            }
+
+            item {
                 AnalysisSummaryCard(analysis = analysis)
             }
 
@@ -147,6 +151,29 @@ fun AnalysisScreen(
 
             item {
                 TextListCard(title = "다음에 기록하면 좋은 항목", values = analysis.nextRecordsToAdd)
+            }
+        }
+    }
+}
+
+@Composable
+private fun KeyInsightsCard(analysis: AnalysisResultDto) {
+    val insights = buildKeyInsights(analysis)
+
+    AppCard(containerColor = SkinColors.Surface) {
+        Text(text = "이번 분석의 핵심 3개", style = MaterialTheme.typography.titleMedium)
+        insights.forEachIndexed { index, insight ->
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(
+                    text = "${index + 1}",
+                    style = MaterialTheme.typography.labelLarge,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = insight,
+                    modifier = Modifier.weight(1f),
+                    style = MaterialTheme.typography.bodyMedium
+                )
             }
         }
     }
@@ -346,6 +373,31 @@ private fun factorTagLabel(value: String): String =
         "product_change" -> "제품 변화"
         else -> value
     }
+
+private fun buildKeyInsights(analysis: AnalysisResultDto): List<String> {
+    val summaryInsight = analysis.summary
+        .split(".", "。", "!")
+        .firstOrNull { it.isNotBlank() }
+        ?.trim()
+        ?: "기록 기반 분석 요약을 확인해보세요."
+    val eventInsight = analysis.notableEvents.maxByOrNull { it.scoreDelta }
+        ?.let { event ->
+            "${event.date} ${event.title}: ${event.reasons.firstOrNull() ?: "평소와 다른 변화가 있었습니다."}"
+        }
+        ?: "눈에 띄는 변화는 아직 충분히 모이지 않았습니다."
+    val candidateInsight = when {
+        analysis.positiveSuspectedIngredients.isNotEmpty() && analysis.negativeSuspectedIngredients.isNotEmpty() ->
+            "긍정 후보 ${analysis.positiveSuspectedIngredients.first().name}, 부정 후보 ${analysis.negativeSuspectedIngredients.first().name}을 우선 확인하세요."
+        analysis.positiveSuspectedIngredients.isNotEmpty() ->
+            "긍정 후보 ${analysis.positiveSuspectedIngredients.first().name}의 반복 노출을 더 기록해보세요."
+        analysis.negativeSuspectedIngredients.isNotEmpty() ->
+            "부정 후보 ${analysis.negativeSuspectedIngredients.first().name}의 사용일 변화를 확인해보세요."
+        else ->
+            "성분 후보를 좁히려면 제품을 바꾼 날과 쉬는 날 기록이 더 필요합니다."
+    }
+
+    return listOf(summaryInsight, eventInsight, candidateInsight)
+}
 
 @Preview(showBackground = true)
 @Composable
