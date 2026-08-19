@@ -4,11 +4,9 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AssistChip
@@ -31,7 +29,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.hackathon.skindata.core.designsystem.AppCard
 import com.hackathon.skindata.core.designsystem.SectionHeader
 import com.hackathon.skindata.core.designsystem.SkinColors
-import com.hackathon.skindata.core.network.AnalysisFactorSummaryDto
 import com.hackathon.skindata.core.designsystem.SkinPrimaryButton as Button
 import com.hackathon.skindata.core.network.AnalysisFindingDto
 import com.hackathon.skindata.core.network.AnalysisNotableEventDto
@@ -113,24 +110,6 @@ fun AnalysisScreen(
                 }
             }
 
-            if (analysis.notableEvents.isNotEmpty()) {
-                item {
-                    Text(text = "눈에 띈 변화", style = MaterialTheme.typography.titleMedium)
-                }
-                items(analysis.notableEvents, key = { it.date }) { event ->
-                    NotableEventCard(event = event)
-                }
-            }
-
-            if (analysis.factorSummaries.isNotEmpty()) {
-                item {
-                    Text(text = "반복 후보 요인", style = MaterialTheme.typography.titleMedium)
-                }
-                items(analysis.factorSummaries, key = { it.factorTag }) { summary ->
-                    FactorSummaryCard(summary = summary)
-                }
-            }
-
             item {
                 Text(text = "긍정적 의심 성분 후보", style = MaterialTheme.typography.titleMedium)
             }
@@ -153,6 +132,15 @@ fun AnalysisScreen(
                 }
             }
 
+            if (analysis.notableEvents.isNotEmpty()) {
+                item {
+                    Text(text = "눈에 띈 변화", style = MaterialTheme.typography.titleMedium)
+                }
+                items(analysis.notableEvents, key = { it.date }) { event ->
+                    NotableEventCard(event = event)
+                }
+            }
+
             item {
                 TextListCard(title = "분석 제한점", values = analysis.limitations)
             }
@@ -172,7 +160,7 @@ private fun TrendChartCard(points: List<AnalysisTrendPointDto>) {
     AppCard(containerColor = SkinColors.Surface) {
         Text(text = "최근 30일 피부 점수", style = MaterialTheme.typography.titleMedium)
         Text(
-            text = "점수가 높을수록 건조함, 유분, 붉음, 트러블 기록이 두드러진 날입니다.",
+            text = "점수가 낮을수록 건조함, 유분, 붉음, 트러블 기록이 두드러진 날입니다.",
             style = MaterialTheme.typography.bodySmall,
             color = SkinColors.TextSecondary
         )
@@ -211,7 +199,7 @@ private fun TrendChartCard(points: List<AnalysisTrendPointDto>) {
                 val x = horizontalGap * index
                 val y = size.height - (point.totalScore.toFloat().coerceIn(0f, maxScore) / maxScore) * size.height
                 drawCircle(
-                    color = if (point.totalScore >= 12) SkinColors.PrimaryOlive else SkinColors.Muted,
+                    color = if (point.totalScore <= 8) SkinColors.PrimaryOlive else SkinColors.Muted,
                     radius = 3.5.dp.toPx(),
                     center = Offset(x, y)
                 )
@@ -242,7 +230,7 @@ private fun NotableEventCard(event: AnalysisNotableEventDto) {
         }
         Text(text = event.title, style = MaterialTheme.typography.titleMedium)
         Text(
-            text = "최근 평균보다 +${formatNumber(event.scoreDelta)}점",
+            text = "최근 평균보다 -${formatNumber(event.scoreDelta)}점",
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.SemiBold
         )
@@ -256,30 +244,6 @@ private fun NotableEventCard(event: AnalysisNotableEventDto) {
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun FactorSummaryCard(summary: AnalysisFactorSummaryDto) {
-    AppCard {
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text(
-                text = summary.label,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
-            Spacer(modifier = Modifier.width(2.dp))
-            AssistChip(
-                onClick = {},
-                label = { Text("특이일 ${summary.eventCount}회") }
-            )
-        }
-        Text(text = summary.description, style = MaterialTheme.typography.bodyMedium)
-        Text(
-            text = "최근 30일 중 ${summary.hitCount}회 기록",
-            style = MaterialTheme.typography.bodySmall,
-            color = SkinColors.TextSecondary
-        )
     }
 }
 
@@ -396,31 +360,23 @@ private fun AnalysisScreenPreview() {
                     confidenceLevel = "weak",
                     summary = "기록 수가 적어 낮은 신뢰도로 관련 가능성을 표시합니다.",
                     trendPoints = listOf(
-                        AnalysisTrendPointDto("2026-08-15", 7.0, 2.0, 2.0, 2.0, 1.0, 7.0),
-                        AnalysisTrendPointDto("2026-08-16", 12.0, 3.0, 3.0, 3.0, 3.0, 5.2),
-                        AnalysisTrendPointDto("2026-08-17", 8.0, 2.0, 2.0, 2.0, 2.0, 7.3)
+                        AnalysisTrendPointDto("2026-08-15", 13.0, 2.0, 2.0, 2.0, 1.0, 7.0),
+                        AnalysisTrendPointDto("2026-08-16", 4.0, 3.0, 4.0, 4.0, 5.0, 5.2),
+                        AnalysisTrendPointDto("2026-08-17", 12.0, 2.0, 2.0, 2.0, 2.0, 7.3)
                     ),
                     notableEvents = listOf(
                         AnalysisNotableEventDto(
                             date = "2026-08-16",
                             title = "트러블이 평소보다 두드러진 날",
                             severity = "high",
-                            totalScore = 12.0,
-                            baselineScore = 8.2,
-                            scoreDelta = 3.8,
+                            totalScore = 4.0,
+                            baselineScore = 12.0,
+                            scoreDelta = 8.0,
                             factorTags = listOf("low_sleep", "high_humidity"),
                             reasons = listOf("수면 시간이 5.2시간으로 짧았습니다.", "습도가 84%로 높았습니다.")
                         )
                     ),
-                    factorSummaries = listOf(
-                        AnalysisFactorSummaryDto(
-                            factorTag = "low_sleep",
-                            label = "수면 부족",
-                            hitCount = 4,
-                            eventCount = 2,
-                            description = "수면 부족 조건이 특이 변화일 2회와 함께 나타났습니다."
-                        )
-                    ),
+                    factorSummaries = emptyList(),
                     positiveSuspectedIngredients = emptyList(),
                     negativeSuspectedIngredients = emptyList(),
                     limitations = listOf("기록 기간이 짧습니다."),

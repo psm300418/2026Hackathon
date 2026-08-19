@@ -12,6 +12,7 @@ const productSeedPath = path.join(backendRoot, "supabase", "seed", "product_seed
 const DEFAULT_DEMO_EMAIL = "demo@example.com";
 const DEFAULT_DEMO_PASSWORD = "demo1234";
 const DEMO_SEED_BATCH = "demo_hackathon_20260818";
+const DEMO_RECORD_DAYS = 90;
 
 const productSeedSchema = z.array(
   z.object({
@@ -113,6 +114,14 @@ type DailyRecordSeed = {
     precipitationAmountMm: number;
     windSpeedMps: number;
   };
+};
+
+type PreviousAnalysisSeed = {
+  requestedAtDaysAgo: number;
+  summary: string;
+  positiveIngredientNames: string[];
+  negativeIngredientNames: string[];
+  notableDateOffset: number;
 };
 
 const selectedSeedExternalIds = [
@@ -689,36 +698,32 @@ const upsertRoutines = async (userId: string, userProductIdByExternalId: Map<str
 const clampScore = (value: number) => Math.max(0, Math.min(5, Math.round(value)));
 
 const cleanserScheduleForIndex = (index: number) => {
-  if (index < 7) {
-    return {
+  const weekInCycle = Math.floor(index / 7) % 4;
+  const schedules = [
+    {
       productExternalId: "demo_admin-cleanser-cosrx-hydrium-triple-ha",
       routineName: "1주차 수분 클렌징"
-    };
-  }
-
-  if (index < 14) {
-    return {
+    },
+    {
       productExternalId: "demo_admin-cleanser-cosrx-ac-calming-foam",
       routineName: "2주차 BHA 클렌징"
-    };
-  }
-
-  if (index < 21) {
-    return {
+    },
+    {
       productExternalId: "demo_admin-cleanser-cosrx-low-ph-good-morning",
       routineName: "3주차 약산성 클렌징"
-    };
-  }
+    },
+    {
+      productExternalId: "demo_admin-cleanser-cosrx-red-rice-inositol",
+      routineName: "4주차 포어 클렌징"
+    }
+  ] as const;
 
-  return {
-    productExternalId: "demo_admin-cleanser-cosrx-red-rice-inositol",
-    routineName: "4주차 포어 클렌징"
-  };
+  return schedules[weekInCycle];
 };
 
 const buildDailyRecords = (today: string): DailyRecordSeed[] => {
   const endDate = new Date(`${today}T00:00:00.000Z`);
-  const startDate = addDays(endDate, -29);
+  const startDate = addDays(endDate, -(DEMO_RECORD_DAYS - 1));
   const records: DailyRecordSeed[] = [];
   const memoPool = [
     "세안 후 당김이 조금 있었지만 저녁 루틴 후 편안함.",
@@ -729,63 +734,64 @@ const buildDailyRecords = (today: string): DailyRecordSeed[] => {
     "두피 샴푸 사용일. 얼굴 피부 변화는 크지 않음."
   ];
 
-  for (let index = 0; index < 30; index += 1) {
+  for (let index = 0; index < DEMO_RECORD_DAYS; index += 1) {
     const date = toDateString(addDays(startDate, index));
     const cleanser = cleanserScheduleForIndex(index);
+    const cycleIndex = index % 30;
     const weekend = index % 7 === 5 || index % 7 === 6;
-    const eventNightCream = index >= 14 && index <= 17;
-    const poorSleep = index % 9 === 2 || index % 11 === 5 || index === 14 || index === 22;
-    const longOutdoor = weekend || index % 8 === 3;
+    const eventNightCream = cycleIndex >= 14 && cycleIndex <= 17;
+    const poorSleep = cycleIndex % 9 === 2 || cycleIndex % 11 === 5 || cycleIndex === 14 || cycleIndex === 22;
+    const longOutdoor = weekend || cycleIndex % 8 === 3;
     const shampooDay = index % 2 === 0;
     const supplementDay = index % 5 !== 1;
-    const serumDay = index >= 6 && index % 6 !== 1;
-    const trendImprovement = Math.min(index / 18, 1);
+    const serumDay = index >= 6 && cycleIndex % 6 !== 1;
+    const trendImprovement = Math.min(cycleIndex / 18, 1);
     const poorSleepPenalty = poorSleep ? 1 : 0;
     const outdoorPenalty = longOutdoor ? 1 : 0;
     const serumBenefit = serumDay ? 0.6 : 0;
 
     let dryness = clampScore(4 - trendImprovement * 1.8 + poorSleepPenalty * 0.4 - serumBenefit);
-    let oiliness = clampScore(2 + (weekend ? 0 : 0.3) + (index % 10 === 4 ? 1 : 0));
+    let oiliness = clampScore(2 + (weekend ? 0 : 0.3) + (cycleIndex % 10 === 4 ? 1 : 0));
     let redness = clampScore(2 + poorSleepPenalty + outdoorPenalty * 0.4 - trendImprovement * 0.9);
-    let trouble = clampScore(2 + (poorSleep ? 1 : 0) + (index % 13 === 4 ? 1 : 0) - trendImprovement * 0.8);
-    let sleepHours = poorSleep ? 5.4 : Number((6.7 + (index % 5) * 0.25 + (weekend ? 0.6 : 0)).toFixed(1));
-    let outdoorMinutes = longOutdoor ? 130 + (index % 4) * 20 : 25 + (index % 5) * 10;
+    let trouble = clampScore(2 + (poorSleep ? 1 : 0) + (cycleIndex % 13 === 4 ? 1 : 0) - trendImprovement * 0.8);
+    let sleepHours = poorSleep ? 5.4 : Number((6.7 + (cycleIndex % 5) * 0.25 + (weekend ? 0.6 : 0)).toFixed(1));
+    let outdoorMinutes = longOutdoor ? 130 + (cycleIndex % 4) * 20 : 25 + (cycleIndex % 5) * 10;
     let memo = memoPool[index % memoPool.length];
-    let temperatureCelsius = Number((27.2 + (index % 9) * 0.45 + (longOutdoor ? 0.8 : 0)).toFixed(1));
-    let humidityPercent = 57 + (index % 8) * 4 + (index % 6 === 0 ? 9 : 0);
-    let precipitationAmountMm = index % 12 === 5 ? 4.5 : 0;
+    let temperatureCelsius = Number((27.2 + (cycleIndex % 9) * 0.45 + (longOutdoor ? 0.8 : 0)).toFixed(1));
+    let humidityPercent = 57 + (cycleIndex % 8) * 4 + (cycleIndex % 6 === 0 ? 9 : 0);
+    let precipitationAmountMm = cycleIndex % 12 === 5 ? 4.5 : 0;
 
-    if (index >= 7 && index <= 13) {
+    if (cycleIndex >= 7 && cycleIndex <= 13) {
       trouble = clampScore(trouble - 1);
       redness = clampScore(redness - 0.5);
       memo = "BHA 폼클렌징 주간. 트러블과 붉음이 조금씩 잦아드는 흐름.";
     }
 
-    if (index === 7) {
+    if (cycleIndex === 7) {
       dryness = 3;
       oiliness = 3;
       redness = 3;
       trouble = 4;
       memo = "AC 카밍 폼클렌저로 바꾼 첫날. 기존 트러블이 아직 남아 있음.";
-    } else if (index === 8) {
+    } else if (cycleIndex === 8) {
       dryness = 3;
       oiliness = 2;
       redness = 3;
       trouble = 3;
       memo = "BHA 클렌징 둘째 날. 트러블 붉음이 조금 내려감.";
-    } else if (index === 9) {
+    } else if (cycleIndex === 9) {
       dryness = 2;
       oiliness = 2;
       redness = 2;
       trouble = 2;
       memo = "BHA 클렌징 주간 중반. 트러블과 유분이 같이 낮아짐.";
-    } else if (index === 10) {
+    } else if (cycleIndex === 10) {
       dryness = 2;
       oiliness = 2;
       redness = 1;
       trouble = 2;
       memo = "AC 카밍 폼클렌저 사용 후 붉음이 안정적인 날.";
-    } else if (index === 11 || index === 12 || index === 13) {
+    } else if (cycleIndex === 11 || cycleIndex === 12 || cycleIndex === 13) {
       dryness = 2;
       oiliness = 2;
       redness = 1;
@@ -793,12 +799,12 @@ const buildDailyRecords = (today: string): DailyRecordSeed[] => {
       memo = "BHA 클렌징 주간 후반. 트러블 점수가 낮게 유지됨.";
     }
 
-    if (index >= 21 && index <= 29) {
+    if (cycleIndex >= 21 && cycleIndex <= 29) {
       dryness = clampScore(dryness + 0.7);
       memo = "포어 딥클렌징 주간. 세안 후 당김을 더 의식해서 기록함.";
     }
 
-    if (index === 14) {
+    if (cycleIndex === 14) {
       dryness = 3;
       oiliness = 4;
       redness = 4;
@@ -809,7 +815,7 @@ const buildDailyRecords = (today: string): DailyRecordSeed[] => {
       humidityPercent = 86;
       precipitationAmountMm = 0;
       memo = "늦게 자고 외출이 길었던 날. 글로우 리치 나이트 크림을 처음 사용함.";
-    } else if (index === 15) {
+    } else if (cycleIndex === 15) {
       dryness = 3;
       oiliness = 4;
       redness = 4;
@@ -820,7 +826,7 @@ const buildDailyRecords = (today: string): DailyRecordSeed[] => {
       humidityPercent = 88;
       precipitationAmountMm = 5.2;
       memo = "습도가 높고 비가 온 날. 전날 생긴 트러블이 이어짐.";
-    } else if (index === 22) {
+    } else if (cycleIndex === 22) {
       dryness = 2;
       oiliness = 3;
       redness = 5;
@@ -831,7 +837,7 @@ const buildDailyRecords = (today: string): DailyRecordSeed[] => {
       humidityPercent = 82;
       precipitationAmountMm = 0;
       memo = "수면 부족과 긴 외출 후 붉음이 크게 올라옴.";
-    } else if (index === 25) {
+    } else if (cycleIndex === 25) {
       dryness = 5;
       oiliness = 2;
       redness = 3;
@@ -1014,6 +1020,121 @@ const upsertDailyRecords = async (
   return records.length;
 };
 
+const previousAnalysisSeeds: PreviousAnalysisSeed[] = [
+  {
+    requestedAtDaysAgo: 60,
+    summary:
+      "초기 30일 구간에서는 AC 카밍 폼클렌저 사용 주간에 트러블과 붉음 기록이 낮아지는 흐름이 있었고, 낮은 수면과 높은 습도가 겹친 날에는 피부 컨디션 점수가 내려갔습니다.",
+    positiveIngredientNames: ["Salicylic Acid", "Asiaticoside", "Madecassic Acid"],
+    negativeIngredientNames: ["Fragrance", "Linalool", "Limonene"],
+    notableDateOffset: -73
+  },
+  {
+    requestedAtDaysAgo: 30,
+    summary:
+      "두 번째 30일 구간에서도 BHA 클렌징 주간의 피부 컨디션 점수 상승 신호가 반복됐고, 포어 딥클렌징 주간에는 낮은 습도와 함께 건조함 기록이 늘었습니다.",
+    positiveIngredientNames: ["Salicylic Acid", "Asiatic Acid", "Betaine Salicylate"],
+    negativeIngredientNames: ["Kaolin", "Hydrated Silica", "Fragrance"],
+    notableDateOffset: -43
+  }
+];
+
+const seedPreviousAnalysisRuns = async (userId: string, today: string) => {
+  const supabase = createSupabaseAdminClient();
+  const todayDate = new Date(`${today}T00:00:00.000Z`);
+  let seededCount = 0;
+
+  for (const seed of previousAnalysisSeeds) {
+    const requestedAt = `${toDateString(addDays(todayDate, -seed.requestedAtDaysAgo))}T09:00:00+09:00`;
+    const notableDate = toDateString(addDays(todayDate, seed.notableDateOffset));
+    const { data, error } = await supabase
+      .from("analysis_runs")
+      .insert({
+        user_id: userId,
+        requested_at: requestedAt,
+        confidence_level: "medium",
+        summary: seed.summary,
+        trend_points: [],
+        notable_events: [
+          {
+            date: notableDate,
+            title: "피부 점수가 평소보다 낮은 날",
+            severity: "high",
+            totalScore: 4,
+            baselineScore: 12,
+            scoreDelta: 8,
+            factorTags: ["low_sleep", "high_humidity", "product_change"],
+            reasons: [
+              "수면 시간이 5시간대로 짧았습니다.",
+              "습도가 80% 이상으로 높았습니다.",
+              "전날과 다른 제품 구성이 함께 기록되었습니다."
+            ],
+            productNames: ["글로우 리치 나이트 크림"]
+          }
+        ],
+        factor_summaries: [
+          {
+            factorTag: "low_sleep",
+            label: "수면 부족",
+            hitCount: 8,
+            eventCount: 3,
+            description: "수면 부족 조건이 특이 변화일과 반복해서 함께 나타났습니다."
+          },
+          {
+            factorTag: "product_change",
+            label: "제품 변화",
+            hitCount: 6,
+            eventCount: 2,
+            description: "클렌저 변경 주간에 피부 컨디션 점수 변화가 함께 관찰됐습니다."
+          }
+        ],
+        limitations: [
+          "과거 분석은 데모 시연용 압축 요약이며 원인 확정이 아닙니다.",
+          "제품 사용 여부와 생활 요인이 같은 날 함께 기록된 수준의 근거입니다."
+        ],
+        next_records_to_add: [
+          "클렌저를 사용하지 않은 날의 피부 상태",
+          "제품 변경 첫 3일의 수면 시간과 습도"
+        ]
+      })
+      .select("id")
+      .single();
+
+    requireNoError(error, `Failed to seed previous analysis: ${requestedAt}`);
+
+    const analysisRunId = idRowSchema.parse(data).id;
+    const findingRows = [
+      ...seed.positiveIngredientNames.map((ingredientName) => ({
+        analysis_run_id: analysisRunId,
+        finding_type: "positive_suspect",
+        ingredient_id: null,
+        ingredient_name: ingredientName,
+        evidence_level: "weak",
+        reason: `${ingredientName}은 과거 분석에서 피부 컨디션 점수가 오른 날 함께 기록된 긍정적 의심 성분 후보입니다.`,
+        supporting_logs: ["과거 30일 구간 분석 요약에 포함", "반복 패턴 보강용 데모 데이터"]
+      })),
+      ...seed.negativeIngredientNames.map((ingredientName) => ({
+        analysis_run_id: analysisRunId,
+        finding_type: "negative_suspect",
+        ingredient_id: null,
+        ingredient_name: ingredientName,
+        evidence_level: "weak",
+        reason: `${ingredientName}은 과거 분석에서 피부 컨디션 점수가 낮아진 날 함께 기록된 부정적 의심 성분 후보입니다.`,
+        supporting_logs: ["과거 30일 구간 분석 요약에 포함", "반복 패턴 보강용 데모 데이터"]
+      }))
+    ];
+
+    const { error: findingsError } = await supabase
+      .from("analysis_findings")
+      .insert(findingRows);
+
+    requireNoError(findingsError, `Failed to seed previous analysis findings: ${requestedAt}`);
+    seededCount += 1;
+  }
+
+  return seededCount;
+};
+
 const main = async () => {
   const demoUser = await ensureDemoUser();
   await clearDemoUserData(demoUser.id);
@@ -1025,6 +1146,7 @@ const main = async () => {
 
   await upsertLocation(demoUser.id);
   const recordCount = await upsertDailyRecords(demoUser.id, userProductIdByExternalId, routineIdByName);
+  const previousAnalysisCount = await seedPreviousAnalysisRuns(demoUser.id, todayInSeoul());
   const analysis = await runAnalysis(demoUser.id);
 
   console.log("Demo data seed complete");
@@ -1033,6 +1155,7 @@ const main = async () => {
   console.log(`Products: ${products.length}`);
   console.log(`Presets: ${routineSeeds.length}`);
   console.log(`Daily records: ${recordCount}`);
+  console.log(`Previous analyses: ${previousAnalysisCount}`);
   console.log(`Analysis run: ${analysis.analysisRunId}`);
 };
 

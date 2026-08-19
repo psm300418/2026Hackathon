@@ -66,8 +66,8 @@ const toDateString = (date: Date) => date.toISOString().slice(0, 10);
 
 const normalizeName = (value: string) => value.trim().toLowerCase().replace(/\s+/g, "");
 
-const totalSkinScore = (record: DailyRecordDto) =>
-  record.dryness + record.oiliness + record.redness + record.trouble;
+const skinConditionScore = (record: DailyRecordDto) =>
+  20 - (record.dryness + record.oiliness + record.redness + record.trouble);
 
 const average = (values: number[]) =>
   values.length === 0
@@ -82,7 +82,7 @@ const signalForRecord = (
     return 0;
   }
 
-  return totalSkinScore(previousRecord) - totalSkinScore(record);
+  return skinConditionScore(record) - skinConditionScore(previousRecord);
 };
 
 const splitIngredientsText = (text: string | null): string[] => {
@@ -109,7 +109,7 @@ const toTrendPoints = (records: DailyRecordDto[]): AnalysisTrendPoint[] =>
     .sort((left, right) => left.recordDate.localeCompare(right.recordDate))
     .map((record) => ({
       date: record.recordDate,
-      totalScore: totalSkinScore(record),
+      totalScore: skinConditionScore(record),
       dryness: record.dryness,
       oiliness: record.oiliness,
       redness: record.redness,
@@ -221,10 +221,10 @@ const buildNotableEvents = (records: DailyRecordDto[]): AnalysisNotableEvent[] =
         index
       );
       const baselineScore = Number(
-        average(baselineRecords.map(totalSkinScore)).toFixed(1)
+        average(baselineRecords.map(skinConditionScore)).toFixed(1)
       );
-      const totalScore = totalSkinScore(record);
-      const scoreDelta = Number((totalScore - baselineScore).toFixed(1));
+      const totalScore = skinConditionScore(record);
+      const scoreDelta = Number((baselineScore - totalScore).toFixed(1));
 
       if (baselineRecords.length < 3 || scoreDelta < NOTABLE_EVENT_DELTA) {
         return null;
@@ -235,7 +235,7 @@ const buildNotableEvents = (records: DailyRecordDto[]): AnalysisNotableEvent[] =
         ? "트러블이 평소보다 두드러진 날"
         : record.redness >= 4
           ? "붉음이 평소보다 두드러진 날"
-          : "피부 점수가 평소보다 오른 날";
+          : "피부 점수가 평소보다 낮은 날";
 
       return {
         date: record.recordDate,
@@ -247,7 +247,7 @@ const buildNotableEvents = (records: DailyRecordDto[]): AnalysisNotableEvent[] =
         factorTags: context.factorTags,
         reasons: context.reasons.length > 0
           ? context.reasons
-          : ["피부 점수가 최근 평균보다 올랐지만 함께 기록된 생활/환경 요인은 뚜렷하지 않습니다."],
+          : ["피부 점수가 최근 평균보다 낮았지만 함께 기록된 생활/환경 요인은 뚜렷하지 않습니다."],
         productNames: context.productNames
       };
     })
@@ -480,8 +480,39 @@ const confidenceForRecordCount = (recentRecordCount: number): AnalysisConfidence
     return "weak";
   }
 
-  return "medium";
+  return recentRecordCount >= 21 ? "medium" : "weak";
 };
+
+const confidenceForEvidence = (
+  evidence: Pick<AnalysisEvidence, "recentRecordCount" | "totalRecordCount" | "previousAnalysis" | "notableEvents" | "ingredientStats">
+): AnalysisConfidenceLevel => {
+  if (evidence.recentRecordCount <= 2) {
+    return "data_insufficient";
+  }
+
+  if (evidence.recentRecordCount >= 21 && evidence.totalRecordCount >= 60) {
+    return "medium";
+  }
+
+  if (evidence.previousAnalysis || evidence.notableEvents.length > 0 || evidence.ingredientStats.length > 0) {
+    return "weak";
+  }
+
+  return confidenceForRecordCount(evidence.recentRecordCount);
+};
+
+const confidenceRank: Record<AnalysisConfidenceLevel, number> = {
+  data_insufficient: 0,
+  weak: 1,
+  medium: 2,
+  strong: 3
+};
+
+const strongerConfidence = (
+  left: AnalysisConfidenceLevel,
+  right: AnalysisConfidenceLevel
+): AnalysisConfidenceLevel =>
+  confidenceRank[left] >= confidenceRank[right] ? left : right;
 
 const baseLimitations = (recentRecordCount: number): string[] => {
   if (recentRecordCount === 0) {
@@ -564,7 +595,7 @@ const fallbackFindings = (
     .map((stat) => ({
       name: stat.name,
       evidenceLevel: stat[scoreKey] >= 3 ? "weak" : "data_insufficient",
-      reason: `${stat.name}은 기록상 ${stat[scoreKey]}회 ${type === "positive" ? "피부 점수 감소" : "피부 점수 증가"}가 있던 날 함께 나타난 의심 성분 후보입니다. 원인으로 확정할 수는 없습니다.`,
+      reason: `${stat.name}은 기록상 ${stat[scoreKey]}회 ${type === "positive" ? "피부 점수 상승" : "피부 점수 하락"}이 있던 날 함께 나타난 의심 성분 후보입니다. 원인으로 확정할 수는 없습니다.`,
       supportingLogs: [
         `전체 노출 ${stat.totalExposureCount}회`,
         `최근 30일 노출 ${stat.recentExposureCount}회`,
@@ -574,15 +605,15 @@ const fallbackFindings = (
 };
 
 const fallbackAnalysis = (evidence: AnalysisEvidence): GeneratedAnalysis => {
-  const confidenceLevel = confidenceForRecordCount(evidence.recentRecordCount);
+  const confidenceLevel = confidenceForEvidence(evidence);
 
   return {
     confidenceLevel,
     summary: evidence.recentRecordCount === 0
       ? "최근 30일 피부 기록이 없어 분석할 수 있는 데이터가 아직 부족합니다."
       : evidence.notableEvents.length > 0
-        ? `${evidence.notableEvents[0].date}에 평소 대비 피부 점수가 ${evidence.notableEvents[0].scoreDelta}점 높았습니다. 함께 기록된 후보 요인을 우선 확인해보세요.`
-        : "최근 30일 기록에서 큰 급증일은 뚜렷하지 않았고, 성분 후보는 관련 가능성으로만 참고해주세요.",
+        ? `${evidence.notableEvents[0].date}에 평소 대비 피부 점수가 ${evidence.notableEvents[0].scoreDelta}점 낮았습니다. 함께 기록된 후보 요인을 우선 확인해보세요.`
+        : "최근 30일 기록에서 큰 하락일은 뚜렷하지 않았고, 성분 후보는 관련 가능성으로만 참고해주세요.",
     positiveSuspectedIngredients: fallbackFindings(evidence.ingredientStats, "positive"),
     negativeSuspectedIngredients: fallbackFindings(evidence.ingredientStats, "negative"),
     limitations: evidence.limitations,
@@ -601,6 +632,23 @@ const clampFindings = (findings: GeneratedAnalysisFinding[]) =>
     reason: finding.reason,
     supportingLogs: finding.supportingLogs.slice(0, 5)
   }));
+
+const mergeFindings = (
+  primaryFindings: GeneratedAnalysisFinding[],
+  fallbackFindings: GeneratedAnalysisFinding[]
+) => {
+  const findingsByName = new Map<string, GeneratedAnalysisFinding>();
+
+  for (const finding of [...primaryFindings, ...fallbackFindings]) {
+    const key = normalizeName(finding.name);
+
+    if (!findingsByName.has(key)) {
+      findingsByName.set(key, finding);
+    }
+  }
+
+  return [...findingsByName.values()].slice(0, 5);
+};
 
 const createAndStoreAnalysis = async (
   userId: string,
@@ -676,12 +724,15 @@ export const runAnalysis = async (userId: string): Promise<AnalysisResultDto> =>
   const fallback = fallbackAnalysis(evidence);
   const mergedAnalysis = {
     ...generatedAnalysis,
-    positiveSuspectedIngredients: generatedAnalysis.positiveSuspectedIngredients.length > 0
-      ? generatedAnalysis.positiveSuspectedIngredients
-      : fallback.positiveSuspectedIngredients,
-    negativeSuspectedIngredients: generatedAnalysis.negativeSuspectedIngredients.length > 0
-      ? generatedAnalysis.negativeSuspectedIngredients
-      : fallback.negativeSuspectedIngredients,
+    confidenceLevel: strongerConfidence(generatedAnalysis.confidenceLevel, fallback.confidenceLevel),
+    positiveSuspectedIngredients: mergeFindings(
+      generatedAnalysis.positiveSuspectedIngredients,
+      fallback.positiveSuspectedIngredients
+    ),
+    negativeSuspectedIngredients: mergeFindings(
+      generatedAnalysis.negativeSuspectedIngredients,
+      fallback.negativeSuspectedIngredients
+    ),
     limitations: [...new Set([...evidence.limitations, ...generatedAnalysis.limitations])]
   };
 

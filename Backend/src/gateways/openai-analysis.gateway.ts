@@ -65,7 +65,8 @@ export const generateAnalysisWithOpenAi = async (
         role: "user",
         content: [
           "아래 evidence는 Backend가 최근 30일 상세 기록과 전체 기간 압축 통계, 이전 분석 요약을 합쳐 만든 데이터다.",
-          "evidence.notableEvents는 최근 평균 대비 피부 점수가 튄 날짜이며, reasons는 같은 날 함께 기록된 후보 요인이다.",
+          "evidence.trendPoints.totalScore는 0-20 범위의 피부 컨디션 점수이며 높을수록 좋은 상태, 낮을수록 건조함/유분/붉음/트러블 기록이 두드러진 상태다.",
+          "evidence.notableEvents는 최근 평균보다 피부 컨디션 점수가 낮아진 날짜이며, reasons는 같은 날 함께 기록된 후보 요인이다.",
           "evidence.factorSummaries는 후보 요인이 기록 전체와 특이 변화일에서 얼마나 반복됐는지 요약한 값이다.",
           "성분 후보는 각 방향 최대 5개로 제한하고, 데이터가 부족하면 confidenceLevel을 data_insufficient 또는 weak로 낮춰라.",
           "ingredientStats에서 positiveSignalCount가 negativeSignalCount보다 큰 항목은 긍정 후보로, negativeSignalCount가 positiveSignalCount보다 큰 항목은 부정 후보로 우선 검토한다.",
