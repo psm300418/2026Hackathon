@@ -6,7 +6,7 @@
 
 ## 1. 디자인 방향
 
-SkinData는 피부 기록과 제품 사용 데이터를 빠르게 남기는 도구다. 화면은 장식보다 입력의 선명함, 넓은 여백, 명확한 버튼 대비를 우선한다.
+SSOM은 피부 기록과 제품 사용 데이터를 빠르게 남기는 도구다. 화면은 장식보다 입력의 선명함, 넓은 여백, 명확한 버튼 대비를 우선한다.
 
 핵심 키워드:
 
@@ -25,7 +25,7 @@ SkinData는 피부 기록과 제품 사용 데이터를 빠르게 남기는 도�
 | `Ink` | `#121212` | 제목, 본문, 활성 버튼 텍스트 |
 | `Muted` | `#B3B3B3` | 비활성 아이콘, placeholder, 보조 라벨 |
 | `Line` | `#EFEFEF` | 구분선, 약한 카드 배경, 비활성 버튼 |
-| `Mint` | `#99E4E1` | 주요 CTA 배경, 선택된 pill |
+| `Mint` | `#D6F4F4` | 주요 CTA 배경, 선택된 pill |
 | `MintSoft` | `#E6FAF8` | 선택된 약한 강조, bottom navigation indicator |
 | `LavenderSoft` | `#F5F3FA` | 보조 카드 배경 |
 | `Surface` | `#FFFFFF` | 기본 화면, 카드, 입력 배경 |
@@ -195,7 +195,7 @@ Android 기본 시스템 폰트를 사용한다. 추후 폰트를 추가한다�
 SkinColors.Ink = #121212
 SkinColors.Muted = #B3B3B3
 SkinColors.SurfaceSoft = #EFEFEF
-SkinColors.PrimaryOlive = #EBFBFC
+SkinColors.PrimaryOlive = #D6F4F4
 SkinColors.Surface = #FFFFFF
 SkinRadius.Card = 8dp
 SkinRadius.Button = 6dp

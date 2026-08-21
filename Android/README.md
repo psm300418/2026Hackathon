@@ -11,7 +11,7 @@ Expected responsibilities:
 - Skin photo upload flow.
 - Analysis and report screens.
 
-Package name and app name can be decided when the Android project is initialized.
+App name: SSOM.
 
 Current package name:
 

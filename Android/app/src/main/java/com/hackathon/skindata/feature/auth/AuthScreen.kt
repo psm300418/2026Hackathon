@@ -118,7 +118,7 @@ fun AuthScreen(
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "Personal\nSkin Data",
+                    text = "SSOM",
                     style = MaterialTheme.typography.headlineLarge
                 )
                 Spacer(modifier = Modifier.height(14.dp))

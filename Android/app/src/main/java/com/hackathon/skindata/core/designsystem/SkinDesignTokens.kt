@@ -9,7 +9,7 @@ object SkinColors {
     val BackgroundWarm = Color(0xFFFBFCFD)
     val Surface = Color(0xFFFFFFFF)
     val SurfaceSoft = Color(0xFFF5F3FA)
-    val PrimaryOlive = Color(0xFF99E4E1)
+    val PrimaryOlive = Color(0xFFD6F4F4)
     val PrimaryOliveSoft = Color(0xFFE6FAF8)
     val AccentCoral = Color(0xFF121212)
     val AccentCoralSoft = Color(0xFFF2EFF8)
