@@ -14,6 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "SkinData"
+rootProject.name = "SSOM"
 include(":app")
-
